@@ -1,0 +1,60 @@
+{
+  "name": "tezos-dashboard",
+  "version": "1.0.0",
+  "description": "Tezos configurable statistics dashboard.",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "clean": "rm -rf build && rm -rf buildpre",
+    "init": "npm run clean && node ./ejs.config.js && npm run first:htm && cp ./src/media ./build -r && cp ./src/root/* ./build -r",
+    "first:htm": "ejs-render --input=./src/html --data=./tokens-ejs.json --output=./build",
+    "build:htm": "ejs-render --input=./src/html --data=./tokens-ejs.json --output=./buildpre && html-minifier --input-dir ./buildpre --output-dir ./build --file-ext html --remove-comments --collapse-whitespace --remove-attribute-quotes --minify-js --minify-css && rm -rf buildpre",
+    "watch:htm": "ejs-render --input=./src/html --data=./tokens-ejs.json --output=./build --watch",
+    "build:css": "postcss src/scss/main.scss -o build/css/main.css --no-map",
+    "watch:css": "postcss src/scss/main.scss -o build/css/main.css --env development -m -w --verbose",
+    "build:es6": "node ./esbuild.config.js production",
+    "watch:es6": "node ./esbuild.config.js development",
+    "watch:srv": "browser-sync start --config browsersync.config.cjs",
+    "build": "npm run init && concurrently 'npm:build:*'",
+    "start": "npm run init && concurrently 'npm:watch:*'"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/craigbuckler/tezosdash.git"
+  },
+  "keywords": [
+    "Tezos",
+    "dashboard",
+    "statistics"
+  ],
+  "browserslist": "> 1%",
+  "author": "Craig Buckler",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/craigbuckler/tezosdash/issues"
+  },
+  "homepage": "https://github.com/craigbuckler/tezosdash#readme",
+  "dependencies": {
+    "autoprefixer": "10.4.7",
+    "concurrently": "7.2.2",
+    "cssnano": "5.1.12",
+    "ejs-render": "1.0.3",
+    "esbuild": "0.14.47",
+    "esbuild-plugin-text-replace": "1.2.0",
+    "esbuild-plugin-time": "1.0.0",
+    "html-minifier": "4.0.0",
+    "postcss": "8.4.14",
+    "postcss-advanced-variables": "3.0.1",
+    "postcss-assets": "6.0.0",
+    "postcss-calc": "8.2.4",
+    "postcss-cli": "9.1.0",
+    "postcss-combine-media-query": "1.0.1",
+    "postcss-map-get": "0.3.0",
+    "postcss-nested": "5.0.6",
+    "postcss-scss": "4.0.4",
+    "statez": "1.0.1"
+  },
+  "devDependencies": {
+    "browser-sync": "2.27.10"
+  }
+}

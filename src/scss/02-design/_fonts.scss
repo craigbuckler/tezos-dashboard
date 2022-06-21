@@ -1,0 +1,45 @@
+// body font weights and styles
+$body-weights: $font_body_normal, $font_body_bold;
+
+@each $fontSize in $body-weights {
+
+  @font-face {
+    font-family: $font_body_face;
+    font-style: normal;
+    font-weight: $fontSize;
+    font-display: block;
+    src: local(''), resolve('#{$font_body_face}-#{$fontSize}.woff2') format('woff2');
+  }
+
+  @font-face {
+    font-family: $font_body_face;
+    font-style: italic;
+    font-weight: $fontSize;
+    font-display: block;
+    src: local(''), resolve('#{$font_body_face}-#{$fontSize}italic.woff2') format('woff2');
+  }
+
+}
+
+// heading font weights and styles
+$head-weights: $font_head_normal, $font_head_bold;
+
+@each $fontSize in $head-weights {
+
+  @font-face {
+    font-family: $font_head_face;
+    font-style: normal;
+    font-weight: $fontSize;
+    font-display: block;
+    src: local(''), resolve('#{$font_head_face}-#{$fontSize}.woff2') format('woff2');
+  }
+
+  @font-face {
+    font-family: $font_head_face;
+    font-style: italic;
+    font-weight: $fontSize;
+    font-display: block;
+    src: local(''), resolve('#{$font_head_face}-#{$fontSize}italic.woff2') format('woff2');
+  }
+
+}

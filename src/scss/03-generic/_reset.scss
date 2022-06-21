@@ -1,0 +1,40 @@
+// reset styles
+*, *:before, *:after {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  user-select: none;
+}
+
+template {
+  display: none;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+ul, ol {
+  list-style-type: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+  html {
+    scroll-behavior: auto !important;
+  }
+
+  *, *:before, *:after {
+    transition-timing-function: step-start !important;
+    animation-delay: 0s !important;
+    animation-timing-function: step-start !important;
+    animation-iteration-count: 1 !important;
+  }
+
+  a:hover, a:active, a:focus {
+    transform: none !important;
+  }
+
+}

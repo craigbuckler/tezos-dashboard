@@ -1,0 +1,20 @@
+html {
+  scroll-behavior: smooth;
+  touch-action: manipulation;
+  image-rendering: -webkit-optimize-contrast;
+}
+
+html, body {
+  font-size: 1rem;
+  min-height: 100%;
+}
+
+body {
+  font-family: $font_body_face, system-ui, sans-serif;
+  font-size: $font_size;
+  font-weight: $font_body_normal;
+  line-height: $font_body_lineheight;
+  color: var(--color-fore1);
+  background-color: var(--color-back1);
+  overflow: auto;
+}

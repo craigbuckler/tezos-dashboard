@@ -1,0 +1,36 @@
+// main grid
+main {
+  display: grid;
+  grid-template-columns: repeat($layout_grid_cols_min, 1fr);
+  grid-auto-flow: row dense;
+  gap: $layout_grid_gap;
+  margin: $layout_grid_gap;
+
+  & > * {
+    padding: calc($layout_grid_gap / 2) $layout_grid_gap;
+    color: var(--color-fore2);
+    background-color: var(--color-back0);
+    border-radius: $layout_widget_radius;
+
+    @each $gSize in 2,3,4,5,6 {
+
+      &[data-colspan="#{$gSize}"] {
+        grid-column-start: span $gSize;
+      }
+
+      &[data-rowspan="#{$gSize}"] {
+        grid-row-start: span $gSize;
+      }
+
+    }
+
+  }
+}
+
+@media (min-width: $layout_grid_cols_breakpoint) {
+
+  main {
+    grid-template-columns: repeat($layout_grid_cols_max, 1fr);
+  }
+
+}
