@@ -1,24 +1,12 @@
 <% meta.title = 'First page' %>
 <%- include('./partials/_pagehead.ejs', { meta }) -%>
 
-<input type="checkbox" id="settings" />
-
 <main>
 
-  <tezos-time zone="Europe/London" showdate="long" colspan="2" rowspan="2" order="1"></tezos-time>
+  <tezos-time zone="Europe/London" date="medium" colspan="4" rowspan="2" order="1"></tezos-time>
 
-  <tezos-time zone="Europe/Zurich" hour12="1" colspan="2" rowspan="2" order="1"></tezos-time>
+  <tezos-time zone="Europe/Zurich" colspan="2" rowspan="1" order="1"></tezos-time>
 
 </main>
-
-<label id="settingsoverlay" for="settings"></label>
-
-<aside id="control" tabindex="0">
-
-  <p>Add widget</p>
-
-</aside>
-
-<label id="settingscontrol" for="settings"><svg id="settingsopen" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0z"/><path fill="currentColor" d="M20 12a8 8 0 0 0-.2-1.7l1.9-1.6-2-3.4-2.4.8a8 8 0 0 0-2.8-1.7L14 2h-4l-.5 2.4c-1 .3-2 1-2.8 1.7l-2.4-.8-2 3.4 1.9 1.6a8 8 0 0 0 0 3.4l-1.9 1.6 2 3.4 2.4-.8a8 8 0 0 0 2.8 1.7L10 22h4l.5-2.4c1-.3 2-1 2.8-1.7l2.4.8 2-3.4-1.9-1.6.2-1.7zm-8 4a4 4 0 1 1 0-8 4 4 0 0 1 0 8z"/></svg><svg id="settingsclose" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30"><path fill="currentColor" d="M7 4a1 1 0 0 0-.7.3l-2 2a1 1 0 0 0 0 1.4l7.3 7.3-7.3 7.3a1 1 0 0 0 0 1.4l2 2c.4.4 1 .4 1.4 0l7.3-7.3 7.3 7.3c.4.4 1 .4 1.4 0l2-2c.4-.4.4-1 0-1.4L18.4 15l7.3-7.3c.4-.4.4-1 0-1.4l-2-2a1 1 0 0 0-1.4 0L15 11.6 7.7 4.3A1 1 0 0 0 7 4z"/></svg></label>
 
 <%- include('./partials/_pagefoot.ejs', { meta }) -%>

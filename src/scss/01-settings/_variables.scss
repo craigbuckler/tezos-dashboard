@@ -1,24 +1,41 @@
 :root {
 
-  // dark mode
-  --color-back0: $color_dark_back_0;
-  --color-back1: $color_dark_back_1;
-  --color-back2: $color_dark_back_2;
+  // Tezos style defaults
 
-  --color-fore0: $color_dark_fore_0;
-  --color-fore1: $color_dark_fore_1;
-  --color-fore2: $color_dark_fore_2;
+  // body font
+  --tz-font-body: $font_body_face, system-ui, sans-serif;
+  --tz-font-body-lineheight: $font_body_lineheight;
+  --tz-font-body-normal: $font_body_normal;
+  --tz-font-body-bold: $font_body_bold;
 
-  --color-high0: $color_dark_high_0;
-  --color-high1: $color_dark_high_1;
+  // head font
+  --tz-font-head: $font_head_face, system-ui, sans-serif;
+  --tz-font-head-lineheight: $font_head_lineheight;
+  --tz-font-head-normal: $font_head_normal;
+  --tz-font-head-bold: $font_head_bold;
 
-  --color-med0: $color_dark_med_0;
-  --color-med1: $color_dark_med_1;
+  // colours: dark mode
+  --tz-color-back0: $color_dark_back_0;
+  --tz-color-back1: $color_dark_back_1;
+  --tz-color-back2: $color_dark_back_2;
 
-  --color-low0: $color_dark_low_0;
-  --color-low1: $color_dark_low_1;
+  --tz-color-fore0: $color_dark_fore_0;
+  --tz-color-fore1: $color_dark_fore_1;
+  --tz-color-fore2: $color_dark_fore_2;
 
-  --color-info0: $color_dark_info_0;
-  --color-info1: $color_dark_info_1;
+  --tz-color-high0: $color_dark_high_0;
+  --tz-color-high1: $color_dark_high_1;
+
+  --tz-color-med0: $color_dark_med_0;
+  --tz-color-med1: $color_dark_med_1;
+
+  --tz-color-low0: $color_dark_low_0;
+  --tz-color-low1: $color_dark_low_1;
+
+  --tz-color-info0: $color_dark_info_0;
+  --tz-color-info1: $color_dark_info_1;
+
+  // other settings
+  --tz-border-radius: $layout_widget_radius;
 
 }

@@ -16,7 +16,7 @@ import tezosReducer from './tezos-reducer.js';
 // string functions
 export const string = {
 
-  // minify html
+  // minify string
   minify(s) {
     return s.trim().replace(/\s*\n\s*/g, '\n');
   }
@@ -104,6 +104,42 @@ export class DOM {
       d.value = value;
       d.node.textContent = value;
     }
+
+  }
+
+}
+
+
+// DOM utility functions
+export const dom = {
+
+  // remove all child elements
+  clean(node) {
+    while (node.lastChild) node.removeChild(node.lastChild);
+  },
+
+  // append elements in string or fragment to node
+  add(node, block) {
+
+    if (typeof block === 'undefined') return;
+
+    // convert string to DOM elements
+    if (typeof block === 'string') {
+
+      const
+        div = document.createElement('div'),
+        frag = new DocumentFragment();
+
+      div.innerHTML = block;
+      while (div.childElementCount) {
+        frag.appendChild(div.firstElementChild);
+      }
+
+      block = frag;
+
+    }
+
+    return node.appendChild( block );
 
   }
 

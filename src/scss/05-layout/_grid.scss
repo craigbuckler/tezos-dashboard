@@ -7,24 +7,22 @@ main {
   margin: $layout_grid_gap;
 
   & > * {
-    padding: calc($layout_grid_gap / 2) $layout_grid_gap;
-    color: var(--color-fore2);
-    background-color: var(--color-back0);
-    border-radius: $layout_widget_radius;
+    background-color: var(--tz-color-back0);
 
     @each $gSize in 2,3,4,5,6 {
 
-      &[data-colspan="#{$gSize}"] {
+      &[colspan="#{$gSize}"] {
         grid-column-start: span $gSize;
       }
 
-      &[data-rowspan="#{$gSize}"] {
+      &[rowspan="#{$gSize}"] {
         grid-row-start: span $gSize;
       }
 
     }
 
   }
+
 }
 
 @media (min-width: $layout_grid_cols_breakpoint) {

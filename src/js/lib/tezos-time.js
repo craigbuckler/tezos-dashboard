@@ -1,43 +1,84 @@
 /*
 Tezos time widget
-<tezos-time zone="" size="" showdate="1"></tezos-time>
 */
 import { TezosWidget } from './tezos-widget.js';
 import * as util from './tezos-util.js';
 
 class TezosTime extends TezosWidget {
 
-  // watch for property/attribute changes
-  static get observedAttributes() {
-    return ['zone', 'hour12', 'showdate'];
-  }
-
   // watch for Tezos reducer updates (become properties)
   static get observedReducers() {
     return ['locale', 'time'];
   }
 
-  // supported timezones
-  // https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
-  static get timeZones() {
-    return [
-      'UTC',
-      'Europe/London',
-      'Europe/Paris',
-      'Europe/Zurich',
-      'Europe/Athens',
-      'Asia/Singapore',
-      'Asia/Tokyo',
-      'Australia/Melbourne',
-      'US/Pacific',
-      'US/Mountain',
-      'US/Central',
-      'US/Eastern'
-    ];
+  // watch for property/attribute changes
+  static get observedAttributes() {
+    return Object.keys( this.attribute );
   }
 
-  #dom = null;
+  // attribute configuration
+  static get attribute() {
 
+    return {
+
+      'zone': {
+        label   : 'time zone',
+        type    : 'select',
+        options : [ // https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+          'UTC',
+          'Europe/London',
+          'Europe/Paris',
+          'Europe/Zurich',
+          'Europe/Athens',
+          'Asia/Singapore',
+          'Asia/Tokyo',
+          'Australia/Melbourne',
+          'US/Pacific',
+          'US/Mountain',
+          'US/Central',
+          'US/Eastern'
+        ]
+      },
+
+      'date': {
+        type    : 'select',
+        options : [
+          { label: 'none', value: '' },
+          'short',
+          'medium',
+          'long'
+        ],
+
+      },
+
+      'hour12': {
+        label   : '12-hour',
+        type    : 'checkbox'
+      }
+
+    };
+
+  }
+
+  // styles
+  static get styleBase() {
+
+    return `
+      .data, .date {
+        padding: 0.1em 0.2em;
+      }
+
+      .date {
+        font-family: var(--tz-font-head);
+        text-align: center;
+        color: var(--tz-color-info1);
+      }
+    `;
+
+  }
+
+
+  #dom = null;
 
   // constructor
   constructor() {
@@ -67,17 +108,26 @@ class TezosTime extends TezosWidget {
 
       this.#dom.reset();
 
+      // time font size based on widget width
+      const
+        compStyle = window.getComputedStyle(this),
+        widthProp = Math.floor( window.innerWidth / parseFloat(compStyle.getPropertyValue('width')) );
+
+      this.styleDynamic = `
+        .data { font-size: ${ Math.max(2, 10 - widthProp) }vw; }
+      `;
+
       return (`
         <h2 class="label">${ this.renderZone() }</h2>
-        <time class="time">${ this.renderTime() }</time>
-        ` + (this.showdate ? `<time class="date">${ this.renderDate() }</time>` : '')
+        <time class="data">${ this.renderTime() }</time>
+        ` + (this.date ? `<time class="date">${ this.renderDate() }</time>` : '')
       );
 
     }
 
     // update time and date
-    this.#dom.update('.time', this.renderTime());
-    if (this.showdate) this.#dom.update('.date', this.renderDate());
+    this.#dom.update('.data', this.renderTime());
+    if (this.date) this.#dom.update('.date', this.renderDate());
 
   }
 
@@ -94,7 +144,7 @@ class TezosTime extends TezosWidget {
 
   // format date
   renderDate() {
-    const dateFn = util.datetime.formatDate[ this.showdate ] || util.datetime.formatDate.medium;
+    const dateFn = util.datetime.formatDate[ this.date ] || util.datetime.formatDate.medium;
     return dateFn( this.time, this.zone );
   }
 
