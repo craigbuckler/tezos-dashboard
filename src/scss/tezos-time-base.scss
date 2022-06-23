@@ -1,0 +1,9 @@
+.data, .date {
+  padding: 0.1em 0.2em;
+}
+
+.date {
+  font-family: var(--tz-font-head);
+  text-align: center;
+  color: var(--tz-color-info1);
+}

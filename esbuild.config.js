@@ -1,5 +1,7 @@
 import { argv } from 'node:process';
+
 import esbuild from 'esbuild';
+import { inlineCSS } from './esbuild.inlinecss.js';
 import textReplace from 'esbuild-plugin-text-replace';
 import time from 'esbuild-plugin-time';
 
@@ -29,7 +31,7 @@ console.log(`JavaScript ${ productionMode ? 'production' : 'development' } build
 
 esbuild.build({
 
-  entryPoints: [ './src/js/main.js' ],
+  entryPoints: [ './src/js/tezos-widgets.js', './src/js/dashboard.js' ],
   platform: 'neutral',
   format: 'esm',
   bundle: true,
@@ -38,6 +40,7 @@ esbuild.build({
   mainFields: ['module', 'browser', 'main'],
   banner: { js: `/* ${ tokens.meta.app } ${ tokens.meta.version }, by ${ tokens.meta.author }, built: ${ (new Date()).toISOString() } */` },
   plugins: [
+    inlineCSS,
     textReplace({
       include: /.js$/,
       pattern
@@ -45,6 +48,6 @@ esbuild.build({
     time('JavaScript')
   ],
   watch: !productionMode,
-  outfile: './build/js/main.js'
+  outdir: './build/js/'
 
 }).catch(() => process.exit(1));

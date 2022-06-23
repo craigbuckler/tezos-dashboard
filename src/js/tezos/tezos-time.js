@@ -4,6 +4,8 @@ Tezos time widget
 import { TezosWidget } from './tezos-widget.js';
 import * as util from './tezos-util.js';
 
+import styleBase from './css/tezos-time-base.css';
+
 class TezosTime extends TezosWidget {
 
   // watch for Tezos reducer updates (become properties)
@@ -62,19 +64,7 @@ class TezosTime extends TezosWidget {
 
   // styles
   static get styleBase() {
-
-    return `
-      .data, .date {
-        padding: 0.1em 0.2em;
-      }
-
-      .date {
-        font-family: var(--tz-font-head);
-        text-align: center;
-        color: var(--tz-color-info1);
-      }
-    `;
-
+    return styleBase;
   }
 
 
@@ -103,12 +93,12 @@ class TezosTime extends TezosWidget {
       console.log(`  data.${ p }: was ${ dataChange[p].valueOld } now ${ dataChange[p].value }`);
     }
 
-    // first/changed render
-    if (iteration === 0 || propChange) {
+    // first render
+    if (iteration === 0) {
 
       this.#dom.reset();
 
-      // time font size based on widget width
+      // dynamic time font size based on widget width
       const
         compStyle = window.getComputedStyle(this),
         widthProp = Math.floor( window.innerWidth / parseFloat(compStyle.getPropertyValue('width')) );
@@ -117,17 +107,15 @@ class TezosTime extends TezosWidget {
         .data { font-size: ${ Math.max(2, 10 - widthProp) }vw; }
       `;
 
-      return (`
-        <h2 class="label">${ this.renderZone() }</h2>
-        <time class="data">${ this.renderTime() }</time>
-        ` + (this.date ? `<time class="date">${ this.renderDate() }</time>` : '')
-      );
+      // widget HTML
+      return (`<h2 class="label">${ this.renderZone() }</h2><time class="data">${ this.renderTime() }</time><time class="date">${ this.date ? this.renderDate() : '' }</time>`);
 
     }
 
-    // update time and date
+    // update values
+    if (propChange?.zone) this.#dom.update('.label', this.renderZone());
     this.#dom.update('.data', this.renderTime());
-    if (this.date) this.#dom.update('.date', this.renderDate());
+    this.#dom.update('.date', this.date ? this.renderDate() : '');
 
   }
 
