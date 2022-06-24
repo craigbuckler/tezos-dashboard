@@ -2,17 +2,6 @@
 import tezosReducer from './tezos-reducer.js';
 
 
-// reducer data handlers
-// e.g. reducerHandler.locale = () => {}
-// const reducerHandler = {};
-// tezosReducer.addEventListener('change', e => {
-
-//   const fn = reducerHandler[ e.detail.property ];
-//   if (fn) fn();
-
-// });
-
-
 // string functions
 export const string = {
 

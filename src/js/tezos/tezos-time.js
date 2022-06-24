@@ -6,7 +6,7 @@ import * as util from './tezos-util.js';
 
 import styleBase from './css/tezos-time-base.css';
 
-class TezosTime extends TezosWidget {
+export class TezosTime extends TezosWidget {
 
   // watch for Tezos reducer updates (become properties)
   static get observedReducers() {

@@ -1,7 +1,7 @@
 import { argv } from 'node:process';
 
 import esbuild from 'esbuild';
-import { inlineCSS } from './esbuild.inlinecss.js';
+import { inlineFile } from './esbuild.inlinefile.js';
 import textReplace from 'esbuild-plugin-text-replace';
 import time from 'esbuild-plugin-time';
 
@@ -35,12 +35,13 @@ esbuild.build({
   platform: 'neutral',
   format: 'esm',
   bundle: true,
+  external: [ './tezos-widgets.js' ], // separate dashboard and widget API JavaScript
   minify: productionMode,
   sourcemap: !productionMode && 'linked',
   mainFields: ['module', 'browser', 'main'],
   banner: { js: `/* ${ tokens.meta.app } ${ tokens.meta.version }, by ${ tokens.meta.author }, built: ${ (new Date()).toISOString() } */` },
   plugins: [
-    inlineCSS,
+    inlineFile,
     textReplace({
       include: /.js$/,
       pattern

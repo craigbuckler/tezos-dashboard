@@ -1,16 +1,18 @@
 /*
 esbuild plugin
-inline CSS import into a string
+inline HTML, CSS, or SVG code as a JavaScript string
 
 // _____________________________________________________
 // use in esbuild.config.js
 import esbuild from 'esbuild';
-import { inlineCSS } from './esbuild.inlinecss.js';
+import { inlineFile } from './esbuild.inlinefile.js';
 
 esbuild.build({
+  ...
   plugins: [
-    inlineCSS
-  ]
+    inlineFile
+  ],
+  ...
 }).catch(() => process.exit(1));
 
 // _____________________________________________________
@@ -33,30 +35,30 @@ function getStyles() {
 import { resolve } from 'node:path';
 import { readFile } from 'node:fs/promises';
 
-export const inlineCSS = {
+export const inlineFile = {
 
-  name: 'inlineCSS',
+  name: 'inlineFile',
   setup(build) {
 
-    build.onResolve({ filter: /css$/ }, args => {
+    build.onResolve({ filter: /\.(html|css|svg)$/ }, args => {
 
       const path = resolve(args.resolveDir, args.path);
 
       return {
         path,
         watchFiles: [ path ],
-        namespace: 'inlineCSS'
+        namespace: 'inlineFile'
       };
 
     });
 
-    build.onLoad({ filter: /.*/, namespace: 'inlineCSS' }, async args => {
+    build.onLoad({ filter: /.*/, namespace: 'inlineFile' }, async args => {
 
-      // read CSS file
-      const css = await readFile(args.path, 'utf-8');
+      // read file
+      const file = await readFile(args.path, 'utf-8');
 
       return {
-        contents: JSON.stringify(css),
+        contents: JSON.stringify(file),
         loader: 'json'
       };
 
