@@ -1,0 +1,83 @@
+// dashboard configuration panel
+
+// checkbox
+#dashconfig {
+  position: fixed;
+  top: -99px;
+
+  &:focus ~ #dashconfig-icon {
+    color: var(--tz-color-info1);
+  }
+}
+
+// open/close control
+#dashconfig-icon {
+  position: fixed;
+  display: block;
+  bottom: 1vmin;
+  right: 1vmin;
+  width: 1em;
+  height: 1em;
+  color: var(--tz-color-info0);
+  cursor: pointer;
+
+  svg {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+#dashconfig-overlay, #dashconfig-icon svg:last-child {
+  display: none;
+}
+
+#dashconfig:checked {
+
+  & ~ #dashconfig-icon svg:first-child {
+    display: none;
+  }
+
+  & ~ #dashconfig-icon svg:last-child {
+    display: block;
+  }
+
+  & ~ #dashconfig-overlay {
+    position: fixed;
+    display: block;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+  }
+
+}
+
+// panel
+#dashconfig-panel {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  padding: 2vmin 2vw;
+  color: var(--tz-color-fore2);
+  background-color: var(--tz-color-back2);
+  transform: translateX(100%);
+  transition: transform 0.7s ease-in-out;
+  overflow: auto;
+  outline: 0 none;
+}
+
+#dashconfig-panel:focus, #dashconfig-panel:focus-within,
+#dashconfig:checked ~ #dashconfig-panel {
+  transform: translateX(0%);
+}
+
+// widget list
+#dashconfig-add li {
+  color: var(--tz-color-fore0);
+  cursor: pointer;
+
+  &:hover, &:focus {
+    outline: 3px solid var(--tz-color-info1);
+  }
+}

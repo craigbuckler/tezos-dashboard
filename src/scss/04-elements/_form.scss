@@ -1,0 +1,26 @@
+// default form styles
+label {
+  clear: both;
+  display: block;
+  margin-top: 1em;
+  cursor: pointer;
+}
+
+input, output, textarea, select, button {
+  width: 100%;
+  font-size: 1em;
+  color: var(--tz-color-fore0);
+  background: var(--tz-color-back2);
+  accent-color: var(--tz-color-back2);
+  border: 0 none;
+  outline: 0 none;
+
+  &:focus {
+    outline: 3px solid var(--tz-color-info1);
+  }
+}
+
+input[type="checkbox"], input[type="radio"] {
+  width: auto;
+  height: auto;
+}

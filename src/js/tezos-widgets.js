@@ -16,4 +16,11 @@ import { TezosWidget } from './tezos/tezos-widget.js';
 import { TezosTime } from './tezos/tezos-time.js'; // localized datetime
 
 // export public methods for use in other code
-export { stateZ, tezosReducer, observeReducer, TezosTime, TezosWidget, util };
+export {
+  stateZ,
+  tezosReducer,
+  util,
+  observeReducer,
+  TezosTime,
+  TezosWidget
+};

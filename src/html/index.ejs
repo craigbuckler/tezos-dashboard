@@ -1,12 +1,43 @@
 <% meta.title = 'First page' %>
 <%- include('./partials/_pagehead.ejs', { meta }) -%>
 
+<input type="checkbox" id="dashconfig" />
+
 <main>
 
-  <tezos-time zone="Europe/London" date="medium" colspan="4" rowspan="2" order="1"></tezos-time>
-
-  <tezos-time zone="Europe/Zurich" colspan="2" rowspan="1" order="1"></tezos-time>
+  <tezos-time zone="UTC" date="long" colspan="4" rowspan="2" order="1"></tezos-time>
 
 </main>
+
+<label id="dashconfig-overlay" for="dashconfig"></label>
+<aside id="dashconfig-panel" tabindex="0">
+
+  <p>add</p>
+  <ul id="dashconfig-add"></ul>
+
+  <!-- locale: https://www.fincher.org/Utilities/CountryLanguageList.shtml -->
+  <label for="locale">language</label>
+  <select id="locale" data-tezos-reducer="locale">
+    <option value="">local</option>
+    <option value="en-GB">English: UK</option>
+    <option value="en-US">English: US</option>
+    <option value="fr-FR">French</option>
+    <option value="de-DE">German</option>
+    <option value="pt-PT">Portuguese</option>
+    <option value="es-ES">Spanish</option>
+    <option value="it-IT">Italian</option>
+    <option value="sv-SE">Swedish</option>
+    <option value="ru-RU">Russian</option>
+    <option value="ar-SA">Arabic</option>
+    <option value="zh-CN">Chinese</option>
+    <option value="ja-JP">Japanese</option>
+  </select>
+
+</aside>
+
+<label id="dashconfig-icon" for="dashconfig">
+  <%- include('../media/icons/cog.svg') -%>
+  <%- include('../media/icons/close.svg') -%>
+</label>
 
 <%- include('./partials/_pagefoot.ejs', { meta }) -%>
