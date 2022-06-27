@@ -13,6 +13,11 @@ main {
 
       &[colspan="#{$gSize}"] {
         grid-column-start: span $gSize;
+
+        // style <tezos-time> time part
+        &::part(time-time) {
+          font-size: calc(1em + #{$gSize}em / 2);
+        }
       }
 
       &[rowspan="#{$gSize}"] {

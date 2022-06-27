@@ -21,9 +21,11 @@ export class TezosWidget extends HTMLElement {
   #renderIteration = 0;
   #propertyChanged = null;
   #dataChanged = {};
-  #reducerHandler = null;
   #panelConfig = null;
+  #renderHandler = () => {};
+  #reducerHandler = null;
   #clickHandler = null;
+  #changeHandler = null;
   #submitHandler = null;
 
   // initialize
@@ -31,8 +33,10 @@ export class TezosWidget extends HTMLElement {
 
     super();
 
-    this.renderDebounce = 50;
-    this.styleDynamic = '';
+    this.liveConfigUpdate = true; // update configuration properties when field changes
+    this.renderDebounce = 100;    // delay before rendering when properties or data update
+    this.styleDynamic = '';       // styles applied at render time
+
     this.#defineProperties();
 
     // keyboard tab
@@ -50,6 +54,42 @@ export class TezosWidget extends HTMLElement {
   }
 
 
+  // connect component to DOM
+  connectedCallback() {
+
+    // render debounce handler
+    this.#renderHandler = util.debounce(this.#renderComponent, this.renderDebounce);
+
+    // tezos reducer event
+    this.#reducerHandler = this.#reducerChangedCallback.bind(this);
+    tezosReducer.addEventListener('change', this.#reducerHandler);
+
+    // click handler
+    this.#clickHandler = this.#clickHandlerCallback.bind(this);
+    this.shadow.addEventListener('click', this.#clickHandler);
+
+    // change handler
+    this.#changeHandler = this.#changeHandlerCallback.bind(this);
+    this.shadow.addEventListener('change', this.#changeHandler);
+
+    // form submit handler
+    this.#submitHandler = this.#submitHandlerCallback.bind(this);
+    this.shadow.addEventListener('submit', this.#submitHandler);
+
+    // render
+    this.#renderComponent();
+  }
+
+
+  // removed from DOM
+  disconnectedCallback() {
+    tezosReducer.removeEventListener('change', this.#reducerHandler);
+    this.shadow.removeEventListener('click', this.#clickHandler);
+    this.shadow.removeEventListener('change', this.#changeHandler);
+    this.shadow.removeEventListener('submit', this.#submitHandler);
+  }
+
+
   // attribute/property change
   attributeChangedCallback(property, valueOld, value) {
 
@@ -63,36 +103,9 @@ export class TezosWidget extends HTMLElement {
     this.#propertyChanged[property] = this.#propertyChanged[property] || { valueOld };
     this.#propertyChanged[property].value = value;
 
-    this.#renderDebounce();
+    // debounced re-render
+    this.#renderHandler();
 
-  }
-
-
-  // connect component to DOM
-  connectedCallback() {
-
-    // tezos reducer event
-    this.#reducerHandler = this.#reducerChangedCallback.bind(this);
-    tezosReducer.addEventListener('change', this.#reducerHandler);
-
-    // click handler
-    this.#clickHandler = this.#clickHandlerCallback.bind(this);
-    this.shadow.addEventListener('click', this.#clickHandler);
-
-    // form handler
-    this.#submitHandler = this.#submitHandlerCallback.bind(this);
-    this.shadow.addEventListener('submit', this.#submitHandler);
-
-    // render
-    this.#renderComponent();
-  }
-
-
-  // removed from DOM
-  disconnectedCallback() {
-    tezosReducer.removeEventListener('change', this.#reducerHandler);
-    this.shadow.removeEventListener('click', this.#clickHandler);
-    this.shadow.removeEventListener('submit', this.#submitHandler);
   }
 
 
@@ -111,19 +124,8 @@ export class TezosWidget extends HTMLElement {
     this.#dataChanged[prop] = this.#dataChanged[prop] || { valueOld: e.detail.valueOld };
     this.#dataChanged[prop].value = e.detail.value;
 
-    this.#renderDebounce();
-
-  }
-
-
-  // render debounce
-  #renderTimer = null;
-  #renderDebounce() {
-
-    if (this.#renderIteration) {
-      clearTimeout( this.#renderTimer );
-      this.#renderTimer = setTimeout(() => this.#renderComponent(), this.renderDebounce);
-    }
+    // debounced re-render
+    this.#renderHandler();
 
   }
 
@@ -139,7 +141,7 @@ export class TezosWidget extends HTMLElement {
     const dataChange = this.#dataChanged ? { ...this.#dataChanged } : null;
     this.#dataChanged = null;
 
-    // returns undefined (no action), or a DOM fragment or HTML string to render
+    // can return undefined (no action), a DOM fragment or HTML string for rendering
     let rendered = this.render( this.#renderIteration, propChange, dataChange );
 
     if (typeof rendered !== 'undefined') {
@@ -167,17 +169,9 @@ export class TezosWidget extends HTMLElement {
   }
 
 
-  // rendering defaults
-  render() {}
-  postRender() {}
+  // render configuration form
+  #renderConfig() {
 
-
-  // click event
-  #clickHandlerCallback(e) {
-
-    if (!e?.target?.closest('button')?.classList.contains('config')) return;
-
-    // render configuration form
     const
       attr = this.constructor.attribute,
       sect = document.createElement('section'),
@@ -230,9 +224,37 @@ export class TezosWidget extends HTMLElement {
       bs = bc.appendChild( document.createElement('button') );
 
     bs.type = 'submit';
-    bs.textContent = 'apply';
+    bs.textContent = 'OK'
 
+    // append to DOM
     this.#panelConfig = util.dom.add( this.shadow, sect );
+
+  }
+
+
+  // rendering defaults
+  render() {}
+  postRender() {}
+
+
+  // click event
+  #clickHandlerCallback(e) {
+
+    const button = e?.target?.closest('button');
+    if (!button) return;
+
+    // show configuration
+    if (button.classList.contains('config')) this.#renderConfig();
+
+  }
+
+
+  // live configuration update
+  #changeHandlerCallback(e) {
+
+    if (this.liveConfigUpdate) {
+      this.#fieldToProperty(e?.target);
+    }
 
   }
 
@@ -242,25 +264,28 @@ export class TezosWidget extends HTMLElement {
 
     e.preventDefault();
 
-    // assign form values to properties
+    // update all properties from form fields
     const field = e?.target?.elements;
     if (field && field.length) {
-
-      Array.from(field).forEach(f => {
-
-        if (f.id && this.hasOwnProperty(f.id)) {
-          const type = this.constructor.attribute[f.id]?.type;
-          this[f.id] = (type === 'checkbox' || type == 'radio' ? (f.checked ? '1' : '') : f.value);
-        }
-
-      });
-
+      Array.from(field).forEach(f => this.#fieldToProperty(f));
     }
 
+    // remove panel
     if (this.#panelConfig) {
       this.shadow.removeChild( this.#panelConfig );
       this.#panelConfig = null;
       this.focus();
+    }
+
+  }
+
+
+  // assign form values to properties
+  #fieldToProperty(field) {
+
+    if (field && field.id && this.hasOwnProperty(field.id)) {
+      const type = this.constructor.attribute[field.id]?.type;
+      this[field.id] = (type === 'checkbox' || type == 'radio' ? (field.checked ? '1' : '') : field.value);
     }
 
   }

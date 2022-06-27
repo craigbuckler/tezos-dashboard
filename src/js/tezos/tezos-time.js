@@ -96,19 +96,11 @@ export class TezosTime extends TezosWidget {
     // first render
     if (iteration === 0) {
 
+      // wipe previously cached DOM nodes
       this.#dom.reset();
 
-      // dynamic time font size based on widget width
-      const
-        compStyle = window.getComputedStyle(this),
-        widthProp = Math.floor( window.innerWidth / parseFloat(compStyle.getPropertyValue('width')) );
-
-      this.styleDynamic = `
-        .data { font-size: ${ Math.max(2, 10 - widthProp) }vw; }
-      `;
-
       // widget HTML
-      return (`<h2 class="label">${ this.renderZone() }</h2><time class="data">${ this.renderTime() }</time><time class="date">${ this.date ? this.renderDate() : '' }</time>`);
+      return (`<h2 part="time-zone" class="label">${ this.renderZone() }</h2><time part="time-time" class="data">${ this.renderTime() }</time><time part="time-date" class="date">${ this.date ? this.renderDate() : '' }</time>`);
 
     }
 

@@ -44,6 +44,7 @@ button {
   color: var(--tz-color-fore0);
   background-color: var(--tz-color-info0);
   border-radius: 0.2em;
+  cursor: pointer;
 
   &:focus {
     background-color: var(--tz-color-info1);

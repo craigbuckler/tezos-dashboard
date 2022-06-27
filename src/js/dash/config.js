@@ -1,24 +1,32 @@
 // configuration panel
-import { tezosReducer, util } from '../dashboard.js';
+import { stateZ, tezosReducer, util } from '../dashboard.js';
 
 // dashboard options
-const dashboard = {
+const
+  dashboard = {
 
-  container:  document.querySelector('main'),
-  addlist:    document.querySelector('#dashconfig-add'),
-  widget: {
+    state: stateZ({ name: 'dashState' }),
+    container:  document.querySelector('main'),
+    addlist:    document.querySelector('#dashconfig-add'),
+    widget: {
 
-    'time': {
-      name: 'date/time',
-      icon: 'clock',
-      html: '<tezos-time zone="UTC" colspan="2" rowspan="1"></tezos-time>',
-      size: [
-        [ 1, 1 ], [ 2, 2 ], [ 3, 2 ], [ 4, 2 ]
-      ]
+      'time': {
+        name: 'date/time',
+        icon: 'clock',
+        html: '<tezos-time zone="UTC"></tezos-time>',
+        size: [
+          [ 2, 1 ], [ 2, 2 ], [ 3, 2 ], [ 4, 2 ]
+        ]
+      }
+
     }
+  };
 
-  }
-};
+
+// initialize dashboard
+util.dom.clean( dashboard.container );
+util.dom.add( dashboard.container, dashboard.state.widgets || '' );
+
 
 // initialize widget choice
 for (const w in dashboard.widget) {
@@ -62,7 +70,18 @@ dashboard.addlist.addEventListener('click', e => {
     wName = e?.target?.dataset?.widget,
     widget = wName && dashboard.widget[wName];
 
-  if (widget) util.dom.add(dashboard.container, widget.html);
+  if (widget) {
+
+    const w = util.dom.add(dashboard.container, widget.html);
+
+    // set size
+    if (widget?.size?.length) {
+      w.gridSize = 0;
+      w.setAttribute('colspan', widget.size[0][0]);
+      w.setAttribute('rowspan', widget.size[0][1]);
+    }
+
+  }
 
 });
 
@@ -86,3 +105,12 @@ document.body.addEventListener('change', e => {
   }
 
 });
+
+
+// save dashboard state after DOM mutation (debounced for 5 seconds)
+const observer = new MutationObserver( util.debounce( (mutationList, observer) => {
+
+  dashboard.state.widgets = dashboard.container.innerHTML;
+
+}, 5000) );
+observer.observe(dashboard.container, { attributes: true, childList: true, subtree: true });

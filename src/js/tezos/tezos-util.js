@@ -128,8 +128,21 @@ export const dom = {
 
     }
 
-    return node.appendChild( block );
+    node.appendChild( block );
+    return node.lastChild;
 
+  }
+
+}
+
+
+// debounce event
+export function debounce(fn, delay = 300) {
+
+  let timer = null;
+  return function() {
+    clearTimeout(timer);
+    timer = setTimeout( fn.bind(this, ...arguments), delay );
   }
 
 }
