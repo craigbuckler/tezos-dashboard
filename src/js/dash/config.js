@@ -5,9 +5,10 @@ import { stateZ, tezosReducer, util } from '../dashboard.js';
 const
   dashboard = {
 
-    state: stateZ({ name: 'dashState' }),
+    state:      stateZ({ name: 'dashState' }),
     container:  document.querySelector('main'),
     addlist:    document.querySelector('#dashconfig-add'),
+    control:    document.querySelector('#dashcontrol'),
     widget: {
 
       'time': {
@@ -74,12 +75,13 @@ dashboard.addlist.addEventListener('click', e => {
 
     const w = util.dom.add(dashboard.container, widget.html);
 
+    // set type
+    w.dataset.dashName = wName;
+
     // set size
-    if (widget?.size?.length) {
-      w.gridSize = 0;
-      w.setAttribute('colspan', widget.size[0][0]);
-      w.setAttribute('rowspan', widget.size[0][1]);
-    }
+    w.dataset.dashSize = 0;
+    w.setAttribute('colspan', widget.size[0][0]);
+    w.setAttribute('rowspan', widget.size[0][1]);
 
   }
 
@@ -105,6 +107,61 @@ document.body.addEventListener('change', e => {
   }
 
 });
+
+
+// widget has focus
+let wFocus;
+dashboard.container.addEventListener('focusin', e => {
+  wFocus = e.target;
+  dashboard.control.classList.add('focus');
+});
+
+
+// no focus
+dashboard.container.addEventListener('focusout', e => {
+  dashboard.control.classList.remove('focus');
+});
+
+
+// control button handler
+dashboard.control.addEventListener('click', e => {
+
+  if (!wFocus) return;
+
+  const action = e?.target?.closest('button')?.id;
+  if (action && actionHandler[action]) actionHandler[action]();
+  if (wFocus) wFocus.focus();
+
+});
+
+
+// control button actions
+const actionHandler = {
+
+  'dashmoveup': () => {
+    if (wFocus.previousSibling) {
+      wFocus = wFocus.previousSibling.insertAdjacentElement('beforebegin', wFocus);
+    }
+  },
+
+  'dashmovedown': () => {
+    if (wFocus.nextSibling) {
+      wFocus = wFocus.nextSibling.insertAdjacentElement('afterend', wFocus);
+    }
+  },
+
+  'dashresize': () => {
+    const w = dashboard.widget[ wFocus.dataset.dashName ];
+    wFocus.dataset.dashSize = ++wFocus.dataset.dashSize % w.size.length;
+    wFocus.setAttribute('colspan', w.size[wFocus.dataset.dashSize][0]);
+    wFocus.setAttribute('rowspan', w.size[wFocus.dataset.dashSize][1]);
+  },
+
+  'dashdelete': () => {
+    wFocus = wFocus.remove();
+  }
+
+}
 
 
 // save dashboard state after DOM mutation (debounced for 5 seconds)

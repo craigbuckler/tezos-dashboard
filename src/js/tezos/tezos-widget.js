@@ -75,6 +75,7 @@ export class TezosWidget extends HTMLElement {
     // form submit handler
     this.#submitHandler = this.#submitHandlerCallback.bind(this);
     this.shadow.addEventListener('submit', this.#submitHandler);
+    this.shadow.addEventListener('keydown', this.#submitHandler);
 
     // render
     this.#renderComponent();
@@ -87,6 +88,7 @@ export class TezosWidget extends HTMLElement {
     this.shadow.removeEventListener('click', this.#clickHandler);
     this.shadow.removeEventListener('change', this.#changeHandler);
     this.shadow.removeEventListener('submit', this.#submitHandler);
+    this.shadow.removeEventListener('keydown', this.#submitHandler);
   }
 
 
@@ -261,6 +263,9 @@ export class TezosWidget extends HTMLElement {
 
   // configuration submit
   #submitHandlerCallback(e) {
+
+    // cancel on Escape or Enter
+    if (e.type === 'keydown' && (e.code !== 'Enter' && e.code !== 'Escape')) return;
 
     e.preventDefault();
 
