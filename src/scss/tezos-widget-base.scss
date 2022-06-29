@@ -11,6 +11,9 @@
 // outer widget
 :host {
   position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   border-radius: var(--tz-border-radius);
 
   &(:focus), &(:focus-within) {

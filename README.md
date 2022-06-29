@@ -19,3 +19,11 @@ Build production-level minified site in `./build` directory:
 ```sh
 npm run build
 ```
+
+## Server
+
+```sh
+ssh ubuntu@18.170.87.208
+```
+
+http://18.170.87.208/

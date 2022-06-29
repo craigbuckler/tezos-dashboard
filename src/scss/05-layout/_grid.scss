@@ -16,7 +16,7 @@ main {
 
         // style <tezos-time> time part
         &::part(time-time) {
-          font-size: calc(1em + #{$gSize}em / 2);
+          font-size: calc(0.5em + #{$gSize}em / 2);
         }
       }
 

@@ -58,7 +58,7 @@ export const inlineFile = {
       const file = await readFile(args.path, 'utf-8');
 
       return {
-        contents: JSON.stringify(file),
+        contents: JSON.stringify(file.trim()),
         loader: 'json'
       };
 
