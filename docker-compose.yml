@@ -1,0 +1,50 @@
+version: '3'
+
+services:
+
+  mongodb:
+    environment:
+      - MONGO_INITDB_DATABASE=tezdashapi
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=password
+    image: mongo:latest
+    container_name: mongodb
+    volumes:
+      - mongodata:/data/db
+      - ./mongodb:/docker-entrypoint-initdb.d
+    ports:
+      - "27017:27017"
+    logging:
+      driver: "none"
+
+  frontend:
+    environment:
+      - NODE_ENV=development
+    build:
+      context: ./frontend
+      dockerfile: frontend.Dockerfile
+    container_name: frontend
+    volumes:
+      - ./frontend:/home/node/app
+      - frontendfiles:/home/node/app/.npm
+      - frontendfiles:/home/node/app/node_modules
+      - frontendfiles:/home/node/app/src/js/tezos/css
+    ports:
+      - "3000:3000"
+    command: /bin/sh -c 'npm i && npm start'
+
+  nginx:
+    image: nginx:stable-alpine
+    container_name: nginx
+    depends_on:
+      - frontend
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+    ports:
+      - "8080:80"
+    logging:
+      driver: "none"
+
+volumes:
+  mongodata:
+  frontendfiles:
