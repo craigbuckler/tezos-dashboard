@@ -1,0 +1,20 @@
+{
+  "name": "tezos-fetchreduce",
+  "version": "0.1.0",
+  "description": "Tezos data fetching APIs for dashboard.",
+  "type": "module",
+  "main": "tasks.js",
+  "scripts": {
+    "debug": "node ./update.js && nodemon --trace-warnings --inspect=0.0.0.0:9229 ./tasks.js",
+    "start": "node ./update.js && node ./tasks.js"
+  },
+  "author": "Craig Buckler",
+  "license": "MIT",
+  "dependencies": {
+    "dotenv": "16.0.1",
+    "mongodb": "4.7.0"
+  },
+  "devDependencies": {
+    "nodemon": "2.0.19"
+  }
+}

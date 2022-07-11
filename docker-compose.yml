@@ -3,8 +3,9 @@ version: '3'
 services:
 
   mongodb:
+    env_file: .env
     environment:
-      - MONGO_INITDB_DATABASE=tezdashapi
+      - MONGO_INITDB_DATABASE=${MONGO_DBNAME}
       - MONGO_INITDB_ROOT_USERNAME=root
       - MONGO_INITDB_ROOT_PASSWORD=password
     image: mongo:latest
@@ -13,9 +14,25 @@ services:
       - mongodata:/data/db
       - ./mongodb:/docker-entrypoint-initdb.d
     ports:
-      - "27017:27017"
+      - "${MONGO_DBPORT}:${MONGO_DBPORT}"
     logging:
       driver: "none"
+
+  backend:
+    env_file: .env
+    environment:
+      - NODE_ENV=development
+    build:
+      context: ./backend
+      dockerfile: backend.Dockerfile
+    container_name: backend
+    depends_on:
+      - mongodb
+    volumes:
+      - ./backend:/home/node/app
+      - backendfiles:/home/node/app/.npm
+      - backendfiles:/home/node/app/node_modules
+    command: /bin/sh -c 'npm i && npm run debug'
 
   frontend:
     environment:
@@ -24,6 +41,8 @@ services:
       context: ./frontend
       dockerfile: frontend.Dockerfile
     container_name: frontend
+    depends_on:
+      - backend
     volumes:
       - ./frontend:/home/node/app
       - frontendfiles:/home/node/app/.npm
@@ -47,4 +66,5 @@ services:
 
 volumes:
   mongodata:
+  backendfiles:
   frontendfiles:

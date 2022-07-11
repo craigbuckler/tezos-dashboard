@@ -5,6 +5,9 @@ node_modules
 .npm
 package-lock.json
 npm-debug.log*
+.ash_history
+
+.env
 
 logs
 *.log
