@@ -4,6 +4,7 @@ import pkg from './package.json' assert {type: 'json'};
 import process from 'node:process';
 import { readdir } from 'node:fs/promises';
 import 'dotenv/config';
+import { versionToInt, pad } from './lib/lib.js';
 import * as db from './lib/db.js';
 
 const
@@ -65,14 +66,3 @@ while (updateFile.length && !abort) {
 
 // close database
 db.close();
-
-// calculate MAJOR.MINOR.PATCH version as an integer
-function versionToInt(v) {
-  var s = String(v).match(/\d+/gi);
-  return s?.length === 3 ? (parseInt(s[0] || 0, 10) * 1000000) + (parseInt(s[1] || 0, 10) * 10000) + parseInt(s[2] || 0, 10) : 0;
-}
-
-// add leading characters to a number
-function pad(str, len = 2, chr=' ') {
-  return String(str).padStart(len, chr).slice(-len);
-}

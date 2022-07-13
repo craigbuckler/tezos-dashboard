@@ -6,7 +6,7 @@
   "main": "tasks.js",
   "scripts": {
     "debug": "node ./update.js && nodemon --trace-warnings --inspect=0.0.0.0:9229 ./tasks.js",
-    "start": "node ./update.js && node ./tasks.js"
+    "start": "node --no-warnings ./update.js && node --no-warnings ./tasks.js"
   },
   "author": "Craig Buckler",
   "license": "MIT",

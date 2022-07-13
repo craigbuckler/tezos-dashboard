@@ -1,8 +1,6 @@
 // task runner
 // calls APIs, stores in database, processes reducers, etc.
-import process from 'node:process';
+import task from './tasks.json' assert {type: 'json'};
 import 'dotenv/config';
 
-console.log('tasks.js');
-
-console.dir(process.env, { depth: null, color: true });
+console.dir(task, { depth: null, color: true });
