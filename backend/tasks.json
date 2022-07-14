@@ -1,19 +1,20 @@
 {
+  "log": "./tasks.log",
+
+  "timeout": 30,
+  "retry": 3600,
   "errorRetry": [300, 600, 1800],
 
-  "task": [
+  "process": [
 
     {
       "name": "FETCH: crypto coin values (10 minutes)",
-      "cmd":  "node--no-warnings ./tasks/fetch.js -name=cryptovalue -retain=60 -freq=600 https://api.coincap.io/v2/assets/?ids=tezos,bitcoin,ethereum",
-      "freq": 600,
-      "disabled": false
+      "cmd":  "node --no-warnings ./tasks/fetch.js -name=cryptovalue -retain=60 -freq=600 https://api.coincap.io/v2/assets/?ids=tezos,bitcoin,ethereum"
     },
 
     {
       "name": "FETCH: exchange rate values (8 hours)",
-      "cmd":  "node --no-warnings ./tasks/fetch.js -name=exchange -freq=28800 https://api.coincap.io/v2/rates?type=fiat",
-      "freq": 28800
+      "cmd":  "node --no-warnings ./tasks/fetch.js -name=exchange -freq=28800 https://api.coincap.io/v2/rates?type=fiat"
     }
 
   ]

@@ -21,7 +21,7 @@ export default [
       detail: 'create fetch indexes',
       result: (
         await fetch.createIndex({ name: 1 }) &&
-        await fetch.createIndex({ date: 1 })
+        await fetch.createIndex({ date: -1 })
       )
     };
 
@@ -37,7 +37,7 @@ export default [
       detail: 'create reduce indexes',
       result: (
         await reduce.createIndex({ name: 1 }) &&
-        await reduce.createIndex({ date: 1 })
+        await reduce.createIndex({ date: -1 })
       )
     };
 

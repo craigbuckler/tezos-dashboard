@@ -36,7 +36,7 @@ const error = new Map([
   [ 'DBFIND',   { code: 202, msg: 'database find failure' } ],
   [ 'FETCH',    { code: 203, msg: 'fetch failure' } ],
   [ 'DBSAVE',   { code: 204, msg: 'database save failure' } ],
-  [ 'DBDEL',    { code:   0, msg: 'database delete failure' } ],
+  [ 'DBDEL',    { code:   0, msg: 'database delete failure' } ]
 
 ]);
 
@@ -59,21 +59,23 @@ if (err > 0) {
 }
 
 // fetch collection
-err = 0;
 const dbFetch = db.conn.collection('fetch');
+let last;
+err = 0;
 
 try {
 
-  let recent = 1, json, id;
+  let json, id;
 
   // recent DB record available?
   try {
-    recent = await dbFetch.countDocuments({ name, date: { $gt: nowOffset(-freq) }});
+    const res = await dbFetch.find({ name }).sort({ _id: -1 }).limit(1);
+    last = (await res.hasNext()) ? new Date( (await res.next()).date ) : 0;
   }
   catch (e) { throw new Error('DBFIND'); }
 
-  // fetch data API
-  if (recent) {
+  // found or fetch API data
+  if (last > nowOffset(-freq)) {
     throw new Error('FOUND');
   }
   else {
@@ -86,30 +88,26 @@ try {
 
   }
 
-  // JSON available
+  // JSON available to store
   if (json) {
 
     try {
-      const res = await dbFetch.insertOne({ name, date: nowOffset(), data: json });
+      last = new Date();
+      const res = await dbFetch.insertOne({ name, date: last, data: json });
       id = res.insertedId || null;
     }
     catch (e) { throw new Error('DBSAVE'); }
 
   }
 
-  // database updated
+  // delete older records
   if (id) {
 
     try {
 
-      if (retain) {
-        // delete records older than retain days
-        await dbFetch.deleteMany({ name, date: { $lt: nowOffset(-retain * 86400) } });
-      }
-      else {
-        // delete all but current record
-        await dbFetch.deleteMany({ name, _id: { $ne: id } });
-      }
+      // older than retain days / or all but current record
+      const cond = retain ? { name, date: { $lt: nowOffset(-retain * 86400) } } : { name, _id: { $ne: id } };
+      await dbFetch.deleteMany(cond);
 
     }
     catch(e) { throw new Error('DBDEL'); }
@@ -134,7 +132,12 @@ process.exit(err);
 function exitCode(code) {
   let e = error.get(code);
   if (e) {
-    console.log(`${ e.code ? 'ERROR' : 'DONE '} ${ pad(e.code, 3) }: ${ e.msg } [${ code }]`);
+
+    // number of seconds before next update
+    const next = !e.code && last ? ' NEXT:' + (freq - Math.floor((+new Date() - last) / 1000)) : '';
+
+    // status message
+    console.log(`${ e.code ? 'ERROR' : 'DONE '} ${ pad(e.code, 3) }: ${ e.msg } [${ code }]${ next }`);
     return e.code;
   }
   else {
