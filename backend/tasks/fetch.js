@@ -15,7 +15,7 @@ where:
 import process from 'node:process';
 import 'dotenv/config';
 import args from '../lib/args.js';
-import { pad, nowOffset } from '../lib/lib.js';
+import { pad, nowOffset, fetchJSON } from '../lib/lib.js';
 import * as db from '../lib/db.js';
 
 
@@ -54,7 +54,7 @@ if (!name) err &= exitCode('NONAME');
 if (!freq) err &= exitCode('NOFREQ');
 if (!db.conn) err &= exitCode('DBDOWN');
 if (err > 0) {
-  db.close();
+  await db.close();
   process.exit(err);
 }
 
@@ -69,7 +69,7 @@ try {
 
   // recent DB record available?
   try {
-    const res = await dbFetch.find({ name }).sort({ _id: -1 }).limit(1);
+    const res = await dbFetch.find({ name }).sort({ date: -1 }).limit(1);
     last = (await res.hasNext()) ? new Date( (await res.next()).date ) : 0;
   }
   catch (e) { throw new Error('DBFIND'); }
@@ -81,8 +81,7 @@ try {
   else {
 
     try {
-      const res = await fetch(url);
-      json = await res.json();
+      json = await fetchJSON(url);
     }
     catch(e) { throw new Error('FETCH'); }
 
@@ -122,7 +121,7 @@ catch (e) {
 }
 
 // close database
-db.close();
+await db.close();
 
 // complete
 process.exit(err);

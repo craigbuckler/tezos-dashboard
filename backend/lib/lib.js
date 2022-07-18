@@ -21,9 +21,37 @@ export function nowOffset( seconds = 0 ) {
 }
 
 
+// date +/- days
+export function dateDayAdd(d, days = 0) {
+
+  const date = dateNew(d);
+  if (date) date.setUTCDate(date.getUTCDate() + days);
+  return date;
+
+}
+
+
+// date at midnight
+export function dateNew(d) {
+
+  const date = (d || d instanceof Date ? new Date(d) : new Date());
+  if (String(date) === 'Invalid Date') return null;
+  date.setUTCMilliseconds(0);
+  date.setUTCSeconds(0);
+  date.setUTCMinutes(0);
+  date.setUTCHours(0);
+  date.setUTCDate(date.getUTCDate());
+  date.setUTCMonth(date.getUTCMonth());
+  date.setUTCFullYear(date.getUTCFullYear());
+  return date;
+
+}
+
+
 // format a date
 export function dateFormat(d = new Date()) {
 
+  d = new Date(d);
   return (
     d.getUTCFullYear() + '-' +
     pad(d.getUTCMonth() + 1, 2, '0') + '-' +
@@ -38,7 +66,7 @@ export function dateFormat(d = new Date()) {
 
 // run an executable
 // returns { code, out } where code is non-zero for errors
-export function execCmd(cmd, timeout) {
+export function execCmd(cmd, timeout = 10) {
 
   return new Promise(resolve => {
 
@@ -66,5 +94,14 @@ export async function fileAppend(file, data) {
   catch (e) {
     return false;
   }
+
+}
+
+
+// fetch JSON from an API
+export async function fetchJSON(url) {
+
+  const res = await fetch(url);
+  return (await res.json());
 
 }

@@ -15,6 +15,16 @@
     {
       "name": "FETCH: exchange rate values (8 hours)",
       "cmd":  "node --no-warnings ./tasks/fetch.js -name=exchange -freq=28800 https://api.coincap.io/v2/rates?type=fiat"
+    },
+
+    {
+      "name": "REDUCE: current crypto coin prices (10 minutes)",
+      "cmd":  "node --no-warnings ./tasks/reduce.js -name=current -freq=600"
+    },
+
+    {
+      "name": "REDUCE: exchange rate values (8 hours)",
+      "cmd":  "node --no-warnings ./tasks/reduce.js -name=exchange -freq=28800"
     }
 
   ]

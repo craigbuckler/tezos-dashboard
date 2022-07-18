@@ -65,4 +65,4 @@ while (updateFile.length && !abort) {
 }
 
 // close database
-db.close();
+await db.close();

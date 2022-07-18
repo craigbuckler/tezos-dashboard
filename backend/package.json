@@ -5,7 +5,7 @@
   "type": "module",
   "main": "tasks.js",
   "scripts": {
-    "debug": "rm ./tasks.log && node ./update.js && node ./tasks.js",
+    "debug": "rm -f ./tasks.log && node ./update.js && node ./tasks.js",
     "start": "node --no-warnings ./update.js && node --no-warnings ./tasks.js"
   },
   "author": "Craig Buckler",
