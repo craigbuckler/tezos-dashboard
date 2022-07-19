@@ -1,0 +1,90 @@
+version: '3'
+
+services:
+
+  mongodb:
+    env_file: .env
+    environment:
+      - MONGO_INITDB_DATABASE=${MONGO_DBNAME}
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=password
+    image: mongo:latest
+    container_name: mongodb
+    volumes:
+      - mongodata:/data/db
+      - ./mongodb:/docker-entrypoint-initdb.d
+    ports:
+      - "${MONGO_DBPORT}:${MONGO_DBPORT}"
+    logging:
+      driver: "none"
+
+  backend:
+    env_file: .env
+    environment:
+      - NODE_ENV=development
+    build:
+      context: ./backend
+      dockerfile: backend.Dockerfile
+    container_name: backend
+    depends_on:
+      - mongodb
+    volumes:
+      - ./backend:/home/node/app
+      - backendfiles:/home/node/app/.npm
+      - backendfiles:/home/node/app/node_modules
+    command: /bin/sh -c 'npm i && npm run debug'
+
+  api:
+    env_file: .env
+    environment:
+      - NODE_ENV=development
+    build:
+      context: ./backend
+      dockerfile: api.Dockerfile
+    container_name: api
+    depends_on:
+      - backend
+    volumes:
+      - ./backend:/home/node/app
+      - apifiles:/home/node/app/.npm
+      - apifiles:/home/node/app/node_modules
+    ports:
+      - "3100:3100"
+      - "9229:9229"
+    command: /bin/sh -c 'npm i && npm run debugapi'
+
+  frontend:
+    environment:
+      - NODE_ENV=development
+    build:
+      context: ./frontend
+      dockerfile: frontend.Dockerfile
+    container_name: frontend
+    depends_on:
+      - api
+    volumes:
+      - ./frontend:/home/node/app
+      - frontendfiles:/home/node/app/.npm
+      - frontendfiles:/home/node/app/node_modules
+      - frontendfiles:/home/node/app/src/js/tezos/css
+    ports:
+      - "3000:3000"
+    command: /bin/sh -c 'npm i && npm start'
+
+  nginx:
+    image: nginx:stable-alpine
+    container_name: nginx
+    depends_on:
+      - frontend
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+    ports:
+      - "8080:80"
+    logging:
+      driver: "none"
+
+volumes:
+  mongodata:
+  backendfiles:
+  apifiles:
+  frontendfiles:

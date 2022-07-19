@@ -1,0 +1,61 @@
+{
+  "log": "./tasks.log",
+
+  "timeout": 30,
+  "retry": 3600,
+  "errorRetry": [300, 600, 1800],
+
+  "process": [
+
+    {
+      "name": "FETCH : current crypto coin values (10 minutes)",
+      "cmd":  "node --no-warnings ./tasks/fetch.js -name=cryptovalue -retain=7 -freq=600 https://api.coincap.io/v2/assets/?ids=tezos,bitcoin,ethereum"
+    },
+
+    {
+      "name": "FETCH : Tezos daily average (12 hours)",
+      "cmd":  "node --no-warnings ./tasks/fetch.js -name=xtzday -date='{day:-1}' -retain=28 -freq=43200 'https://api.coincap.io/v2/assets/tezos/history?interval=d1&start={+day:-1}&end={+day:0}'"
+    },
+
+    {
+      "name": "FETCH : Bitcoin daily average (12 hours)",
+      "cmd":  "node --no-warnings ./tasks/fetch.js -name=btcday -date='{day:-1}' -retain=28 -freq=43200 'https://api.coincap.io/v2/assets/bitcoin/history?interval=d1&start={+day:-1}&end={+day:0}'"
+    },
+
+    {
+      "name": "FETCH : Etherium daily average (12 hours)",
+      "cmd":  "node --no-warnings ./tasks/fetch.js -name=ethday -date='{day:-1}' -retain=28 -freq=43200 'https://api.coincap.io/v2/assets/etherium/history?interval=d1&start={+day:-1}&end={+day:0}'"
+    },
+
+    {
+      "name": "FETCH : exchange rate values (8 hours)",
+      "cmd":  "node --no-warnings ./tasks/fetch.js -name=exchange -freq=28800 https://api.coincap.io/v2/rates?type=fiat"
+    },
+
+    {
+      "name": "REDUCE: current crypto coin prices (10 minutes)",
+      "cmd":  "node --no-warnings ./tasks/reduce.js -name=current -freq=600"
+    },
+
+    {
+      "name": "REDUCE: exchange rate values (8 hours)",
+      "cmd":  "node --no-warnings ./tasks/reduce.js -name=exchange -freq=28800"
+    },
+
+    {
+      "name": "REDUCE: Tezos daily averages (12 hours)",
+      "cmd":  "node --no-warnings ./tasks/reduce.js -name=xtzday -freq=43200"
+    },
+
+    {
+      "name": "REDUCE: Bitcoin daily averages (12 hours)",
+      "cmd":  "node --no-warnings ./tasks/reduce.js -name=btcday -freq=43200"
+    },
+
+    {
+      "name": "REDUCE: Etherium daily averages (12 hours)",
+      "cmd":  "node --no-warnings ./tasks/reduce.js -name=ethday -freq=43200"
+    }
+
+  ]
+}

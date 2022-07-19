@@ -4,7 +4,7 @@ module.exports = {
   'ui': {
     'port': 3001
   },
-  'files': ['build/**/*'],
+  'files': ['static/**/*'],
   'watchEvents': [
     'change'
   ],
@@ -15,7 +15,7 @@ module.exports = {
     'ignoreInitial': true
   },
   'server': {
-    'baseDir': 'build',
+    'baseDir': 'static',
     'index': 'index.html'
   },
   'proxy': false,

@@ -49,6 +49,6 @@ esbuild.build({
     time('JavaScript')
   ],
   watch: !productionMode,
-  outdir: './build/js/'
+  outdir: './static/js/'
 
 }).catch(() => process.exit(1));
