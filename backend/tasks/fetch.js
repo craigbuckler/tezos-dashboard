@@ -7,15 +7,23 @@ example:
 where:
 
   -name   : associated database reference name
+  -date   : database storage date shortcode
   -freq   : maximum frequency of fetches in seconds
   -retain : retain records for number of days (no value retains one record only)
   [url]   : URL to retrieve
+
+The -date and URL can use shortcodes, e.g.
+
+  {day:0} - Date() today at 00:00
+  {day:1} - Date() tomorrow at 00:00
+  {day:-2} - Date() two days ago at 00:00
+  {+day:-7} - Unix epoch 7 days ago
 
 */
 import process from 'node:process';
 import 'dotenv/config';
 import args from '../lib/args.js';
-import { pad, nowOffset, fetchJSON } from '../lib/lib.js';
+import { pad, nowOffset, parseShortcodeString, parseShortcode, fetchJSON } from '../lib/lib.js';
 import * as db from '../lib/db.js';
 
 
@@ -29,7 +37,8 @@ const error = new Map([
   // parameter errors
   [ 'NOURL',    { code: 101, msg: 'no URL specified' } ],
   [ 'NONAME',   { code: 102, msg: 'no database reference -name specified' } ],
-  [ 'NOFREQ',   { code: 103, msg: 'no update frequency -freq specified' } ],
+  [ 'NODATE',   { code: 103, msg: 'invalid -date specified' } ],
+  [ 'NOFREQ',   { code: 104, msg: 'no update frequency -freq specified' } ],
 
   // runtime errors
   [ 'DBDOWN',   { code: 201, msg: 'database access failure' } ],
@@ -44,13 +53,15 @@ const error = new Map([
 let err = -1;
 
 const
-  url = args.param[0],
+  url = parseShortcodeString(args.param[0]),
   name = args.option.name,
+  date = args.option.date ? parseShortcode(args.option.date) : undefined,
   freq = args.option.freq,
   retain = args.option.retain;
 
 if (!url) err &= exitCode('NOURL');
 if (!name) err &= exitCode('NONAME');
+if (date === null) err &= exitCode('NODATE');
 if (!freq) err &= exitCode('NOFREQ');
 if (!db.conn) err &= exitCode('DBDOWN');
 if (err > 0) {
@@ -69,13 +80,16 @@ try {
 
   // recent DB record available?
   try {
-    const res = await dbFetch.find({ name }).sort({ date: -1 }).limit(1);
+    const find = { name };
+    if (date) find.date = date;
+    const res = await dbFetch.find(find).sort({ date: -1 }).limit(1);
     last = (await res.hasNext()) ? new Date( (await res.next()).date ) : 0;
+    if (last && date) last = new Date();
   }
   catch (e) { throw new Error('DBFIND'); }
 
   // found or fetch API data
-  if (last > nowOffset(-freq)) {
+  if ((date && +date === +last) || last > nowOffset(-freq)) {
     throw new Error('FOUND');
   }
   else {
@@ -92,7 +106,7 @@ try {
 
     try {
       last = new Date();
-      const res = await dbFetch.insertOne({ name, date: last, data: json });
+      const res = await dbFetch.insertOne({ name, date: date || last, data: json });
       id = res.insertedId || null;
     }
     catch (e) { throw new Error('DBSAVE'); }

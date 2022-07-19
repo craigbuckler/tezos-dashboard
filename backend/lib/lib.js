@@ -64,6 +64,36 @@ export function dateFormat(d = new Date()) {
 }
 
 
+// parse a string containing shortcodes
+export function parseShortcodeString(str) {
+
+  return str.replace(/(\{[^}]+\})/g, parseShortcode);
+
+}
+
+
+// parse a "{day:N}" shortcode and return a date
+export function parseShortcode(sc) {
+
+  sc = sc.trim();
+  if (sc.at(0) !== '{' || sc.at(-1) !== '}') return null;
+
+  let
+    parse = sc.slice(1, -1).trim().split(':'),
+    token = parse[0].toLowerCase(),
+    inc = parseFloat(parse[1] || 0) || 0,
+    val;
+
+  if (token === 'day' || token === '+day') {
+    val = dateDayAdd(null, inc);
+    val = token.at(0) === '+' ? +new Date(val) : val;
+  }
+
+  return val;
+
+}
+
+
 // run an executable
 // returns { code, out } where code is non-zero for errors
 export function execCmd(cmd, timeout = 10) {

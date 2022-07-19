@@ -46,12 +46,12 @@ export default [
   },
 
 
-  // fetch last 60 days of price data
+  // fetch daily price data
   async () => {
 
     return {
-      detail: 'fill 60 days of crypto price data',
-      result: await execCmd('node --no-warnings ./tasks/fillprice.js -retain=60', 60)
+      detail: 'fetch previous crypto daily prices',
+      result: await execCmd('node --no-warnings ./tasks/fillday.js -retain=28', 60)
     };
 
   }
