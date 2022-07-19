@@ -34,6 +34,25 @@ services:
       - backendfiles:/home/node/app/node_modules
     command: /bin/sh -c 'npm i && npm run debug'
 
+  api:
+    env_file: .env
+    environment:
+      - NODE_ENV=development
+    build:
+      context: ./backend
+      dockerfile: api.Dockerfile
+    container_name: api
+    depends_on:
+      - backend
+    volumes:
+      - ./backend:/home/node/app
+      - apifiles:/home/node/app/.npm
+      - apifiles:/home/node/app/node_modules
+    ports:
+      - "3100:3100"
+      - "9229:9229"
+    command: /bin/sh -c 'npm i && npm run debugapi'
+
   frontend:
     environment:
       - NODE_ENV=development
@@ -42,7 +61,7 @@ services:
       dockerfile: frontend.Dockerfile
     container_name: frontend
     depends_on:
-      - backend
+      - api
     volumes:
       - ./frontend:/home/node/app
       - frontendfiles:/home/node/app/.npm
@@ -67,4 +86,5 @@ services:
 volumes:
   mongodata:
   backendfiles:
+  apifiles:
   frontendfiles:

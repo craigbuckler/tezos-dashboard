@@ -1,6 +1,7 @@
 // task runner
 // calls APIs, stores in database, processes reducers, etc.
 import task from './tasks.json' assert {type: 'json'};
+import 'dotenv/config';
 import { dateFormat, execCmd, fileAppend } from './lib/lib.js';
 
 const queue = [];

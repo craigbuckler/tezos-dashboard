@@ -40,7 +40,7 @@
   "homepage": "https://github.com/craigbuckler/tezos-dashboard#readme",
   "dependencies": {
     "autoprefixer": "10.4.7",
-    "concurrently": "7.2.2",
+    "concurrently": "7.3.0",
     "cssnano": "5.1.12",
     "ejs-render": "1.0.3",
     "esbuild": "0.14.49",
