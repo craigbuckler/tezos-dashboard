@@ -33,13 +33,15 @@ docker-compose down
 
 ## Backend
 
+Runs with `npm run debug` or `npm run start` (debug deletes the `tasks.log` file).
+
 Initial installation:
 
 ```sh
 node ./update.js
 ```
 
-If not run for some time, load initial database values:
+Load initial database values whenever a restart occurs:
 
 ```sh
 node ./tasks/fillday.js -retain=28
@@ -53,6 +55,8 @@ node ./tasks.js
 
 
 ## REST API
+
+Runs with `npm run debugapi` or `npm run startapi` (debug enabled V8 inspector).
 
 Express server (run with PM2 or in background):
 

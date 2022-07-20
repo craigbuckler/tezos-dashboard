@@ -59,6 +59,19 @@ export const datetime = {
 };
 
 
+// localised currency functions
+export const currency = {
+
+  format(value, currency) {
+    return Intl.NumberFormat(
+      tezosReducer.locale || [],
+      { style: 'currency', currency, maximumFractionDigits: (value > 100 ? 0 : 2) }
+    ).format( value );
+  }
+
+};
+
+
 // DOM updater
 // caches nodes and updates content if changed
 export class DOM {
@@ -133,7 +146,7 @@ export const dom = {
 
   }
 
-}
+};
 
 
 // debounce event
@@ -143,6 +156,6 @@ export function debounce(fn, delay = 300) {
   return function() {
     clearTimeout(timer);
     timer = setTimeout( fn.bind(this, ...arguments), delay );
-  }
+  };
 
 }

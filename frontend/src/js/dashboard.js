@@ -1,5 +1,5 @@
 // Tezos widget import
-import { stateZ, tezosReducer, observeReducer, TezosWidget, util } from './tezos-widgets.js';
+import { stateZ, tezosReducer, observeReducers, TezosWidget, util } from './tezos-widgets.js';
 
 // configuration panel
 import './dash/config.js';

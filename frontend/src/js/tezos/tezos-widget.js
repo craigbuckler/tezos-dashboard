@@ -4,7 +4,7 @@ All widgets must extend from this class
 */
 
 // state
-import tezosReducer, { observeReducer } from './tezos-reducer.js';
+import tezosReducer, { observeReducers } from './tezos-reducer.js';
 import * as util from './tezos-util.js';
 
 // widget base styles
@@ -43,10 +43,10 @@ export class TezosWidget extends HTMLElement {
     this.setAttribute('tabindex', 0);
 
     // state data - becomes a property
-    this.constructor.observedReducers.forEach(p => {
-      this[p] = observeReducer(p);
-      this.#dataChanged[p] = { value: this[p] };
-    });
+    // this.constructor.observedReducers.forEach(p => {
+    //   this[p] = observeReducers(p);
+    //   this.#dataChanged[p] = { value: this[p] };
+    // });
 
     // create shadow DOM
     this.shadow = this.attachShadow({ mode: 'closed' });
@@ -55,7 +55,14 @@ export class TezosWidget extends HTMLElement {
 
 
   // connect component to DOM
-  connectedCallback() {
+  async connectedCallback() {
+
+    // set state data as properties
+    const reducer = await observeReducers( this.constructor.observedReducers );
+    for (let p in reducer) {
+      this[ p ] = reducer[p];
+      this.#dataChanged[p] = { value: this[p] };
+    }
 
     // render debounce handler
     this.#renderHandler = util.debounce(this.#renderComponent, this.renderDebounce);
@@ -192,14 +199,21 @@ export class TezosWidget extends HTMLElement {
 
         case 'select':
           field = document.createElement('select');
-          attr[a].options.forEach(o => {
-            const
-              opt = field.appendChild( document.createElement('option')),
-              val = (typeof o === 'object' ? o.value || '' : o);
-            opt.textContent = o.label || o;
-            opt.value = val;
-            if (val == this[a]) opt.selected = true;
-          });
+
+          console.log(a);
+
+          if (attr[a]?.options?.length) {
+
+            attr[a].options.forEach(o => {
+              const
+                opt = field.appendChild( document.createElement('option')),
+                val = (typeof o === 'object' ? o.value || '' : o);
+              opt.textContent = o.label || o;
+              opt.value = val;
+              if (val == this[a]) opt.selected = true;
+            });
+
+          }
           break;
 
         default:
@@ -226,7 +240,7 @@ export class TezosWidget extends HTMLElement {
       bs = bc.appendChild( document.createElement('button') );
 
     bs.type = 'submit';
-    bs.textContent = 'OK'
+    bs.textContent = 'OK';
 
     // append to DOM
     this.#panelConfig = util.dom.add( this.shadow, sect );
@@ -304,7 +318,7 @@ export class TezosWidget extends HTMLElement {
     attributes.forEach(attr => {
 
       Object.defineProperty(this, this.#camelCase(attr), {
-        set: value => this.setAttribute( attr, value ),
+        set: value => { this.setAttribute( attr, value ); },
         get: () => this.getAttribute( attr )
       });
 

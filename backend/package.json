@@ -7,8 +7,8 @@
   "scripts": {
     "debugapi": "nodemon --inspect=0.0.0.0:9229 ./api.js",
     "startapi": "node --no-warnings ./api.js",
-    "debug": "rm -f ./tasks.log && node ./update.js && node ./tasks.js",
-    "start": "node --no-warnings ./update.js && node --no-warnings ./tasks.js"
+    "debug": "rm -f ./tasks.log && npm run start",
+    "start": "node --no-warnings ./update.js && node --no-warnings ./tasks/fillday.js -retain=28 && node --no-warnings ./tasks.js"
   },
   "author": "Craig Buckler",
   "license": "MIT",

@@ -18,6 +18,10 @@ main {
         &::part(time-time) {
           font-size: calc(0.5em + #{$gSize}em / 2);
         }
+
+        &::part(liveprice-price) {
+          font-size: calc(0.5em + #{$gSize}em / 4);
+        }
       }
 
       &[rowspan="#{$gSize}"] {

@@ -20,6 +20,10 @@
     outline: 3px solid var(--tz-color-info1);
   }
 
+  & > * {
+    overflow: hidden;
+  }
+
 }
 
 // default styles
@@ -150,7 +154,6 @@ td {
   }
 }
 
-// custom styles
 .label {
   color: var(--tz-color-fore2);
   padding: 0.1em 0.2em;

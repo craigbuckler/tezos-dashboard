@@ -1,6 +1,4 @@
 // database update
-import { execCmd } from '../lib/lib.js';
-
 export default [
 
   // setting indexes
@@ -41,17 +39,6 @@ export default [
         await reduce.createIndex({ name: 1 }) &&
         await reduce.createIndex({ date: -1 })
       )
-    };
-
-  },
-
-
-  // fetch daily price data
-  async () => {
-
-    return {
-      detail: 'fetch previous crypto daily prices',
-      result: await execCmd('node --no-warnings ./tasks/fillday.js -retain=28', 60)
     };
 
   }

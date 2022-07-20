@@ -18,6 +18,15 @@ const
         size: [
           [ 2, 1 ], [ 2, 2 ], [ 3, 2 ], [ 4, 2 ]
         ]
+      },
+
+      'liveprice': {
+        name: 'live price',
+        icon: 'value',
+        html: '<tezos-liveprice crypto="XTZ" currency="USD"></tezos-liveprice>',
+        size: [
+          [ 2, 1 ], [ 2, 2 ], [ 3, 2 ], [ 4, 2 ]
+        ]
       }
 
     }
@@ -100,8 +109,8 @@ document.body.addEventListener('change', e => {
     tezosReducer[reducer] = (
       field.type === 'password' ||
       (field.type === 'checkbox' && !field.checked) ?
-      '' :
-      field.value
+        '' :
+        field.value
     );
 
   }
@@ -118,7 +127,7 @@ dashboard.container.addEventListener('focusin', e => {
 
 
 // no focus
-dashboard.container.addEventListener('focusout', e => {
+dashboard.container.addEventListener('focusout', () => {
   dashboard.control.classList.remove('focus');
 });
 
@@ -161,11 +170,11 @@ const actionHandler = {
     wFocus = wFocus.remove();
   }
 
-}
+};
 
 
 // save dashboard state after DOM mutation (debounced for 5 seconds)
-const observer = new MutationObserver( util.debounce( (mutationList, observer) => {
+const observer = new MutationObserver( util.debounce( () => {
 
   dashboard.state.widgets = dashboard.container.innerHTML;
 

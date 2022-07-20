@@ -18,6 +18,24 @@ app.disable( 'x-powered-by' );
 app.use( compression() );
 
 
+// enable CORS
+app.use((req, res, next) => {
+
+  res.append('Vary', 'X-Requested-With');
+
+  if (req.method.toUpperCase() === 'OPTIONS') {
+    res.append('Access-Control-Allow-Origin', '*');
+    res.append('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+    res.append('Access-Control-Allow-Credentials', 'true');
+    res.json({});
+  }
+  else {
+    next();
+  }
+
+});
+
+
 // single route
 // e.g. /api/?reducer=current,exchange&timestamp=1658241852359
 app.get('/api/', async (req, res) => {

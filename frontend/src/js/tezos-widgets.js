@@ -4,7 +4,7 @@
 import { stateZ } from 'statez';
 
 // reducer state
-import tezosReducer, { observeReducer } from './tezos/tezos-reducer.js';
+import tezosReducer, { observeReducers } from './tezos/tezos-reducer.js';
 
 // utilities
 import * as util from './tezos/tezos-util.js';
@@ -13,14 +13,16 @@ import * as util from './tezos/tezos-util.js';
 import { TezosWidget } from './tezos/tezos-widget.js';
 
 // widget classes
-import { TezosTime } from './tezos/tezos-time.js'; // localized datetime
+import { TezosTime } from './tezos/tezos-time.js';            // localized datetime
+import { TezosLivePrice } from './tezos/tezos-liveprice.js';  // live currency price
 
 // export public methods for use in other code
 export {
   stateZ,
   tezosReducer,
   util,
-  observeReducer,
+  observeReducers,
   TezosTime,
+  TezosLivePrice,
   TezosWidget
 };
