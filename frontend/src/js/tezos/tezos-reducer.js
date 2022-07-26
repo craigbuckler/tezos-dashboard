@@ -1,8 +1,6 @@
 /*
 Tezos reducer
 Fetches API data and distributes to widgets
-
-TODO: fetch every 10 minutes
 */
 
 import { stateZ } from 'statez';
@@ -10,13 +8,11 @@ import { stateZ } from 'statez';
 const
   api = '/api/?reducer=',
   state = stateZ({ name: 'tezosReducer' }),
-  observeList = new Set();
-
-// initial states
-observeList.add('time');
-observeList.add('locale');
+  observeList = new Set(),                    // observed reducers passed to API
+  ignoreSet = new Set(['locale', 'time']);    // non-API reducers
 
 state.timestamp = 0;
+
 
 // pass reducers to observe and return initial values
 export async function observeReducers( props ) {
@@ -26,7 +22,7 @@ export async function observeReducers( props ) {
 
   // determine new properties
   props.forEach(p => {
-    if (observeList.has( p )) {
+    if (observeList.has( p ) || ignoreSet.has( p )) {
       value[ p ] = state[ p ];
     }
     else {
@@ -50,12 +46,17 @@ export async function observeReducers( props ) {
 
 }
 
-// local time
+
+// local time updated every 30 seconds
 setTime();
 setInterval(setTime, 30000);
 function setTime() {
   state.time = +new Date();
 }
+
+
+// reducer update every 10 minutes
+setInterval(reducerFetch, 600000);
 
 
 // fetch updated reducer values from API
@@ -69,6 +70,10 @@ async function reducerFetch( reducers ) {
     timestamp = state.timestamp;
   }
 
+  console.log(`API call: ${ reducers.join(',') } ; ${ timestamp }`);
+
+  if (!reducers.length) return;
+
   try {
 
     const
@@ -80,8 +85,6 @@ async function reducerFetch( reducers ) {
         }
       ),
       update = await res.json();
-
-    console.dir(update, { depth: null, color: true });
 
     // store updates
     for (let prop in update) {

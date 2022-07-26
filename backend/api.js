@@ -21,12 +21,12 @@ app.use( compression() );
 // enable CORS
 app.use((req, res, next) => {
 
+  res.append('Access-Control-Allow-Origin', '*');
+  res.append('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+  res.append('Access-Control-Allow-Credentials', 'true');
   res.append('Vary', 'X-Requested-With');
 
   if (req.method.toUpperCase() === 'OPTIONS') {
-    res.append('Access-Control-Allow-Origin', '*');
-    res.append('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
-    res.append('Access-Control-Allow-Credentials', 'true');
     res.json({});
   }
   else {

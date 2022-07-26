@@ -70,9 +70,15 @@ export class TezosTime extends TezosWidget {
 
   #dom = null;
 
+
   // constructor
   constructor() {
     super();
+  }
+
+
+  // pre-render configuration (can be async)
+  preRender() {
 
     // DOM updater
     this.#dom = new util.DOM( this.shadow );

@@ -72,6 +72,19 @@ export const currency = {
 };
 
 
+// localised percent functions
+export const percent = {
+
+  format(value) {
+    return Intl.NumberFormat(
+      tezosReducer.locale || [],
+      { style: 'percent', signDisplay: 'exceptZero', maximumFractionDigits: (value >= 100 ? 0 : 1) }
+    ).format( value );
+  }
+
+};
+
+
 // DOM updater
 // caches nodes and updates content if changed
 export class DOM {
@@ -143,6 +156,20 @@ export const dom = {
 
     node.appendChild( block );
     return node.lastChild;
+
+  }
+
+};
+
+
+// CSS utility functions
+export const css = {
+
+  // sets an active class and unsets any non-active
+  setClass(node, active, nonActive = []) {
+
+    nonActive.forEach( c => { if (c !== active) node.classList.remove(c); } );
+    node.classList.add(active);
 
   }
 

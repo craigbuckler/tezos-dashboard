@@ -42,12 +42,6 @@ export class TezosWidget extends HTMLElement {
     // keyboard tab
     this.setAttribute('tabindex', 0);
 
-    // state data - becomes a property
-    // this.constructor.observedReducers.forEach(p => {
-    //   this[p] = observeReducers(p);
-    //   this.#dataChanged[p] = { value: this[p] };
-    // });
-
     // create shadow DOM
     this.shadow = this.attachShadow({ mode: 'closed' });
 
@@ -59,6 +53,7 @@ export class TezosWidget extends HTMLElement {
 
     // set state data as properties
     const reducer = await observeReducers( this.constructor.observedReducers );
+    this.#dataChanged = {};
     for (let p in reducer) {
       this[ p ] = reducer[p];
       this.#dataChanged[p] = { value: this[p] };
@@ -85,6 +80,7 @@ export class TezosWidget extends HTMLElement {
     this.shadow.addEventListener('keydown', this.#submitHandler);
 
     // render
+    await this.preRender();
     this.#renderComponent();
   }
 
@@ -249,6 +245,7 @@ export class TezosWidget extends HTMLElement {
 
 
   // rendering defaults
+  async preRender() {}
   render() {}
   postRender() {}
 
