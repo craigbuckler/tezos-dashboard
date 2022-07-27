@@ -9,6 +9,7 @@ const
     container:  document.querySelector('main'),
     addlist:    document.querySelector('#dashconfig-add'),
     control:    document.querySelector('#dashcontrol'),
+    tooltip:    document.querySelector('#dashconfig-tooltip'),
     widget: {
 
       'time': {
@@ -23,9 +24,27 @@ const
       'liveprice': {
         name: 'live price',
         icon: 'value',
-        html: '<tezos-liveprice crypto="XTZ" currency="USD"></tezos-liveprice>',
+        html: '<tezos-liveprice crypto="XTZ" currency="USD" increase="1"></tezos-liveprice>',
         size: [
           [ 2, 1 ], [ 2, 2 ], [ 3, 2 ], [ 4, 2 ]
+        ]
+      },
+
+      'accounts': {
+        name: 'Tezos accounts',
+        icon: 'account',
+        html: '<tezos-accounts></tezos-liveprice>',
+        size: [
+          [ 4, 3 ], [ 6, 3 ], [8, 3]
+        ]
+      },
+
+      'cycle': {
+        name: 'Tezos cycle',
+        icon: 'bake',
+        html: '<tezos-cycle></tezos-cycle>',
+        size: [
+          [ 4, 3 ], [ 6, 3 ], [8, 3]
         ]
       }
 
@@ -36,6 +55,7 @@ const
 // initialize dashboard
 util.dom.clean( dashboard.container );
 util.dom.add( dashboard.container, dashboard.state.widgets || '' );
+showTooltip();
 
 
 // initialize widget choice
@@ -51,7 +71,7 @@ for (const w in dashboard.widget) {
 // initialize form fields
 Array.from(document.querySelectorAll('[data-tezos-reducer]')).forEach(field => {
 
-  const value = tezosReducer[field.dataset.tezosReducer];
+  const value = tezosReducer[field.dataset.tezosReducer] || '';
 
   switch (field.type) {
 
@@ -92,6 +112,9 @@ dashboard.addlist.addEventListener('click', e => {
     w.setAttribute('colspan', widget.size[0][0]);
     w.setAttribute('rowspan', widget.size[0][1]);
 
+    // hide tooltip
+    showTooltip();
+
   }
 
 });
@@ -116,6 +139,17 @@ document.body.addEventListener('change', e => {
   }
 
 });
+
+
+// show/hide start tooltip
+function showTooltip() {
+  if (dashboard.container.childElementCount) {
+    dashboard.tooltip.classList.remove('enable');
+  }
+  else {
+    dashboard.tooltip.classList.add('enable');
+  }
+}
 
 
 // widget has focus
@@ -168,6 +202,7 @@ const actionHandler = {
 
   'dashdelete': () => {
     wFocus = wFocus.remove();
+    showTooltip();
   }
 
 };

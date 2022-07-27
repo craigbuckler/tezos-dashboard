@@ -59,7 +59,29 @@ export const datetime = {
 };
 
 
-// localised currency functions
+// localised number function
+export const number = {
+
+  format(value, notation, round) {
+
+    round = (typeof round === 'undefined' ? (value > 100 ? 0 : 2) : round);
+
+    const opt = {
+      minimumFractionDigits: round,
+      maximumFractionDigits: round,
+    };
+
+    if (notation) opt.notation = notation;
+
+    return Intl.NumberFormat(
+      tezosReducer.locale || [], opt
+    ).format( value );
+  }
+
+};
+
+
+// localised currency function
 export const currency = {
 
   format(value, currency) {
@@ -72,13 +94,21 @@ export const currency = {
 };
 
 
-// localised percent functions
+// localised percent function
 export const percent = {
 
-  format(value) {
+  format(value, round, sign) {
+
+    round = (typeof round === 'undefined' ? (value > 100 ? 0 : 2) : round);
+    const opt = {
+      style: 'percent',
+      minimumFractionDigits: round,
+      maximumFractionDigits: round,
+    };
+    if (sign) opt.signDisplay = 'exceptZero';
+
     return Intl.NumberFormat(
-      tezosReducer.locale || [],
-      { style: 'percent', signDisplay: 'exceptZero', maximumFractionDigits: (value >= 100 ? 0 : 1) }
+      tezosReducer.locale || [], opt
     ).format( value );
   }
 
@@ -169,7 +199,7 @@ export const css = {
   setClass(node, active, nonActive = []) {
 
     nonActive.forEach( c => { if (c !== active) node.classList.remove(c); } );
-    node.classList.add(active);
+    if (active) node.classList.add(active);
 
   }
 

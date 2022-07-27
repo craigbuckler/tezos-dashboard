@@ -17,6 +17,11 @@ const attributeConfig = {
   'currency': {
     label   : 'to currency',
     type    : 'select'
+  },
+
+  'increase': {
+    label   : 'show increase',
+    type    : 'checkbox'
   }
 
 };
@@ -107,14 +112,14 @@ export class TezosLivePrice extends TezosWidget {
       this.#dom.reset();
 
       // widget HTML
-      return (`<h2 part="liveprice-crypto" class="label">${ this.renderCrypto() }</h2><p part="liveprice-price" class="data">${ this.renderPrice() }</p><p part="liveprice-change" class="change">${ this.renderChange() }</p>`);
+      return (`<h2 part="liveprice-crypto" class="label">${ this.renderCrypto() }</h2><p part="liveprice-price" class="data">${ this.renderPrice() }</p><p part="liveprice-change" class="change">${ this.increase ? this.renderChange() : '' }</p>`);
 
     }
 
     // update values
     if (propChange?.crypto) this.#dom.update('.label', this.renderCrypto());
     this.#dom.update('.data', this.renderPrice());
-    this.#dom.update('.change', this.renderChange());
+    this.#dom.update('.change', (this.increase ? this.renderChange() : ''));
 
   }
 
@@ -123,7 +128,9 @@ export class TezosLivePrice extends TezosWidget {
   postRender() {
 
     this.#changeNode = this.changeNode || this.shadow.querySelector('.change');
-    util.css.setClass(this.#changeNode, (this.#priceNow > this.#priceLast ? 'up' : 'dn'), ['up', 'dn']);
+    if (this.increase) {
+      util.css.setClass(this.#changeNode, (this.#priceNow > this.#priceLast ? 'up' : 'dn'), ['up', 'dn']);
+    }
 
   }
 
@@ -154,7 +161,7 @@ export class TezosLivePrice extends TezosWidget {
       this.#priceLast = this.#priceNow;
     }
 
-    return util.percent.format(inc);
+    return util.percent.format(inc, 1, true);
 
   }
 

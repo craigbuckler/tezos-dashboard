@@ -20,7 +20,7 @@ main {
         }
 
         &::part(liveprice-price) {
-          font-size: calc(0.5em + #{$gSize}em / 4);
+          font-size: calc(0.5em + #{$gSize}em / 3);
         }
       }
 

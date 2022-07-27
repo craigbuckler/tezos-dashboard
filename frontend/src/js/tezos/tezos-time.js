@@ -49,8 +49,7 @@ export class TezosTime extends TezosWidget {
           'short',
           'medium',
           'long'
-        ],
-
+        ]
       },
 
       'hour12': {
