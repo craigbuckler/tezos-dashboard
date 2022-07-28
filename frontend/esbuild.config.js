@@ -15,6 +15,7 @@ const productionMode = ('development' !== (argv[2] || process.env.NODE_ENV));
 tokens.meta.version = pkg.version;
 tokens.meta.description = pkg.description;
 tokens.meta.author = pkg.author;
+tokens.meta.api = process.env.API_URL;
 
 // generate token replacements
 const pattern = Object.entries( flatten( tokens, '__', '__' ) );

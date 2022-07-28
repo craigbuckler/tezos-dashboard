@@ -71,7 +71,7 @@ app.use((req, res) => {
 
 // start server
 const server = app.listen(cfg.port, () => {
-  console.log(`REST API listening on port ${ cfg.port }`);
+  console.log(`${ process.env.NODE_ENV || 'development' } REST API listening on port ${ cfg.port }`);
 });
 
 // stop server

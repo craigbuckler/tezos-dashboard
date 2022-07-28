@@ -6,7 +6,7 @@ Fetches API data and distributes to widgets
 import { stateZ } from 'statez';
 
 const
-  api = '/api/?reducer=',
+  api = '__meta_api__?reducer=',
   state = stateZ({ name: 'tezosReducer' }),
   observeList = new Set(),                    // observed reducers passed to API
   ignoreSet = new Set(['locale', 'time']);    // non-API reducers
