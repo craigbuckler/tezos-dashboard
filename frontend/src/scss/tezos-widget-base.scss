@@ -1,5 +1,4 @@
 * {
-  display: block;
   font-family: var(--tz-font-body);
   font-size: 1em;
   font-weight: var(--tz-font-body-normal);
@@ -18,6 +17,10 @@
 
   &(:focus), &(:focus-within) {
     outline: 3px solid var(--tz-color-info1);
+  }
+
+  & > * {
+    overflow: hidden;
   }
 
 }
@@ -42,6 +45,7 @@ input, output, textarea, select, button {
 }
 
 button {
+  display: block;
   padding: 0.1em 1.5em;
   margin: auto;
   color: var(--tz-color-fore0);
@@ -74,25 +78,27 @@ input[type="checkbox"], input[type="radio"] {
 }
 
 table {
-  display: table;
-	width: 100%;
-	font-size: 1rem;
+  margin: 0.1em 0.2em;
 	border-spacing: 0.5vw;
 	border-collapse: collapse;
 	empty-cells: show;
 }
 
 th {
-  font-weight: $font_head_normal;
   text-align: left;
-	vertical-align: middle;
+	vertical-align: top;
   color: var(--tz-color-info1);
 }
 
+th[colspan] {
+  color: var(--tz-color-info2);
+}
+
 td {
+  font-weight: $font_head_normal;
   font-variant-numeric: tabular-nums;
   text-align: right;
-	vertical-align: middle;
+	vertical-align: top;
   color: var(--tz-color-fore0);
 }
 
@@ -150,7 +156,6 @@ td {
   }
 }
 
-// custom styles
 .label {
   color: var(--tz-color-fore2);
   padding: 0.1em 0.2em;
@@ -161,4 +166,12 @@ td {
   font-size: 1.5em;
   text-align: center;
   color: var(--tz-color-fore0);
+}
+
+.up {
+  color: var(--tz-color-low1);
+}
+
+.dn {
+  color: var(--tz-color-high1);
 }

@@ -13,4 +13,7 @@
   white-space: nowrap;
 }
 
+@include icon(account);
+@include icon(bake);
 @include icon(clock);
+@include icon(value);

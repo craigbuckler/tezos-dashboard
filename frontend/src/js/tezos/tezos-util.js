@@ -59,6 +59,62 @@ export const datetime = {
 };
 
 
+// localised number function
+export const number = {
+
+  format(value, notation, round) {
+
+    round = (typeof round === 'undefined' ? (value > 100 ? 0 : 2) : round);
+
+    const opt = {
+      minimumFractionDigits: round,
+      maximumFractionDigits: round,
+    };
+
+    if (notation) opt.notation = notation;
+
+    return Intl.NumberFormat(
+      tezosReducer.locale || [], opt
+    ).format( value );
+  }
+
+};
+
+
+// localised currency function
+export const currency = {
+
+  format(value, currency) {
+    return Intl.NumberFormat(
+      tezosReducer.locale || [],
+      { style: 'currency', currency, maximumFractionDigits: (value > 100 ? 0 : 2) }
+    ).format( value );
+  }
+
+};
+
+
+// localised percent function
+export const percent = {
+
+  format(value, round, sign) {
+
+    round = (typeof round === 'undefined' ? (value > 100 ? 0 : 2) : round);
+    const opt = {
+      style: 'percent',
+      minimumFractionDigits: round,
+      maximumFractionDigits: round,
+    };
+    if (sign) opt.signDisplay = 'exceptZero';
+
+    return Intl.NumberFormat(
+      tezosReducer.locale || [], opt
+    ).format( value );
+  }
+
+};
+
+
 // DOM updater
 // caches nodes and updates content if changed
 export class DOM {
@@ -133,7 +189,21 @@ export const dom = {
 
   }
 
-}
+};
+
+
+// CSS utility functions
+export const css = {
+
+  // sets an active class and unsets any non-active
+  setClass(node, active, nonActive = []) {
+
+    nonActive.forEach( c => { if (c !== active) node.classList.remove(c); } );
+    if (active) node.classList.add(active);
+
+  }
+
+};
 
 
 // debounce event
@@ -143,6 +213,6 @@ export function debounce(fn, delay = 300) {
   return function() {
     clearTimeout(timer);
     timer = setTimeout( fn.bind(this, ...arguments), delay );
-  }
+  };
 
 }

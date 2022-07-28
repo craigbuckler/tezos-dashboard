@@ -49,8 +49,7 @@ export class TezosTime extends TezosWidget {
           'short',
           'medium',
           'long'
-        ],
-
+        ]
       },
 
       'hour12': {
@@ -70,9 +69,15 @@ export class TezosTime extends TezosWidget {
 
   #dom = null;
 
+
   // constructor
   constructor() {
     super();
+  }
+
+
+  // pre-render configuration (can be async)
+  preRender() {
 
     // DOM updater
     this.#dom = new util.DOM( this.shadow );
@@ -83,7 +88,7 @@ export class TezosTime extends TezosWidget {
   // render component (string or DOM elements)
   render(iteration, propChange, dataChange) {
 
-    console.log('render iteration:', iteration, propChange !== null, dataChange !== null);
+    console.log(this.constructor.name, 'render iteration:', iteration, propChange !== null, dataChange !== null);
 
     for(let p in propChange) {
       console.log(`  prop.${ p }: was ${ propChange[p].valueOld } now ${ propChange[p].value }`);

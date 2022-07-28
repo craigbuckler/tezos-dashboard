@@ -83,6 +83,40 @@ export default {
   },
 
   /*
+  yesterday's average prices
+  {
+    XTZ: { "price": 1.4 },
+    BTC: { "price": 20001 },
+    ETH: { "price": 1349 }
+  }
+  */
+  'current1': {
+
+    detail: 'reduce yesterday\'s crypto-currency price',
+    fetch:  [ 'xtzday:3', 'btcday:3', 'ethday:3' ],
+    reduce: fetch => {
+
+      const
+        data = {},
+        coin = [ 'xtz', 'btc', 'eth' ];
+
+      coin.forEach(c => {
+
+        const priceDay = fetch?.[c + 'day'];
+        if (!priceDay || !priceDay.length) return;
+
+        const price = priceDay.find( p => p?.data?.data?.[0]?.priceUsd );
+        if (price) data[ c.toUpperCase() ] = { price: parseFloat(price.data.data[0].priceUsd) || 0 };
+
+      });
+
+      if (Object.keys(data).length === coin.length) return data;
+
+    }
+
+  },
+
+  /*
   XTZ/BTC/ETH daily price
   [
     1.50, // yesterday
@@ -107,6 +141,59 @@ export default {
     detail: 'reduce average daily ETH prices',
     fetch:  [ 'ethday' ],
     reduce: fetch => reduceDay(fetch?.ethday)
+  },
+
+
+  /*
+  XTZ cycle information
+  */
+  xtzcycle: {
+
+    detail: 'reduce Tezos cycle information',
+    fetch:  [ 'xtzcycle' ],
+    reduce: fetch => {
+
+      const cycle = fetch?.xtzcycle?.[0]?.data;
+      if (!cycle) return;
+
+      return {
+        cycle:      cycle.cycle,
+        start:      cycle.start_time,
+        end:        cycle.end_time,
+        progress:   cycle.progress,
+        bakers:     cycle.working_bakers,
+        solvetime:  cycle.solvetime_mean,
+        solvemin:   cycle.solvetime_min,
+        solvemax:   cycle.solvetime_max
+      };
+
+    }
+  },
+
+
+  /*
+  XTZ accounts information
+  */
+  xtzaccount: {
+
+    detail: 'reduce Tezos account information',
+    fetch:  [ 'xtzblockchain' ],
+    reduce: fetch => {
+
+      const chain = fetch?.xtzblockchain?.[0]?.data;
+      if (!chain) return;
+
+      return {
+        total:      chain.total_accounts,
+        funded:     chain.funded_accounts,
+        zero:       chain.dust_accounts,
+        new30:      chain.new_accounts_30d,
+        fund30:     chain.funded_accounts_30d,
+        cleared30:  chain.cleared_accounts_30d
+      };
+
+    }
+
   }
 
 };
