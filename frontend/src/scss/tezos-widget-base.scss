@@ -159,6 +159,11 @@ td {
 .label {
   color: var(--tz-color-fore2);
   padding: 0.1em 0.2em;
+
+  .sub {
+    font-size: 0.75em;
+    display: block;
+  }
 }
 
 .data {

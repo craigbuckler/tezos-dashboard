@@ -7,7 +7,7 @@ ENV HOME=/home/node/app
 ENV PATH=${HOME}/node_modules/.bin:${PATH}
 
 # create application folder and assign rights to node user
-RUN mkdir -p $HOME/static/dummy && chown -R node:node $HOME
+RUN mkdir -p $HOME && chown -R node:node $HOME
 
 # set working directory
 WORKDIR $HOME
@@ -25,7 +25,7 @@ RUN npm install
 COPY --chown=node:node . .
 
 # share volume
-VOLUME ${HOME}/static
+# VOLUME ${HOME}/static
 
 # expose ports
 EXPOSE 3000

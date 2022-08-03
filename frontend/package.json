@@ -5,7 +5,7 @@
   "type": "module",
   "main": "index.js",
   "scripts": {
-    "clean": "rm -r static/* && rm -rf buildpre",
+    "clean": "rm -rf buildpre && rm -rf static && mkdir -p static",
     "init": "npm run clean && node ./ejs.config.js && concurrently 'npm:first:*' && cp ./src/media ./static -r && cp ./src/root/* ./static -r",
     "first:htm": "ejs-render --input=./src/html --data=./tokens-ejs.json --output=./static",
     "build:htm": "ejs-render --input=./src/html --data=./tokens-ejs.json --output=./buildpre && html-minifier --input-dir ./buildpre --output-dir ./static --file-ext html --remove-comments --collapse-whitespace --remove-attribute-quotes --minify-js --minify-css && rm -rf buildpre",
@@ -41,11 +41,11 @@
   },
   "homepage": "https://github.com/craigbuckler/tezos-dashboard#readme",
   "dependencies": {
-    "autoprefixer": "10.4.7",
+    "autoprefixer": "10.4.8",
     "concurrently": "7.3.0",
     "cssnano": "5.1.12",
     "ejs-render": "1.0.3",
-    "esbuild": "0.14.50",
+    "esbuild": "0.14.53",
     "esbuild-plugin-text-replace": "1.2.0",
     "esbuild-plugin-time": "1.0.0",
     "html-minifier": "4.0.0",

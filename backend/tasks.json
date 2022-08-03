@@ -14,7 +14,7 @@
 
     {
       "name": "FETCH : crypto daily averages (8 hours)",
-      "cmd":  "node --no-warnings ./tasks/fillday.js -retain=28 -freq=28800"
+      "cmd":  "node --no-warnings ./tasks/fillday.js -retain=30 -freq=28800"
     },
 
     {
@@ -38,23 +38,18 @@
     },
 
     {
+      "name": "REDUCE: prices over 24 hours (10 minutes)",
+      "cmd":  "node --no-warnings ./tasks/reduce.js -name=currentday -freq=600"
+    },
+
+    {
       "name": "REDUCE: yesterday's average crypto coin prices (8 hours)",
       "cmd":  "node --no-warnings ./tasks/reduce.js -name=current1 -freq=28800"
     },
 
     {
-      "name": "REDUCE: Tezos daily averages (8 hours)",
-      "cmd":  "node --no-warnings ./tasks/reduce.js -name=xtzday -freq=28800"
-    },
-
-    {
-      "name": "REDUCE: Bitcoin daily averages (8 hours)",
-      "cmd":  "node --no-warnings ./tasks/reduce.js -name=btcday -freq=28800"
-    },
-
-    {
-      "name": "REDUCE: Etherium daily averages (8 hours)",
-      "cmd":  "node --no-warnings ./tasks/reduce.js -name=ethday -freq=28800"
+      "name": "REDUCE: daily averages over 30 days (8 hours)",
+      "cmd":  "node --no-warnings ./tasks/reduce.js -name=currentmonth -freq=28800"
     },
 
     {

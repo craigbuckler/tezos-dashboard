@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# TODO: add PM2 restart commands
+
 ENV="./backend/.env"
 
 # log exists?
@@ -41,4 +43,7 @@ cd ..
 # configure NGINX
 # cp /etc/nginx/nginx.conf ~/nginx-bak.conf
 # sudo cp ./nginx/nginx-live.conf /etc/nginx/nginx.conf
+
+# test config
+# sudo nginx -t
 # sudo systemctl reload nginx

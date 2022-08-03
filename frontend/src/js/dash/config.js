@@ -31,20 +31,38 @@ const
       },
 
       'accounts': {
-        name: 'Tezos accounts',
+        name: 'XTZ accounts',
         icon: 'account',
-        html: '<tezos-accounts></tezos-liveprice>',
+        html: '<tezos-accounts></tezos-accounts>',
         size: [
-          [ 4, 3 ], [ 6, 3 ], [8, 3]
+          [ 4, 2 ], [ 6, 3 ], [8, 2]
+        ]
+      },
+
+      'accounts30': {
+        name: 'XTZ a/c (month)',
+        icon: 'account',
+        html: '<tezos-accounts30></tezos-accounts30>',
+        size: [
+          [ 4, 2 ], [ 6, 3 ], [8, 2]
         ]
       },
 
       'cycle': {
-        name: 'Tezos cycle',
+        name: 'XTZ cycle',
         icon: 'bake',
         html: '<tezos-cycle></tezos-cycle>',
         size: [
-          [ 4, 3 ], [ 6, 3 ], [8, 3]
+          [ 4, 2 ], [ 6, 2 ], [8, 2]
+        ]
+      },
+
+      'blocksolve': {
+        name: 'XTZ block solve',
+        icon: 'bake',
+        html: '<tezos-blocksolve></tezos-blocksolve>',
+        size: [
+          [ 4, 2 ], [ 6, 2 ], [8, 2]
         ]
       }
 

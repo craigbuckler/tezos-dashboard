@@ -1,10 +1,10 @@
 /*
-Tezos accounts widget
+Tezos accounts activity over month widget
 */
 import { TezosWidget } from './tezos-widget.js';
 import * as util from './tezos-util.js';
 
-export class TezosAccounts extends TezosWidget {
+export class TezosAccounts30 extends TezosWidget {
 
   // watch for Tezos reducer updates (become properties)
   static get observedReducers() {
@@ -63,7 +63,7 @@ export class TezosAccounts extends TezosWidget {
       this.#dom.reset();
 
       // widget HTML
-      return (`<h2 part="accounts-title" class="label">XTZ accounts</h2><table><tbody><tr><th>total</th><td part="accounts-total">${ this.renderNumber( this.xtzaccount.total ) }</td></tr><tr><th>funded</th><td part="accounts-funded">${ this.renderNumber( this.xtzaccount.funded ) }</td></tr><tr><th>non-funded</th><td part="accounts-zero">${ this.renderNumber( this.xtzaccount.zero ) }</td></tr></tbody></table>`);
+      return (`<h2 part="accounts-title" class="label">XTZ accounts <span class="sub">(monthly activity)<span></h2><table><tbody><tr><th>new</th><td part="accounts-new30">${ this.renderNumber( this.xtzaccount.new30 ) }</td></tr><tr><th>funded</th><td part="accounts-fund30">${ this.renderNumber( this.xtzaccount.fund30 ) }</td></tr><tr><th>cleared</th><td part="accounts-cleared30">${ this.renderNumber( this.xtzaccount.cleared30 ) }</td></tr></tbody></table>`);
 
     }
 
@@ -84,4 +84,4 @@ export class TezosAccounts extends TezosWidget {
 
 
 // register component
-window.customElements.define('tezos-accounts', TezosAccounts);
+window.customElements.define('tezos-accounts30', TezosAccounts30);
