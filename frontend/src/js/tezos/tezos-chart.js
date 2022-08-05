@@ -76,6 +76,7 @@ export class Chart {
   // render a line chart
   line({
     showArea = false,
+    showLegend = false,
     gridXsplit = 1,
     gridYsplit = 1
   } = {}) {
@@ -104,14 +105,17 @@ export class Chart {
           x = util.number.round( (dataIdx / (o.seriesCount - 1)) * o.chartWidth + o.chartXmin ),
           y = util.number.round( o.chartYmax - (((data - o.seriesMin) / o.seriesRange) * o.chartHeight) );
 
+        // plot line and area
         line[idx] += `${ !dataIdx ? 'M' : ' L' }${ x },${ y }`;
         area[idx] += ` L${ x },${ y }`;
 
-        if (!idx && dataIdx && !(dataIdx % gridXskip) && (dataIdx + gridXskip < o.seriesCount)) {
+        // grid X-axis and data labels
+        if (!idx && dataIdx && !(dataIdx % gridXskip) && (dataIdx + gridXskip - 1 < o.seriesCount)) {
           gridX += ` M${ x },${ o.chartYmin } L${ x },${ o.chartYmax }`;
           label += `<text class="label top center" x="${ x }" y="${ o.chartYmax + textOffset }">${ this.labels[dataIdx] }</text>`;
         }
 
+        // minimum and maximum values
         if (data == o.seriesMinValue) labelMin = this.labels[dataIdx];
         if (data == o.seriesMaxValue) labelMax = this.labels[dataIdx];
 
@@ -127,17 +131,24 @@ export class Chart {
       gridY += ` M${ o.chartXmin },${ y } L${ o.chartXmax },${ y }`;
     }
 
+    // legend Y position
+    const
+      legInc = Math.min(90, (o.chartHeight * 0.5) / this.series.length),
+      legMin = o.chartYmin + textOffset + (o.chartHeight / 2) - (this.series.length / 2 * legInc);
+
+    // generate SVG
     const svg =
       (showArea ? area.map((path, idx) => `<path class="area series${ idx } ${ this.series[idx].id }" d="${ path }" />`).join('') : '') +
       line.map((path, idx) => `<path class="line series${ idx } ${ this.series[idx].id }" d="${ path }" />`).join('') +
       `<path class="grid" d="${ gridX.trim() }" />` +
       `<path class="grid" d="${ gridY.trim() }" />` +
       `<rect class="grid" x="${ o.chartXmin }" y="${ o.chartYmin }" width="${ o.chartWidth }" height="${ o.chartHeight }" />` +
-      `<text class="top" x="${ o.chartXmin + textOffset }" y="${ o.chartYmin + textOffset }">${ o.seriesFormat( o.seriesMaxValue ) } (${ labelMax })</text>` +
+      `<text class="top right" x="${ o.chartXmax - textOffset }" y="${ o.chartYmin + textOffset }">${ o.seriesFormat( o.seriesMaxValue ) } (${ labelMax })</text>` +
       `<text x="${ o.chartXmin + textOffset }" y="${ o.chartYmax - textOffset }">${ o.seriesFormat( o.seriesMinValue ) } (${ labelMin })</text>` +
       label +
       `<text class="label top" x="${ o.chartXmin + textOffset }" y="${ o.chartYmax + textOffset }">${ this.labels[0] }</text>` +
-      `<text class="label top right" x="${ o.chartXmax - textOffset }" y="${ o.chartYmax + textOffset }">${ this.labels.at(-1) }</text>`;
+      `<text class="label top right" x="${ o.chartXmax - textOffset }" y="${ o.chartYmax + textOffset }">${ this.labels.at(-1) }</text>` +
+      (showLegend ? this.series.sort((a, b) => b.data.at(-1)-a.data.at(-1)).map((s, idx) => `<text class="legend middle series${ idx } ${ s.id }" x="${ o.chartXmin + textOffset }" y="${ legMin + (idx * legInc)}">${ o.seriesFormat( s.data.at(-1) ) } ${ s.name }</text>`).join('') : '');
 
     return this.#SVGwrap(svg, 'tezoslinechart');
 

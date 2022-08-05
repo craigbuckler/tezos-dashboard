@@ -16,14 +16,15 @@ import { Chart } from './tezos/tezos-chart.js';
 import { TezosWidget } from './tezos/tezos-widget.js';
 
 // widget classes
-import { TezosTime } from './tezos/tezos-time.js';              // localized datetime
-import { TezosLivePrice } from './tezos/tezos-liveprice.js';    // live currency price
-import { TezosDayChart } from './tezos/tezos-daychart.js';      // month chart
-import { TezosMonthChart } from './tezos/tezos-monthchart.js';  // month chart
-import { TezosAccounts } from './tezos/tezos-accounts.js';      // Tezos accounts
-import { TezosAccounts30 } from './tezos/tezos-accounts30.js';  // Tezos accounts (30 days)
-import { TezosCycle } from './tezos/tezos-cycle.js';            // Tezos cycle
-import { TezosBlockSolve } from './tezos/tezos-blocksolve.js';  // Tezos block solve times
+import { TezosTime } from './tezos/tezos-time.js';                // localized datetime
+import { TezosLivePrice } from './tezos/tezos-liveprice.js';      // live currency price
+import { TezosDayChart } from './tezos/tezos-daychart.js';        // day chart
+import { TezosMonthChart } from './tezos/tezos-monthchart.js';    // month chart
+import { TezosCryptoMonth } from './tezos/tezos-cryptomonth.js';  // crypto month comparison chart
+import { TezosAccounts } from './tezos/tezos-accounts.js';        // Tezos accounts
+import { TezosAccounts30 } from './tezos/tezos-accounts30.js';    // Tezos accounts (30 days)
+import { TezosCycle } from './tezos/tezos-cycle.js';              // Tezos cycle
+import { TezosBlockSolve } from './tezos/tezos-blocksolve.js';    // Tezos block solve times
 
 // export public methods for use in other code
 export {
@@ -36,6 +37,7 @@ export {
   TezosLivePrice,
   TezosDayChart,
   TezosMonthChart,
+  TezosCryptoMonth,
   TezosAccounts,
   TezosAccounts30,
   TezosCycle,

@@ -48,6 +48,15 @@ const
         ]
       },
 
+      'cryptocompare': {
+        name: 'month compare',
+        icon: 'chart',
+        html: '<tezos-cryptomonth zone="UTC"></tezos-cryptomonth>',
+        size: [
+          [ 3, 2 ], [ 4, 3 ], [6, 4]
+        ]
+      },
+
       'accounts': {
         name: 'XTZ accounts',
         icon: 'account',

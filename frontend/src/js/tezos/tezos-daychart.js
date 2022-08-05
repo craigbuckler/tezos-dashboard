@@ -102,14 +102,21 @@ export class TezosDayChart extends TezosWidget {
       gridYsplit: 4
     });
 
-    return (`<h2 part="monthchart-crypto" class="label">${ this.renderCrypto() }</h2>${ svg }`);
+    return (`<h2 part="daychart-crypto" class="label">${ this.renderCrypto() }</h2>${ svg }`);
 
   }
 
 
   // crypto currency label
   renderCrypto() {
-    return (this?.currentday?.[ this.crypto ]?.name || this.crypto) + ' day';
+    const c = this?.currentday?.[ this.crypto ];
+    if (!c || !c.price.at(0)) return this.crypto || '';
+
+    const
+      p = (c.price.at(-1) - c.price.at(0)) / c.price.at(0),
+      pc = p > 0 ? 'up' : (p < 0 ? 'dn' : '');
+
+    return `${ this.crypto } day: <span class="${ pc }">${ util.percent.format(p, 1, true) }</span>`;
   }
 
   // crypto price

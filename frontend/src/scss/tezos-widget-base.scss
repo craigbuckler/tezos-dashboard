@@ -145,22 +145,6 @@ svg {
     opacity: 0.2;
   }
 
-  .line.BTC, .area.BTC {
-    stroke: var(--tz-color-low1);
-  }
-
-  .area.BTC {
-    fill: var(--tz-color-low0);
-  }
-
-  .line.ETH, .area.ETH {
-    stroke: var(--tz-color-med1);
-  }
-
-  .area.ETH {
-    fill: var(--tz-color-med0);
-  }
-
   .grid {
     stroke: var(--tz-color-fore2);
     stroke-width: 1;
@@ -168,15 +152,21 @@ svg {
 
   text {
     font-family: var(--tz-font-body);
-    font-size: 2em;
+    font-size: 100px;
     fill: var(--tz-color-fore0);
     stroke: var(--tz-color-back0);
     stroke-width: 15;
     paint-order: stroke;
 
     &.label {
-      font-size: 1.5em;
+      font-size: 80px;
       fill: var(--tz-color-fore2);
+    }
+
+    &.legend {
+      font-size: 80px;
+      font-weight: var(--tz-font-body-bold);
+      fill: var(--tz-color-info1);
     }
 
     &.top {
@@ -194,6 +184,30 @@ svg {
     &.right {
       text-anchor: end;
     }
+  }
+
+  .line.BTC {
+    stroke: var(--tz-color-low1);
+  }
+
+  .legend.BTC {
+    fill: var(--tz-color-low1);
+  }
+
+  .area.BTC {
+    fill: var(--tz-color-low0);
+  }
+
+  .line.ETH {
+    stroke: var(--tz-color-med1);
+  }
+
+  .legend.ETH {
+    fill: var(--tz-color-med1);
+  }
+
+  .area.ETH {
+    fill: var(--tz-color-med0);
   }
 
 }

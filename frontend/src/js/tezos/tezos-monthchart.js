@@ -109,7 +109,16 @@ export class TezosMonthChart extends TezosWidget {
 
   // crypto currency label
   renderCrypto() {
-    return (this?.currentmonth?.[ this.crypto ]?.name || this.crypto) + ' month';
+
+    const c = this?.currentmonth?.[ this.crypto ];
+    if (!c || !c.price.at(0)) return this.crypto || '';
+
+    const
+      p = (c.price.at(-1) - c.price.at(0)) / c.price.at(0),
+      pc = p > 0 ? 'up' : (p < 0 ? 'dn' : '');
+
+    return `${ this.crypto } month: <span class="${ pc }">${ util.percent.format(p, 1, true) }</span>`;
+
   }
 
   // crypto price
