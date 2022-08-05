@@ -83,7 +83,7 @@ export default {
   },
 
   /*
-  yesterday's average prices
+  yesterday's average price
   {
     XTZ: { "price": 1.4 },
     BTC: { "price": 20001 },
@@ -117,32 +117,88 @@ export default {
   },
 
   /*
-  XTZ/BTC/ETH daily price
-  [
-    1.50, // yesterday
-    1.51, // 2 days ago
-    1.49, // 3 days ago
-    ...
-  ]
+  XTZ/BTC/ETH prices over past 24 hours
+  {
+    date: [ <date-1>, <date-2>, ...],
+    XTZ: { "name" : "Tezos", "price": [1.70, 1.71, ...] },
+    BTC: { "name" : "Bitcoin", "price": [] },
+    ETH: { "name" : "Ethereum", "price": [] }
+  }
   */
-  xtzday: {
-    detail: 'reduce average daily XTZ prices',
-    fetch:  [ 'xtzday' ],
-    reduce: fetch => reduceDay(fetch?.xtzday)
+  currentday: {
+
+    detail: 'reduce crypto-currency prices over previous 24 hours',
+    fetch:  [ 'cryptovalue:150' ],
+    reduce: fetch => {
+
+      const
+        dateMax = dateDayAdd(null, -1),
+        cv = (fetch.cryptovalue || []).filter(d => d.date >= dateMax ).sort((a, b) => +a.date-b.date),
+        ret = {
+          date: []
+        };
+
+      cv.forEach(v => {
+
+        // add date stamp
+        ret.date.push( parseFloat( +v.date ) );
+
+        // add prices
+        v?.data?.data.forEach(c => {
+
+          ret[ c.symbol ] = ret[ c.symbol ] || { name: c.name, price: [] };
+          ret[ c.symbol ].price.push( parseFloat( c.priceUsd ) );
+
+        });
+
+      });
+
+      return ret;
+
+    }
+
   },
 
-  btcday: {
-    detail: 'reduce average daily BTC prices',
-    fetch:  [ 'btcday' ],
-    reduce: fetch => reduceDay(fetch?.btcday)
-  },
+  /*
+  XTZ/BTC/ETH daily prices over past 30 days (dates are at midnight)
+  {
+    date: [ <date-1>, <date-2>, ...],
+    XTZ: { "name" : "Tezos", "price": [1.70, 1.71, ...] },
+    BTC: { "name" : "Bitcoin", "price": [] },
+    ETH: { "name" : "Ethereum", "price": [] }
+  }
+  */
+  currentmonth: {
 
-  ethday: {
-    detail: 'reduce average daily ETH prices',
-    fetch:  [ 'ethday' ],
-    reduce: fetch => reduceDay(fetch?.ethday)
-  },
+    detail: 'reduce average daily crypto-currency prices for month',
+    fetch:  [ 'xtzday:30', 'btcday:30', 'ethday:30' ],
+    reduce: fetch => {
 
+      const
+        xtz = reduceDay(fetch?.xtzday),
+        btc = reduceDay(fetch?.btcday),
+        eth = reduceDay(fetch?.ethday);
+
+      if (xtz && btc && eth) return {
+
+        date: fetch.xtzday.map(day => parseFloat( +day.date ) ).reverse(),
+        XTZ: {
+          name: 'Tezos',
+          price: xtz
+        },
+        BTC: {
+          name: 'Bitcoin',
+          price: btc
+        },
+        ETH: {
+          name: 'Etherium',
+          price: eth
+        }
+
+      };
+
+    }
+  },
 
   /*
   XTZ cycle information
@@ -208,7 +264,7 @@ function reduceDay(price) {
   if (!price || !price.length) return;
 
   const
-    max = 28,
+    max = 30,
     data = [],
     date = Array(max).fill(null, 0).map((v, i) => +dateDayAdd(v, -i-1));
 
@@ -251,6 +307,6 @@ function reduceDay(price) {
     ns++;
   }
 
-  if (data.length === max) return data;
+  if (data.length === max) return data.reverse();
 
 }

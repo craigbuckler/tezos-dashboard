@@ -24,8 +24,5 @@ RUN npm install
 # copy remaining files and build
 COPY --chown=node:node . .
 
-# database updates
-RUN node ./update.js
-
 # start application
-CMD [ "node", "./tasks.js" ]
+CMD [ "npm", "start" ]

@@ -2,7 +2,7 @@
 get previous days of average XTZ, BTC, and ETH values
 
 example:
-  node ./tasks/fillday.js -retain=28
+  node ./tasks/fillday.js -retain=30
 
 where:
 

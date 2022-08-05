@@ -90,16 +90,6 @@ export class TezosLivePrice extends TezosWidget {
   // render component (string or DOM elements)
   render(iteration, propChange, dataChange) {
 
-    console.log(this.constructor.name, 'render iteration:', iteration, propChange !== null, dataChange !== null);
-
-    for(let p in propChange) {
-      console.log(`  prop.${ p }: was ${ propChange[p].valueOld } now ${ propChange[p].value }`);
-    }
-
-    for(let p in dataChange) {
-      console.log(`  data.${ p }: was ${ dataChange[p].valueOld } now ${ dataChange[p].value }`);
-    }
-
     // reset last price
     if (propChange?.crypto || propChange?.currency || dataChange?.current1) {
       this.#priceLast = this.current1[ this.crypto ].price / this.exchange[ this.currency ].rate;

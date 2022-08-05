@@ -29,4 +29,4 @@ EXPOSE 3100
 EXPOSE 9229
 
 # start application
-CMD [ "node", "./api.js" ]
+CMD [ "npm", "startapi" ]

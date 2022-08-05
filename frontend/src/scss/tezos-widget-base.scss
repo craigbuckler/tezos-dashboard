@@ -2,7 +2,7 @@
   font-family: var(--tz-font-body);
   font-size: 1em;
   font-weight: var(--tz-font-body-normal);
-  line-height: 1;
+  line-height: 1.15;
   padding: 0;
   margin: 0;
 }
@@ -23,6 +23,10 @@
     overflow: hidden;
   }
 
+  progress:last-child, svg:last-child {
+    border-radius: 0 0 var(--tz-border-radius) var(--tz-border-radius);
+  }
+
 }
 
 // default styles
@@ -30,6 +34,7 @@ style, template {
   display: none;
 }
 
+// forms and fields
 input, output, textarea, select, button {
   grid-column: 2 / 4;
   clear: both;
@@ -77,6 +82,7 @@ input[type="checkbox"], input[type="radio"] {
   }
 }
 
+// tables
 table {
   margin: 0.1em 0.2em;
 	border-spacing: 0.5vw;
@@ -100,6 +106,110 @@ td {
   text-align: right;
 	vertical-align: top;
   color: var(--tz-color-fore0);
+}
+
+// progress bar
+progress {
+  appearance: none;
+  width: 100%;
+  height: 0.3em;
+  color: var(--tz-color-low1);
+  background: transparent;
+  border: 0 none;
+}
+
+progress::-webkit-progress-bar {
+  background: transparent;
+}
+
+progress::-webkit-progress-value {
+  background: var(--tz-color-low0);
+}
+
+progress::-moz-progress-bar {
+  background: var(--tz-color-low0);
+}
+
+// SVGs
+svg {
+
+  .line, .area, .grid {
+    stroke: var(--tz-color-info1);
+    stroke-width: 1%;
+    fill: none;
+  }
+
+  .area {
+    stroke: var(--tz-color-info0);
+    fill: var(--tz-color-info0);
+    opacity: 0.2;
+  }
+
+  .grid {
+    stroke: var(--tz-color-fore2);
+    stroke-width: 1;
+  }
+
+  text {
+    font-family: var(--tz-font-body);
+    font-size: 100px;
+    fill: var(--tz-color-fore0);
+    stroke: var(--tz-color-back0);
+    stroke-width: 15;
+    paint-order: stroke;
+
+    &.label {
+      font-size: 80px;
+      fill: var(--tz-color-fore2);
+    }
+
+    &.legend {
+      font-size: 80px;
+      font-weight: var(--tz-font-body-bold);
+      fill: var(--tz-color-info1);
+    }
+
+    &.top {
+      dominant-baseline: hanging;
+    }
+
+    &.middle {
+      dominant-baseline: middle;
+    }
+
+    &.center {
+      text-anchor: middle;
+    }
+
+    &.right {
+      text-anchor: end;
+    }
+  }
+
+  .line.BTC {
+    stroke: var(--tz-color-low1);
+  }
+
+  .legend.BTC {
+    fill: var(--tz-color-low1);
+  }
+
+  .area.BTC {
+    fill: var(--tz-color-low0);
+  }
+
+  .line.ETH {
+    stroke: var(--tz-color-med1);
+  }
+
+  .legend.ETH {
+    fill: var(--tz-color-med1);
+  }
+
+  .area.ETH {
+    fill: var(--tz-color-med0);
+  }
+
 }
 
 // configuration button
@@ -159,6 +269,11 @@ td {
 .label {
   color: var(--tz-color-fore2);
   padding: 0.1em 0.2em;
+
+  .sub {
+    font-size: 0.75em;
+    display: block;
+  }
 }
 
 .data {

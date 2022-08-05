@@ -26,20 +26,7 @@ export class TezosTime extends TezosWidget {
       'zone': {
         label   : 'time zone',
         type    : 'select',
-        options : [ // https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
-          'UTC',
-          'Europe/London',
-          'Europe/Paris',
-          'Europe/Zurich',
-          'Europe/Athens',
-          'Asia/Singapore',
-          'Asia/Tokyo',
-          'Australia/Melbourne',
-          'US/Pacific',
-          'US/Mountain',
-          'US/Central',
-          'US/Eastern'
-        ]
+        options : util.datetime.zone
       },
 
       'date': {
@@ -88,15 +75,15 @@ export class TezosTime extends TezosWidget {
   // render component (string or DOM elements)
   render(iteration, propChange, dataChange) {
 
-    console.log(this.constructor.name, 'render iteration:', iteration, propChange !== null, dataChange !== null);
+    // console.log(this.constructor.name, 'render iteration:', iteration, propChange !== null, dataChange !== null);
 
-    for(let p in propChange) {
-      console.log(`  prop.${ p }: was ${ propChange[p].valueOld } now ${ propChange[p].value }`);
-    }
+    // for(let p in propChange) {
+    //   console.log(`  prop.${ p }: was ${ propChange[p].valueOld } now ${ propChange[p].value }`);
+    // }
 
-    for(let p in dataChange) {
-      console.log(`  data.${ p }: was ${ dataChange[p].valueOld } now ${ dataChange[p].value }`);
-    }
+    // for(let p in dataChange) {
+    //   console.log(`  data.${ p }: was ${ dataChange[p].valueOld } now ${ dataChange[p].value }`);
+    // }
 
     // first render
     if (iteration === 0) {

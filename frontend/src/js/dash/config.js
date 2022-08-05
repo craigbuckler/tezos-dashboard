@@ -17,7 +17,7 @@ const
         icon: 'clock',
         html: '<tezos-time zone="UTC"></tezos-time>',
         size: [
-          [ 2, 1 ], [ 2, 2 ], [ 3, 2 ], [ 4, 2 ]
+          [ 2, 1 ], [ 3, 1 ], [ 4, 1 ]
         ]
       },
 
@@ -26,25 +26,70 @@ const
         icon: 'value',
         html: '<tezos-liveprice crypto="XTZ" currency="USD" increase="1"></tezos-liveprice>',
         size: [
-          [ 2, 1 ], [ 2, 2 ], [ 3, 2 ], [ 4, 2 ]
+          [ 2, 1 ], [ 3, 1 ], [ 4, 1 ]
+        ]
+      },
+
+      'daychart': {
+        name: 'day chart',
+        icon: 'chart',
+        html: '<tezos-daychart crypto="XTZ" currency="USD" zone="UTC"></tezos-daychart>',
+        size: [
+          [ 3, 2 ], [ 4, 3 ], [6, 4]
+        ]
+      },
+
+      'monthchart': {
+        name: 'month chart',
+        icon: 'chart',
+        html: '<tezos-monthchart crypto="XTZ" currency="USD" zone="UTC"></tezos-monthchart>',
+        size: [
+          [ 3, 2 ], [ 4, 3 ], [6, 4]
+        ]
+      },
+
+      'cryptocompare': {
+        name: 'month compare',
+        icon: 'chart',
+        html: '<tezos-cryptomonth zone="UTC"></tezos-cryptomonth>',
+        size: [
+          [ 3, 2 ], [ 4, 3 ], [6, 4]
         ]
       },
 
       'accounts': {
-        name: 'Tezos accounts',
+        name: 'XTZ accounts',
         icon: 'account',
-        html: '<tezos-accounts></tezos-liveprice>',
+        html: '<tezos-accounts></tezos-accounts>',
         size: [
-          [ 4, 3 ], [ 6, 3 ], [8, 3]
+          [ 4, 2 ], [ 6, 2 ]
+        ]
+      },
+
+      'accounts30': {
+        name: 'XTZ monthly',
+        icon: 'account',
+        html: '<tezos-accounts30></tezos-accounts30>',
+        size: [
+          [ 3, 2 ], [ 4, 2 ]
         ]
       },
 
       'cycle': {
-        name: 'Tezos cycle',
+        name: 'XTZ cycle',
         icon: 'bake',
         html: '<tezos-cycle></tezos-cycle>',
         size: [
-          [ 4, 3 ], [ 6, 3 ], [8, 3]
+          [ 4, 2 ], [ 6, 2 ]
+        ]
+      },
+
+      'blocksolve': {
+        name: 'XTZ block solve',
+        icon: 'bake',
+        html: '<tezos-blocksolve></tezos-blocksolve>',
+        size: [
+          [ 3, 2 ], [ 4, 2 ]
         ]
       }
 
