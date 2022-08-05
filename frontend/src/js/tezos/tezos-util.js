@@ -23,6 +23,22 @@ function datetimeFormat(date, format) {
 // localised datetime functions
 export const datetime = {
 
+  zone: [
+    // https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+    'UTC',
+    'Europe/London',
+    'Europe/Paris',
+    'Europe/Zurich',
+    'Europe/Athens',
+    'Asia/Singapore',
+    'Asia/Tokyo',
+    'Australia/Melbourne',
+    'US/Pacific',
+    'US/Mountain',
+    'US/Central',
+    'US/Eastern'
+  ],
+
   formatTime: {
 
     // HH:MM:SS
@@ -52,6 +68,11 @@ export const datetime = {
     // DD/MM/YYYY
     short(date, timeZone) {
       return datetimeFormat(date, { timeZone, dateStyle: 'short' });
+    },
+
+    // DD MMM
+    daymonth(date, timeZone) {
+      return datetimeFormat(date, { timeZone, day: 'numeric', month: 'short' });
     }
 
   }
@@ -61,6 +82,13 @@ export const datetime = {
 
 // localised number function
 export const number = {
+
+  round(value, dp = 3) {
+
+    const f = 10 ** dp;
+    return Math.round(value * f) / f;
+
+  },
 
   format(value, notation, round) {
 
@@ -148,6 +176,7 @@ export class DOM {
     if (d.node && value !== d.value) {
       d.value = value;
       d.node.textContent = value;
+      if (d.node.hasAttribute('value')) d.node.setAttribute('value', value);
     }
 
   }

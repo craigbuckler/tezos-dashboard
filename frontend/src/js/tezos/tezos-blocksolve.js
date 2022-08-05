@@ -26,7 +26,7 @@ export class TezosBlockSolve extends TezosWidget {
 
   #dom = null;
   #solvetimeNode = null;
-  #solvetimeWarn = 35; // warn when solvetime is over or above
+  #solvetimeWarn = 33; // warn when solvetime is over or above
 
   // constructor
   constructor() {
@@ -53,11 +53,9 @@ export class TezosBlockSolve extends TezosWidget {
       this.#dom.reset();
 
       // widget HTML
-      return (`<h2 class="label">XTZ block solve times</h2><table><tbody><tr><th>average</th><td part="cycle-solvetime">${ this.renderNumber( this.xtzcycle.solvetime, 1 ) }</td></tr><tr><th>minimum</th><td part="cycle-solvemin">${ this.renderNumber( this.xtzcycle.solvemin, 1 ) }</td></tr><tr><th>maximum</th><td part="cycle-solvemax">${ this.renderNumber( this.xtzcycle.solvemax, 1 ) }</td></tr></tbody></table>`);
+      return (`<h2 class="label">XTZ block <span class="sub">solve times</span></h2><table><tbody><tr><th>average</th><td part="cycle-solvetime">${ this.renderNumber( this.xtzcycle.solvetime, 1 ) }</td></tr><tr><th>minimum</th><td part="cycle-solvemin">${ this.renderNumber( this.xtzcycle.solvemin, 1 ) }</td></tr><tr><th>maximum</th><td part="cycle-solvemax">${ this.renderNumber( this.xtzcycle.solvemax, 1 ) }</td></tr></tbody></table>`);
 
     }
-
-
 
     // update values
     this.#dom.update('[part=cycle-solvetime]', this.renderNumber( this.xtzcycle.solvetime, 1 ));

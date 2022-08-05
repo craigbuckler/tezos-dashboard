@@ -133,7 +133,7 @@ export default {
 
       const
         dateMax = dateDayAdd(null, -1),
-        cv = (fetch.cryptovalue || []).filter(d => d.date >= dateMax ),
+        cv = (fetch.cryptovalue || []).filter(d => d.date >= dateMax ).sort((a, b) => +a.date-b.date),
         ret = {
           date: []
         };
@@ -181,7 +181,7 @@ export default {
 
       if (xtz && btc && eth) return {
 
-        date: fetch.xtzday.map(day => parseFloat( +day.date ) ),
+        date: fetch.xtzday.map(day => parseFloat( +day.date ) ).reverse(),
         XTZ: {
           name: 'Tezos',
           price: xtz
@@ -307,6 +307,6 @@ function reduceDay(price) {
     ns++;
   }
 
-  if (data.length === max) return data;
+  if (data.length === max) return data.reverse();
 
 }

@@ -62,18 +62,17 @@ export class TezosCycle extends TezosWidget {
       this.#dom.reset();
 
       // widget HTML
-      return (`<h2 class="label">XTZ cycle <span part="cycle-cycle">${ this.renderNumber( this.xtzcycle.cycle ) }</span></h2><table><tbody><tr><th>start</th><td part="cycle-start">${ this.renderDate( this.xtzcycle.start ) }</td></tr><tr><th>end</th><td part="cycle-end">${ this.renderDate( this.xtzcycle.end ) }</td></tr><tr><th>progress</th><td part="cycle-progress">${ this.renderPercent( this.xtzcycle.progress / 100, 1 ) }</td></tr><tr><th>bakers</th><td part="cycle-bakers">${ this.renderNumber( this.xtzcycle.bakers ) }</td></tr></tbody></table>`);
+      return (`<h2 class="label">XTZ cycle <span part="cycle-cycle">${ this.renderNumber( this.xtzcycle.cycle ) }</span></h2><table><tbody><tr><th>start</th><td part="cycle-start">${ this.renderDate( this.xtzcycle.start ) }</td></tr><tr><th>end</th><td part="cycle-end">${ this.renderDate( this.xtzcycle.end ) }</td></tr><tr><th>bakers</th><td part="cycle-bakers">${ this.renderNumber( this.xtzcycle.bakers ) }</td></tr><tr><th>progress</th><td part="cycle-progress">${ this.renderPercent( this.xtzcycle.progress / 100, 1 ) }</td></tr></tbody></table><progress part="cycle-progressbar" max="100" value="${ this.xtzcycle.progress }" />`);
 
     }
-
-
 
     // update values
     this.#dom.update('[part=cycle-cycle]', this.renderNumber( this.xtzcycle.cycle ));
     this.#dom.update('[part=cycle-start]', this.renderDate( this.xtzcycle.start ));
     this.#dom.update('[part=cycle-end]', this.renderDate( this.xtzcycle.end ));
-    this.#dom.update('[part=cycle-progress]', this.renderPercent( this.xtzcycle.progress / 100, 1 ));
     this.#dom.update('[part=cycle-bakers]', this.renderNumber( this.xtzcycle.bakers ));
+    this.#dom.update('[part=cycle-progress]', this.renderPercent( this.xtzcycle.progress / 100, 1 ));
+    this.#dom.update('[part=cycle-progressbar]', this.xtzcycle.progress);
 
   }
 

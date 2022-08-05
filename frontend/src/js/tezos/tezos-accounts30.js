@@ -63,7 +63,7 @@ export class TezosAccounts30 extends TezosWidget {
       this.#dom.reset();
 
       // widget HTML
-      return (`<h2 part="accounts-title" class="label">XTZ accounts <span class="sub">(monthly activity)<span></h2><table><tbody><tr><th>new</th><td part="accounts-new30">${ this.renderNumber( this.xtzaccount.new30 ) }</td></tr><tr><th>funded</th><td part="accounts-fund30">${ this.renderNumber( this.xtzaccount.fund30 ) }</td></tr><tr><th>cleared</th><td part="accounts-cleared30">${ this.renderNumber( this.xtzaccount.cleared30 ) }</td></tr></tbody></table>`);
+      return (`<h2 part="accounts-title" class="label">XTZ accounts <span class="sub">monthly activity<span></h2><table><tbody><tr><th>new</th><td part="accounts-new30">${ this.renderNumber( this.xtzaccount.new30 ) }</td></tr><tr><th>funded</th><td part="accounts-fund30">${ this.renderNumber( this.xtzaccount.fund30 ) }</td></tr><tr><th>cleared</th><td part="accounts-cleared30">${ this.renderNumber( this.xtzaccount.cleared30 ) }</td></tr></tbody></table>`);
 
     }
 
