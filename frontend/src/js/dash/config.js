@@ -35,7 +35,7 @@ const
         icon: 'chart',
         html: '<tezos-daychart crypto="XTZ" currency="USD" zone="UTC"></tezos-daychart>',
         size: [
-          [ 3, 2 ], [ 4, 3 ], [6, 4]
+          [ 3, 2 ], [ 4, 2 ], [6, 2]
         ]
       },
 
@@ -44,7 +44,7 @@ const
         icon: 'chart',
         html: '<tezos-monthchart crypto="XTZ" currency="USD" zone="UTC"></tezos-monthchart>',
         size: [
-          [ 3, 2 ], [ 4, 3 ], [6, 4]
+          [ 3, 2 ], [ 4, 2 ], [6, 2]
         ]
       },
 
@@ -53,7 +53,7 @@ const
         icon: 'chart',
         html: '<tezos-cryptomonth zone="UTC"></tezos-cryptomonth>',
         size: [
-          [ 3, 2 ], [ 4, 3 ], [6, 4]
+          [ 3, 2 ], [ 4, 2 ], [6, 2]
         ]
       },
 

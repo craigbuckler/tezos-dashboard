@@ -10,17 +10,15 @@ import styleBase from './css/tezos-liveprice-base.css';
 const attributeConfig = {
 
   'crypto': {
-    label   : 'crypto',
     type    : 'select'
   },
 
   'currency': {
-    label   : 'to currency',
     type    : 'select'
   },
 
   'increase': {
-    label   : 'show increase',
+    label   : 'change',
     type    : 'checkbox'
   }
 

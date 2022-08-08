@@ -39,6 +39,7 @@ export class TezosCryptoMonth extends TezosWidget {
   // constructor
   constructor() {
     super();
+    this.liveConfigUpdate = false;
   }
 
 
@@ -69,8 +70,9 @@ export class TezosCryptoMonth extends TezosWidget {
     // create chart
     const chart = new Chart({
 
-      labels: this.currentmonth.date.map(d => this.renderDate( new Date(d)) ),
+      labels: this.currentmonth.date,
       series,
+      labelsFormat: d => this.renderDate( new Date(d)),
       seriesFormat: p => util.percent.format(p, 0, true),
       aspect: 3/2
 
@@ -84,7 +86,7 @@ export class TezosCryptoMonth extends TezosWidget {
       gridYsplit: 1
     });
 
-    return (`<h2 part="cryptomonth-head" class="label">Month comparison</h2>${ svg }`);
+    return (`<h2 part="cryptomonth-head" class="label">${ util.lang('month') } ${ util.lang('compare') }</h2>${ svg }`);
 
   }
 

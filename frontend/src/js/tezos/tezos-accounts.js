@@ -63,11 +63,17 @@ export class TezosAccounts extends TezosWidget {
       this.#dom.reset();
 
       // widget HTML
-      return (`<h2 part="accounts-title" class="label">XTZ accounts</h2><table><tbody><tr><th>total</th><td part="accounts-total">${ this.renderNumber( this.xtzaccount.total ) }</td></tr><tr><th>funded</th><td part="accounts-funded">${ this.renderNumber( this.xtzaccount.funded ) }</td></tr><tr><th>non-funded</th><td part="accounts-zero">${ this.renderNumber( this.xtzaccount.zero ) }</td></tr></tbody></table>`);
+      return (`<h2 part="accounts-title" class="label">XTZ ${ util.lang('accounts') }<span part="accounts-subtitle" class="sub">${ util.lang('total') }</span></h2><table><tbody><tr><th part="accounts-totallabel">${ util.lang('accounts') }</th><td part="accounts-total">${ this.renderNumber( this.xtzaccount.total ) }</td></tr><tr><th part="accounts-fundedlabel">${ util.lang('funded') }</th><td part="accounts-funded">${ this.renderNumber( this.xtzaccount.funded ) }</td></tr><tr><th part="accounts-zerolabel">${ util.lang('non-funded') }</th><td part="accounts-zero">${ this.renderNumber( this.xtzaccount.zero ) }</td></tr></tbody></table>`);
 
     }
 
     // update values
+    this.#dom.update('[part=accounts-title]', `XTZ ${ util.lang('accounts') }` );
+    this.#dom.update('[part=accounts-subtitle]', util.lang('total') );
+    this.#dom.update('[part=accounts-totallabel]', util.lang('accounts') );
+    this.#dom.update('[part=accounts-fundedlabel]', util.lang('funded') );
+    this.#dom.update('[part=accounts-zerolabel]', util.lang('non-funded') );
+
     for (let p in this.xtzaccount) {
       this.#dom.update(`[part=accounts-${ p }]`, this.renderNumber( this.xtzaccount[p] ));
     }

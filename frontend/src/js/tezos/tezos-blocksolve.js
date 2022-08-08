@@ -19,14 +19,22 @@ export class TezosBlockSolve extends TezosWidget {
   // attribute configuration
   static get attribute() {
 
-    return {};
+    return {
+
+      'warning': {
+        type    : 'number',
+        min     : 31,
+        max     : 60,
+        value   : 33
+      }
+
+    };
 
   }
 
 
   #dom = null;
   #solvetimeNode = null;
-  #solvetimeWarn = 33; // warn when solvetime is over or above
 
   // constructor
   constructor() {
@@ -53,13 +61,21 @@ export class TezosBlockSolve extends TezosWidget {
       this.#dom.reset();
 
       // widget HTML
-      return (`<h2 class="label">XTZ block <span class="sub">solve times</span></h2><table><tbody><tr><th>average</th><td part="cycle-solvetime">${ this.renderNumber( this.xtzcycle.solvetime, 1 ) }</td></tr><tr><th>minimum</th><td part="cycle-solvemin">${ this.renderNumber( this.xtzcycle.solvemin, 1 ) }</td></tr><tr><th>maximum</th><td part="cycle-solvemax">${ this.renderNumber( this.xtzcycle.solvemax, 1 ) }</td></tr></tbody></table>`);
+      return (`<h2 part="cycle-title" class="label">XTZ ${ util.lang('block') }<span part="cycle-subtitle" class="sub">${ util.lang('solve') } (${ util.lang('seconds') })</span></h2><table><tbody><tr><th part="cycle-solvetimelabel">${ util.lang('average') }</th><td part="cycle-solvetime">${ this.renderNumber( this.xtzcycle.solvetime, 1 ) }</td></tr><tr><th part="cycle-solveminlabel">${ util.lang('minimum') }</th><td part="cycle-solvemin">${ this.renderNumber( this.xtzcycle.solvemin, 1 ) }</td></tr><tr><th part="cycle-solvemaxlabel">${ util.lang('maximum') }</th><td part="cycle-solvemax">${ this.renderNumber( this.xtzcycle.solvemax, 1 ) }</td></tr></tbody></table>`);
 
     }
 
     // update values
+    this.#dom.update('[part=cycle-title]', `XTZ ${ util.lang('block') }` );
+    this.#dom.update('[part=cycle-subtitle]', `${ util.lang('solve') } (${ util.lang('seconds') })` );
+
+    this.#dom.update('[part=cycle-solvetimelabel]', util.lang('average'));
     this.#dom.update('[part=cycle-solvetime]', this.renderNumber( this.xtzcycle.solvetime, 1 ));
+
+    this.#dom.update('[part=cycle-solveminlabel]', util.lang('minimum'));
     this.#dom.update('[part=cycle-solvemin]', this.renderNumber( this.xtzcycle.solvemin, 1 ));
+
+    this.#dom.update('[part=cycle-solvemaxlabel]', util.lang('maximum'));
     this.#dom.update('[part=cycle-solvemax]', this.renderNumber( this.xtzcycle.solvemax, 1 ));
 
   }
@@ -69,7 +85,7 @@ export class TezosBlockSolve extends TezosWidget {
   postRender() {
 
     this.#solvetimeNode = this.solvetimeNode || this.shadow.querySelector('[part=cycle-solvetime]');
-    util.css.setClass(this.#solvetimeNode, (this.xtzcycle.solvetime >= this.#solvetimeWarn ? 'dn' : ''), ['dn']);
+    util.css.setClass(this.#solvetimeNode, (this.xtzcycle.solvetime >= (parseFloat(this.warning) || 35) ? 'dn' : ''), ['dn']);
 
   }
 

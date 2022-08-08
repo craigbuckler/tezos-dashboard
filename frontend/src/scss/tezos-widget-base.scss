@@ -36,8 +36,8 @@ style, template {
 
 // forms and fields
 input, output, textarea, select, button {
-  grid-column: 2 / 4;
   clear: both;
+  grid-column: 2 / 4;
   color: var(--tz-color-fore0);
   background: var(--tz-color-back2);
   accent-color: var(--tz-color-back2);

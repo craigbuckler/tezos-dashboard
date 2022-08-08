@@ -9,17 +9,15 @@ import { Chart } from './tezos-chart.js';
 const attributeConfig = {
 
   'crypto': {
-    label   : 'crypto',
     type    : 'select'
   },
 
   'currency': {
-    label   : 'as currency',
     type    : 'select'
   },
 
   'zone': {
-    label   : 'time zone',
+    label   : 'timezone',
     type    : 'select',
     options : util.datetime.zone
   }
@@ -49,6 +47,7 @@ export class TezosDayChart extends TezosWidget {
   // constructor
   constructor() {
     super();
+    this.liveConfigUpdate = false;
   }
 
 
@@ -82,7 +81,7 @@ export class TezosDayChart extends TezosWidget {
     // create chart
     const chart = new Chart({
 
-      labels: this.currentday.date.map(d => this.renderTime( new Date(d)) ),
+      labels: this.currentday.date,
       series: [
         {
           id: this.crypto,
@@ -90,6 +89,7 @@ export class TezosDayChart extends TezosWidget {
           data: this.currentday[ this.crypto ].price.map(p => p / this.exchange[ this.currency ].rate)
         }
       ],
+      labelsFormat: d => this.renderTime( new Date(d) ),
       seriesFormat: v => this.renderCurrency(v),
       aspect: 3/2
 
@@ -116,7 +116,7 @@ export class TezosDayChart extends TezosWidget {
       p = (c.price.at(-1) - c.price.at(0)) / c.price.at(0),
       pc = p > 0 ? 'up' : (p < 0 ? 'dn' : '');
 
-    return `${ this.crypto } day: <span class="${ pc }">${ util.percent.format(p, 1, true) }</span>`;
+    return `${ this.crypto } ${ util.lang('day') }: <span class="${ pc }">${ util.percent.format(p, 1, true) }</span>`;
   }
 
   // crypto price

@@ -24,7 +24,7 @@ export class TezosTime extends TezosWidget {
     return {
 
       'zone': {
-        label   : 'time zone',
+        label   : 'timezone',
         type    : 'select',
         options : util.datetime.zone
       },
