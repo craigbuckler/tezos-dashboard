@@ -9,17 +9,15 @@ import { Chart } from './tezos-chart.js';
 const attributeConfig = {
 
   'crypto': {
-    label   : 'crypto',
     type    : 'select'
   },
 
   'currency': {
-    label   : 'as currency',
     type    : 'select'
   },
 
   'zone': {
-    label   : 'time zone',
+    label   : 'timezone',
     type    : 'select',
     options : util.datetime.zone
   }
@@ -49,6 +47,7 @@ export class TezosMonthChart extends TezosWidget {
   // constructor
   constructor() {
     super();
+    this.liveConfigUpdate = false;
   }
 
 
@@ -82,7 +81,7 @@ export class TezosMonthChart extends TezosWidget {
     // create chart
     const chart = new Chart({
 
-      labels: this.currentmonth.date.map(d => this.renderDate( new Date(d)) ),
+      labels: this.currentmonth.date,
       series: [
         {
           id: this.crypto,
@@ -90,6 +89,7 @@ export class TezosMonthChart extends TezosWidget {
           data: this.currentmonth[ this.crypto ].price.map(p => p / this.exchange[ this.currency ].rate)
         }
       ],
+      labelsFormat: d => this.renderDate( new Date(d) ),
       seriesFormat: v => this.renderCurrency(v),
       aspect: 3/2
 
@@ -117,7 +117,7 @@ export class TezosMonthChart extends TezosWidget {
       p = (c.price.at(-1) - c.price.at(0)) / c.price.at(0),
       pc = p > 0 ? 'up' : (p < 0 ? 'dn' : '');
 
-    return `${ this.crypto } month: <span class="${ pc }">${ util.percent.format(p, 1, true) }</span>`;
+    return `${ this.crypto } ${ util.lang('month') }: <span class="${ pc }">${ util.percent.format(p, 1, true) }</span>`;
 
   }
 

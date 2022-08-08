@@ -100,7 +100,7 @@ export class TezosWidget extends HTMLElement {
 
     if (value == valueOld) return;
 
-    console.log(`attributeChangedCallback: ${ property } changed from ${ valueOld } to ${ value }`);
+    // console.log(`attributeChangedCallback: ${ property } changed from ${ valueOld } to ${ value }`);
 
     // append changed property data
     property = this.#camelCase(property);
@@ -117,7 +117,7 @@ export class TezosWidget extends HTMLElement {
   // state update
   #reducerChangedCallback(e) {
 
-    console.log(`#reducerChangeCallback: ${ e.detail.property } changed from ${ e.detail.valueOld } to ${ e.detail.value }`);
+    // console.log(`#reducerChangeCallback: ${ e.detail.property } changed from ${ e.detail.valueOld } to ${ e.detail.value }`);
 
     // observed state?
     const prop = e.detail.property;
@@ -186,6 +186,8 @@ export class TezosWidget extends HTMLElement {
     sect.className = 'configpanel';
     grid.className = 'formgrid';
 
+    let firstField;
+
     // add field
     for (const a in attr) {
 
@@ -196,15 +198,13 @@ export class TezosWidget extends HTMLElement {
         case 'select':
           field = document.createElement('select');
 
-          console.log(a);
-
           if (attr[a]?.options?.length) {
 
             attr[a].options.forEach(o => {
               const
                 opt = field.appendChild( document.createElement('option')),
                 val = (typeof o === 'object' ? o.value || '' : o);
-              opt.textContent = o.label || o;
+              opt.textContent = util.lang( o.label || o );
               opt.value = val;
               if (val == this[a]) opt.selected = true;
             });
@@ -215,18 +215,28 @@ export class TezosWidget extends HTMLElement {
         default:
           field = document.createElement('input');
           field.type = attr[a].type;
-          field.checked = !!this[a];
+
+          if (field.type == 'checkbox') {
+            field.checked = !!this[a];
+          }
+          else {
+            field.required = true;
+            field.value = this[a] || attr[a].value;
+            if (attr[a].min) field.min = attr[a].min;
+            if (attr[a].max) field.max = attr[a].max;
+          }
           break;
 
       }
 
       field.id = a;
+      firstField = firstField || field;
       grid.appendChild(field);
 
       // add label
       const label = grid.appendChild( document.createElement('label') );
       label.htmlFor = a;
-      label.textContent = attr[a].label || a;
+      label.textContent = util.lang( attr[a].label || a );
 
     }
 
@@ -240,6 +250,7 @@ export class TezosWidget extends HTMLElement {
 
     // append to DOM
     this.#panelConfig = util.dom.add( this.shadow, sect );
+    firstField.focus();
 
   }
 
@@ -276,7 +287,7 @@ export class TezosWidget extends HTMLElement {
   #submitHandlerCallback(e) {
 
     // cancel on Escape or Enter
-    if (e.type === 'keydown' && (e.code !== 'Enter' && e.code !== 'Escape')) return;
+    if (e.type === 'keydown' && e.code !== 'Escape') return;
 
     e.preventDefault();
 
@@ -299,7 +310,7 @@ export class TezosWidget extends HTMLElement {
   // assign form values to properties
   #fieldToProperty(field) {
 
-    if (field && field.id && this.hasOwnProperty(field.id)) {
+    if (field && field.id && this.hasOwnProperty(field.id) && (!field.willValidate || field.validity.valid)) {
       const type = this.constructor.attribute[field.id]?.type;
       this[field.id] = (type === 'checkbox' || type == 'radio' ? (field.checked ? '1' : '') : field.value);
     }

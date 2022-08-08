@@ -132,7 +132,7 @@ export default {
     reduce: fetch => {
 
       const
-        dateMax = dateDayAdd(null, -1),
+        dateMax = +new Date() - 86400000, // 24 hours ago
         cv = (fetch.cryptovalue || []).filter(d => d.date >= dateMax ).sort((a, b) => +a.date-b.date),
         ret = {
           date: []

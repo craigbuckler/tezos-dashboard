@@ -70,7 +70,7 @@ async function reducerFetch( reducers ) {
     timestamp = state.timestamp;
   }
 
-  console.log(`API call: ${ reducers.join(',') } ; ${ timestamp }`);
+  // console.log(`API call: ${ reducers.join(',') } ; ${ timestamp }`);
 
   if (!reducers.length) return;
 
