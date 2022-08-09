@@ -22,7 +22,7 @@ export class TezosCryptoMonth extends TezosWidget {
 
   // watch for Tezos reducer updates (become properties)
   static get observedReducers() {
-    return ['locale', 'currentmonth'];
+    return ['locale', 'current', 'currentmonth'];
   }
 
   // watch for property/attribute changes
@@ -55,7 +55,7 @@ export class TezosCryptoMonth extends TezosWidget {
 
         const
           base = cm[c].price[0],
-          data = cm[c].price.map(d => base ? (d - base) / base : 0);
+          data = cm[c].price.concat( this.current[c].price ).map(d => base ? (d - base) / base : 0);
 
         series.unshift({
           id: c,
@@ -70,7 +70,7 @@ export class TezosCryptoMonth extends TezosWidget {
     // create chart
     const chart = new Chart({
 
-      labels: this.currentmonth.date,
+      labels: this.currentmonth.date.concat( +new Date(new Date().setUTCHours(0,0,0,0)) ),
       series,
       labelsFormat: d => this.renderDate( new Date(d)),
       seriesFormat: p => util.percent.format(p, 0, true),

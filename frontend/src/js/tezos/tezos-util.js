@@ -716,10 +716,10 @@ const languageToken = {
 };
 
 
+// return token language translation
 export function lang(token) {
 
-  const locale = (tezosReducer.locale || 'en').slice(-2).toLowerCase();
-
+  const locale = (tezosReducer.locale || window?.navigator?.language || 'en').slice(0,2).toLowerCase();
   return languageToken?.[token]?.[locale] || token;
 
 }

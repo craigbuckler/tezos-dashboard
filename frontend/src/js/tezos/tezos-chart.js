@@ -45,8 +45,8 @@ export class Chart {
 
     this.series.map(s => {
 
-      s.min = Math.min(...s.data);
-      s.max = Math.max(...s.data);
+      s.min = Math.min( ...s.data );
+      s.max = Math.max( ...s.data );
       min.push(s.min);
       max.push(s.max);
 
@@ -146,8 +146,8 @@ export class Chart {
     const svg =
       (showArea ? area.map((path, idx) => `<path class="area series${ idx } ${ this.series[idx].id }" d="${ path }" />`).join('') : '') +
       line.map((path, idx) => `<path class="line series${ idx } ${ this.series[idx].id }" d="${ path }" />`).join('') +
-      `<path class="grid" d="${ gridX.trim() }" />` +
-      `<path class="grid" d="${ gridY.trim() }" />` +
+      (gridX ? `<path class="grid" d="${ gridX.trim() }" />` : '') +
+      (gridY ? `<path class="grid" d="${ gridY.trim() }" />` : '') +
       `<rect class="grid" x="${ o.chartXmin }" y="${ o.chartYmin }" width="${ o.chartWidth }" height="${ o.chartHeight }" />` +
       `<text class="top right" x="${ o.chartXmax - textOffset }" y="${ o.chartYmin + textOffset }">${ o.seriesFormat( o.seriesMaxValue ) } (${ labelMax })</text>` +
       `<text x="${ o.chartXmin + textOffset }" y="${ o.chartYmax - textOffset }">${ o.seriesFormat( o.seriesMinValue ) } (${ labelMin })</text>` +

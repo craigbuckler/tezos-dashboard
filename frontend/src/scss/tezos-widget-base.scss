@@ -38,6 +38,7 @@ style, template {
 input, output, textarea, select, button {
   clear: both;
   grid-column: 2 / 4;
+  max-width: 100%;
   color: var(--tz-color-fore0);
   background: var(--tz-color-back2);
   accent-color: var(--tz-color-back2);

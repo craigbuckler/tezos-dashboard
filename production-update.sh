@@ -1,6 +1,6 @@
 #!/bin/bash
 
-HOME="~/tezos-dashboard"
+HOME="/home/ubuntu/tezos-dashboard"
 BACKEND="$HOME/backend"
 FRONTEND="$HOME/frontend"
 
