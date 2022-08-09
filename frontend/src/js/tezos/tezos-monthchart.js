@@ -30,7 +30,7 @@ export class TezosMonthChart extends TezosWidget {
 
   // watch for Tezos reducer updates (become properties)
   static get observedReducers() {
-    return ['locale', 'currentmonth', 'exchange'];
+    return ['locale', 'current', 'currentmonth', 'exchange'];
   }
 
   // watch for property/attribute changes
@@ -81,12 +81,12 @@ export class TezosMonthChart extends TezosWidget {
     // create chart
     const chart = new Chart({
 
-      labels: this.currentmonth.date,
+      labels: this.currentmonth.date.concat( new Date().setUTCHours(0,0,0,0) ),
       series: [
         {
           id: this.crypto,
           name: this.currentmonth[ this.crypto ].name,
-          data: this.currentmonth[ this.crypto ].price.map(p => p / this.exchange[ this.currency ].rate)
+          data: this.currentmonth[ this.crypto ].price.concat( this.current[ this.crypto ].price ).map(p => p / this.exchange[ this.currency ].rate)
         }
       ],
       labelsFormat: d => this.renderDate( new Date(d) ),
@@ -110,11 +110,11 @@ export class TezosMonthChart extends TezosWidget {
   // crypto currency label
   renderCrypto() {
 
-    const c = this?.currentmonth?.[ this.crypto ];
-    if (!c || !c.price.at(0)) return this.crypto || '';
+    const cd = this?.current?.[ this.crypto ], cm = this?.currentmonth?.[ this.crypto ];
+    if (!cd || !cm || !cm.price.at(0)) return this.crypto || '';
 
     const
-      p = (c.price.at(-1) - c.price.at(0)) / c.price.at(0),
+      p = (cd.price - cm.price.at(0)) / cm.price.at(0),
       pc = p > 0 ? 'up' : (p < 0 ? 'dn' : '');
 
     return `${ this.crypto } ${ util.lang('month') }: <span class="${ pc }">${ util.percent.format(p, 1, true) }</span>`;
