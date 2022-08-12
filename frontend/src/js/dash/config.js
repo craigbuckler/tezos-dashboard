@@ -6,6 +6,7 @@ const
   dashboard = {
 
     state:      stateZ({ name: 'dashState' }),
+    dom:        new util.DOM(),
     container:  document.querySelector('main'),
     addlist:    document.querySelector('#dashconfig-add'),
     control:    document.querySelector('#dashcontrol'),
@@ -22,7 +23,7 @@ const
       },
 
       'liveprice': {
-        name: 'live price',
+        name: 'current price',
         icon: 'value',
         html: '<tezos-liveprice crypto="XTZ" currency="USD" increase="1"></tezos-liveprice>',
         size: [
@@ -67,7 +68,7 @@ const
       },
 
       'accounts30': {
-        name: 'XTZ monthly',
+        name: 'XTZ month',
         icon: 'account',
         html: '<tezos-accounts30></tezos-accounts30>',
         size: [
@@ -108,10 +109,47 @@ for (const w in dashboard.widget) {
 
   util.dom.add(
     dashboard.addlist,
-    `<li data-widget="${ w }" tabindex="0" class="icon ${ dashboard.widget[w].icon }">${ dashboard.widget[w].name }</li>`
+    `<li data-widget="${ w }" tabindex="0" class="icon ${ dashboard.widget[w].icon }"></li>`
   );
 
 }
+
+
+// localization
+tezosReducer.addEventListener('change', e => {
+  if (e.detail.property === 'locale') localizeDashboard();
+});
+
+localizeDashboard();
+
+// localize all dashboard strings
+function localizeDashboard() {
+
+  // start tooltip
+  dashboard.tooltip.textContent = localizeString('start');
+
+  // widget names
+  for (const w in dashboard.widget) {
+    dashboard.dom.update(`[data-widget="${ w }"]`, localizeString(dashboard.widget[w].name));
+  }
+
+}
+
+
+// localize a string
+function localizeString(str) {
+
+  str.split(/\W/).forEach(w => {
+    const trans = util.lang(w);
+    if (trans !== w) {
+      str = str.replace(new RegExp(w, 'ig'), trans);
+    }
+  });
+
+  return str;
+
+}
+
 
 // initialize form fields
 Array.from(document.querySelectorAll('[data-tezos-reducer]')).forEach(field => {

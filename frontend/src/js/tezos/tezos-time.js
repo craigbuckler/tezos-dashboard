@@ -92,14 +92,14 @@ export class TezosTime extends TezosWidget {
       this.#dom.reset();
 
       // widget HTML
-      return (`<h2 part="time-zone" class="label">${ this.renderZone() }</h2><time part="time-time" class="data">${ this.renderTime() }</time><time part="time-date" class="date">${ this.date ? this.renderDate() : '' }</time>`);
+      return (`<h2 part="time-zone" class="label">${ this.renderZone() }</h2><time part="time-time" class="data">${ this.renderTime() }</time><time part="time-date" class="date">${ this.renderDate() }</time>`);
 
     }
 
     // update values
     if (propChange?.zone) this.#dom.update('.label', this.renderZone());
     this.#dom.update('.data', this.renderTime());
-    this.#dom.update('.date', this.date ? this.renderDate() : '');
+    this.#dom.update('.date', this.renderDate());
 
   }
 
@@ -116,6 +116,7 @@ export class TezosTime extends TezosWidget {
 
   // format date
   renderDate() {
+    if (!this.date) return '';
     const dateFn = util.datetime.formatDate[ this.date ] || util.datetime.formatDate.medium;
     return dateFn( this.time, this.zone );
   }

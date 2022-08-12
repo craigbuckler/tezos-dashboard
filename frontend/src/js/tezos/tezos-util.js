@@ -162,7 +162,7 @@ export class DOM {
 
   // get first text node
   firstTextNode( node ) {
-    return [...node.childNodes].find(child => child.nodeType === Node.TEXT_NODE) || {};
+    return [...node.childNodes].find(child => child.nodeType === Node.TEXT_NODE) || node;
   }
 
   // update a selector with a value
@@ -260,11 +260,11 @@ const languageToken = {
     pt: '12 horas',
     es: '12 horas',
     it: '12 ore',
-    se: '12 timmar',
+    sv: '12 timmar',
     ru: '12 часов',
-    sa: '12 ساعة',
-    cn: '12 小时',
-    jp: '12時間',
+    ar: '12 ساعة',
+    zh: '12 小时',
+    ja: '12時間',
   },
 
   accounts: {
@@ -273,11 +273,11 @@ const languageToken = {
     pt: 'contas',
     es: 'cuentas',
     it: 'conti',
-    se: 'konton',
+    sv: 'konton',
     ru: 'учетные записи',
-    sa: 'حسابات',
-    cn: '帐户',
-    jp: 'アカウント',
+    ar: 'حسابات',
+    zh: '帐户',
+    ja: 'アカウント',
   },
 
   average: {
@@ -286,11 +286,11 @@ const languageToken = {
     pt: 'média',
     es: 'promedio',
     it: 'media',
-    se: 'medel',
+    sv: 'medel',
     ru: 'средний',
-    sa: 'معدل',
-    cn: '平均',
-    jp: '平均',
+    ar: 'معدل',
+    zh: '平均',
+    ja: '平均',
   },
 
   bakers: {
@@ -299,11 +299,11 @@ const languageToken = {
     pt: 'padeiros',
     es: 'panadería',
     it: 'fornai',
-    se: 'bagare',
+    sv: 'bagare',
     ru: 'пекари',
-    sa: 'الخبازين',
-    cn: '面包师',
-    jp: 'パン職人',
+    ar: 'الخبازين',
+    zh: '面包师',
+    ja: 'パン職人',
   },
 
   block: {
@@ -311,11 +311,11 @@ const languageToken = {
     pt: 'quadra',
     es: 'bloquear',
     it: 'bloccare',
-    se: 'blockera',
+    sv: 'blockera',
     ru: 'блокировать',
-    sa: 'الكتلة',
-    cn: '堵塞',
-    jp: 'ブロック',
+    ar: 'الكتلة',
+    zh: '堵塞',
+    ja: 'ブロック',
   },
 
   change: {
@@ -324,11 +324,11 @@ const languageToken = {
     pt: 'mudança',
     es: 'cambio',
     it: 'modificare',
-    se: 'förändra',
+    sv: 'förändra',
     ru: 'сдача',
-    sa: 'يتغيرون',
-    cn: '改变',
-    jp: '変化する',
+    ar: 'يتغيرون',
+    zh: '改变',
+    ja: '変化する',
   },
 
   chart: {
@@ -337,11 +337,11 @@ const languageToken = {
     pt: 'gráfico',
     es: 'cuadro',
     it: 'grafico',
-    se: 'diagram',
+    sv: 'diagram',
     ru: 'диаграмма',
-    sa: 'جدول',
-    cn: '图表',
-    jp: 'チャート',
+    ar: 'جدول',
+    zh: '图表',
+    ja: 'チャート',
   },
 
   cleared: {
@@ -350,11 +350,11 @@ const languageToken = {
     pt: 'limpo',
     es: 'despejado',
     it: 'cancellato',
-    se: 'rensas',
+    sv: 'rensas',
     ru: 'очищен',
-    sa: 'مسح',
-    cn: '清除',
-    jp: 'クリア',
+    ar: 'مسح',
+    zh: '清除',
+    ja: 'クリア',
   },
 
   compact: {
@@ -362,11 +362,11 @@ const languageToken = {
     pt: 'compactar',
     es: 'compacto',
     it: 'compatto',
-    se: 'kompakt',
+    sv: 'kompakt',
     ru: 'компактный',
-    sa: 'المدمج',
-    cn: '袖珍的',
-    jp: 'コンパクト',
+    ar: 'المدمج',
+    zh: '袖珍的',
+    ja: 'コンパクト',
   },
 
   compare: {
@@ -375,11 +375,11 @@ const languageToken = {
     pt: 'comparar',
     es: 'comparar',
     it: 'confrontare',
-    se: 'jämföra',
+    sv: 'jämföra',
     ru: 'сравнивать',
-    sa: 'قارن',
-    cn: '相比',
-    jp: '比較',
+    ar: 'قارن',
+    zh: '相比',
+    ja: '比較',
   },
 
   crypto: {
@@ -387,11 +387,11 @@ const languageToken = {
     pt: 'cripto',
     es: 'cripro',
     it: 'cripro',
-    se: 'crypro',
+    sv: 'crypro',
     ru: 'крипро',
-    sa: 'كريبرو',
-    cn: '密码',
-    jp: 'クリプロ',
+    ar: 'كريبرو',
+    zh: '密码',
+    ja: 'クリプロ',
   },
 
   currency: {
@@ -400,11 +400,24 @@ const languageToken = {
     pt: 'moeda',
     es: 'divisa',
     it: 'moneta',
-    se: 'valuta',
+    sv: 'valuta',
     ru: 'валюта',
-    sa: 'عملة',
-    cn: '货币',
-    jp: '通貨',
+    ar: 'عملة',
+    zh: '货币',
+    ja: '通貨',
+  },
+
+  current: {
+    fr: 'courant',
+    de: 'aktuell',
+    pt: 'atual',
+    es: 'actual',
+    it: 'attuale',
+    sv: 'nuvarande',
+    ru: 'текущий',
+    ar: 'تيار',
+    zh: '当前的',
+    ja: '現在',
   },
 
   cycle: {
@@ -412,11 +425,11 @@ const languageToken = {
     pt: 'ciclo',
     es: 'ciclo',
     it: 'ciclo',
-    se: 'cykel',
+    sv: 'cykel',
     ru: 'цикл',
-    sa: 'دورة',
-    cn: '循环',
-    jp: 'サイクル',
+    ar: 'دورة',
+    zh: '循环',
+    ja: 'サイクル',
   },
 
   date: {
@@ -424,11 +437,11 @@ const languageToken = {
     pt: 'encontro',
     es: 'fecha',
     it: 'data',
-    se: 'datum',
+    sv: 'datum',
     ru: 'свидание',
-    sa: 'تاريخ',
-    cn: '日期',
-    jp: '日にち',
+    ar: 'تاريخ',
+    zh: '日期',
+    ja: '日にち',
   },
 
   day: {
@@ -437,11 +450,11 @@ const languageToken = {
     pt: 'dia',
     es: 'día',
     it: 'giorno',
-    se: 'dag',
+    sv: 'dag',
     ru: 'день',
-    sa: 'يوم',
-    cn: '天',
-    jp: '日',
+    ar: 'يوم',
+    zh: '天',
+    ja: '日',
   },
 
   end: {
@@ -450,22 +463,22 @@ const languageToken = {
     pt: 'fim',
     es: 'final',
     it: 'fine',
-    se: 'slutet',
+    sv: 'slutet',
     ru: 'конец',
-    sa: 'نهاية',
-    cn: '结尾',
-    jp: '終わり',
+    ar: 'نهاية',
+    zh: '结尾',
+    ja: '終わり',
   },
 
   format: {
     pt: 'formato',
     es: 'formato',
     it: 'formato',
-    se: 'formatera',
+    sv: 'formatera',
     ru: 'формат',
-    sa: 'صيغة',
-    cn: '格式',
-    jp: 'フォーマット',
+    ar: 'صيغة',
+    zh: '格式',
+    ja: 'フォーマット',
   },
 
   funded: {
@@ -474,11 +487,11 @@ const languageToken = {
     pt: 'financiado',
     es: 'fundado',
     it: 'finanziato',
-    se: 'finansieras',
+    sv: 'finansieras',
     ru: 'финансируемый',
-    sa: 'ممول',
-    cn: '资助的',
-    jp: '資金提供',
+    ar: 'ممول',
+    zh: '资助的',
+    ja: '資金提供',
   },
 
   long: {
@@ -486,11 +499,11 @@ const languageToken = {
     pt: 'grandes',
     es: 'largo',
     it: 'lungo',
-    se: 'lång',
+    sv: 'lång',
     ru: 'длинная',
-    sa: 'طويل',
-    cn: '长',
-    jp: '長いです',
+    ar: 'طويل',
+    zh: '长',
+    ja: '長いです',
   },
 
   maximum: {
@@ -498,11 +511,11 @@ const languageToken = {
     pt: 'máximo',
     es: 'máximo',
     it: 'massimo',
-    se: 'maximal',
+    sv: 'maximal',
     ru: 'максимум',
-    sa: 'أقصى',
-    cn: '最大',
-    jp: '最大',
+    ar: 'أقصى',
+    zh: '最大',
+    ja: '最大',
   },
 
   medium: {
@@ -512,9 +525,9 @@ const languageToken = {
     es: 'medio',
     it: 'medio',
     ru: 'средний',
-    sa: 'متوسط',
-    cn: '中等的',
-    jp: '中くらい',
+    ar: 'متوسط',
+    zh: '中等的',
+    ja: '中くらい',
   },
 
   minimum: {
@@ -522,9 +535,9 @@ const languageToken = {
     es: 'mínimo',
     it: 'minimo',
     ru: 'минимум',
-    sa: 'الحد الأدنى',
-    cn: '最低限度',
-    jp: '最小',
+    ar: 'الحد الأدنى',
+    zh: '最低限度',
+    ja: '最小',
   },
 
   month: {
@@ -533,11 +546,11 @@ const languageToken = {
     pt: 'mês',
     es: 'mes',
     it: 'mese',
-    se: 'månad',
+    sv: 'månad',
     ru: 'месяц',
-    sa: 'شهر',
-    cn: '月',
-    jp: '月',
+    ar: 'شهر',
+    zh: '月',
+    ja: '月',
   },
 
   new: {
@@ -546,11 +559,11 @@ const languageToken = {
     pt: 'novo',
     es: 'nuevo',
     it: 'nuovo',
-    se: 'ny',
+    sv: 'ny',
     ru: 'новый',
-    sa: 'الجديد',
-    cn: '新的',
-    jp: '新着',
+    ar: 'الجديد',
+    zh: '新的',
+    ja: '新着',
   },
 
   none: {
@@ -559,11 +572,11 @@ const languageToken = {
     pt: 'Nenhum',
     es: 'ninguna',
     it: 'nessuno',
-    se: 'ingen',
+    sv: 'ingen',
     ru: 'никто',
-    sa: 'لا أحد',
-    cn: '没有任何',
-    jp: 'なし',
+    ar: 'لا أحد',
+    zh: '没有任何',
+    ja: 'なし',
   },
 
   'non-funded': {
@@ -572,11 +585,24 @@ const languageToken = {
     pt: 'não financiado',
     es: 'no financiado',
     it: 'non finanziato',
-    se: 'icke-finansierat',
+    sv: 'icke-finansierat',
     ru: 'нефинансируемый',
-    sa: 'غير ممولة',
-    cn: '非资助',
-    jp: '資金提供なし',
+    ar: 'غير ممولة',
+    zh: '非资助',
+    ja: '資金提供なし',
+  },
+
+  price: {
+    fr: 'le prix',
+    de: 'preis',
+    pt: 'preço',
+    es: 'precio',
+    it: 'prezzo',
+    sv: 'pris',
+    ru: 'цена',
+    ar: 'سعر',
+    zh: '价格',
+    ja: '価格',
   },
 
   progress: {
@@ -585,11 +611,11 @@ const languageToken = {
     pt: 'progresso',
     es: 'Progreso',
     it: 'progresso',
-    se: 'framsteg',
+    sv: 'framsteg',
     ru: 'прогресс',
-    sa: 'تقدم',
-    cn: '进步',
-    jp: '進捗',
+    ar: 'تقدم',
+    zh: '进步',
+    ja: '進捗',
   },
 
   scientific: {
@@ -598,11 +624,11 @@ const languageToken = {
     pt: 'científico',
     es: 'científico',
     it: 'scientifico',
-    se: 'vetenskaplig',
+    sv: 'vetenskaplig',
     ru: 'научный',
-    sa: 'علمي',
-    cn: '科学的',
-    jp: '科学的',
+    ar: 'علمي',
+    zh: '科学的',
+    ja: '科学的',
   },
 
   seconds: {
@@ -610,11 +636,11 @@ const languageToken = {
     pt: 'segundos',
     es: 'segundos',
     it: 'secondi',
-    se: 'sekunder',
+    sv: 'sekunder',
     ru: 'секунды',
-    sa: 'ثواني',
-    cn: '秒',
-    jp: '秒',
+    ar: 'ثواني',
+    zh: '秒',
+    ja: '秒',
   },
 
   short: {
@@ -623,11 +649,11 @@ const languageToken = {
     pt: 'curto',
     es: 'corto',
     it: 'breve',
-    se: 'kort',
+    sv: 'kort',
     ru: 'короткая',
-    sa: 'قصيرة',
-    cn: '短的',
-    jp: '短い',
+    ar: 'قصيرة',
+    zh: '短的',
+    ja: '短い',
   },
 
   solve: {
@@ -636,11 +662,11 @@ const languageToken = {
     pt: 'resolver',
     es: 'resolver',
     it: 'risolvere',
-    se: 'lösa',
+    sv: 'lösa',
     ru: 'решать',
-    sa: 'يحل',
-    cn: '解决',
-    jp: '解決する',
+    ar: 'يحل',
+    zh: '解决',
+    ja: '解決する',
   },
 
   standard: {
@@ -648,9 +674,9 @@ const languageToken = {
     pt: 'padrão',
     es: 'estándar',
     ru: 'стандартный',
-    sa: 'اساسي',
-    cn: '标准',
-    jp: '標準',
+    ar: 'اساسي',
+    zh: '标准',
+    ja: '標準',
   },
 
   start: {
@@ -660,9 +686,22 @@ const languageToken = {
     es: 'comienzo',
     it: 'inizio',
     ru: 'Начало',
-    sa: 'بداية',
-    cn: '开始',
-    jp: '始める',
+    ar: 'بداية',
+    zh: '开始',
+    ja: '始める',
+  },
+
+  time: {
+    fr: 'temps',
+    de: 'Zeit',
+    pt: 'Tempo',
+    es: 'tiempo',
+    it: 'volta',
+    sv: 'tid',
+    ru: 'время',
+    ar: 'زمن',
+    zh: '时间',
+    ja: '時間',
   },
 
   timezone: {
@@ -671,20 +710,20 @@ const languageToken = {
     pt: 'fuso horário',
     es: 'zona horaria',
     it: 'fuso orario',
-    se: 'tidszon',
+    sv: 'tidszon',
     ru: 'часовой пояс',
-    sa: 'وحدة زمنية',
-    cn: '时区',
-    jp: 'タイムゾーン',
+    ar: 'وحدة زمنية',
+    zh: '时区',
+    ja: 'タイムゾーン',
   },
 
   total: {
     de: 'gesamt',
     it: 'totale',
     ru: 'общий',
-    sa: 'المجموع',
-    cn: '全部的',
-    jp: '合計',
+    ar: 'المجموع',
+    zh: '全部的',
+    ja: '合計',
   },
 
   warning: {
@@ -693,11 +732,11 @@ const languageToken = {
     pt: 'aviso',
     es: 'advertencia',
     it: 'avvertimento',
-    se: 'varning',
+    sv: 'varning',
     ru: 'предупреждение',
-    sa: 'تحذير',
-    cn: '警告',
-    jp: '警告',
+    ar: 'تحذير',
+    zh: '警告',
+    ja: '警告',
   },
 
   year: {
@@ -706,11 +745,11 @@ const languageToken = {
     pt: 'ano',
     es: 'año',
     it: 'anno',
-    se: 'år',
+    sv: 'år',
     ru: 'год',
-    sa: 'عام',
-    cn: '年',
-    jp: '年',
+    ar: 'عام',
+    zh: '年',
+    ja: '年',
   },
 
 };
@@ -719,6 +758,7 @@ const languageToken = {
 // return token language translation
 export function lang(token) {
 
+  if (!token) return '';
   const locale = (tezosReducer.locale || window?.navigator?.language || 'en').slice(0,2).toLowerCase();
   return languageToken?.[token]?.[locale] || token;
 
