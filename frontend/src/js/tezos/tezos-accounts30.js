@@ -13,7 +13,7 @@ export class TezosAccounts30 extends TezosWidget {
 
   // watch for property/attribute changes
   static get observedAttributes() {
-    return Object.keys( this.attribute );
+    return Object.keys( this.attribute ).concat('noconfig');
   }
 
   // attribute configuration
