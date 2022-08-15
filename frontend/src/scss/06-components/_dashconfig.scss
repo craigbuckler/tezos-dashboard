@@ -16,8 +16,8 @@
   display: block;
   bottom: 1vmin;
   right: 1vmin;
-  width: 1em;
-  height: 1em;
+  width: 1.5em;
+  height: 1.5em;
   color: var(--tz-color-info0);
   opacity: 0.5;
   cursor: pointer;
@@ -69,7 +69,7 @@
   display: none;
   position: absolute;
   right: 1vmin;
-  bottom: calc(1vmin + 1.2em);
+  bottom: calc(1vmin + 1.6em);
   padding: 0.2em 0.5em;
   margin: 0;
   color: var(--tz-color-back0);

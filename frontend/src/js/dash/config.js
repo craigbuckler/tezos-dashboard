@@ -291,10 +291,10 @@ const actionHandler = {
 };
 
 
-// save dashboard state after DOM mutation (debounced for 5 seconds)
+// save dashboard state after DOM mutation (debounced for 1 second)
 const observer = new MutationObserver( util.debounce( () => {
 
   dashboard.state.widgets = dashboard.container.innerHTML;
 
-}, 5000) );
+}, 1000) );
 observer.observe(dashboard.container, { attributes: true, childList: true, subtree: true });

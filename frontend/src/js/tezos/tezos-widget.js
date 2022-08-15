@@ -21,6 +21,7 @@ export class TezosWidget extends HTMLElement {
   #renderIteration = 0;
   #propertyChanged = null;
   #dataChanged = {};
+  #buttonConfig = null;
   #panelConfig = null;
   #renderHandler = () => {};
   #reducerHandler = null;
@@ -153,19 +154,31 @@ export class TezosWidget extends HTMLElement {
 
       // clean shadow DOM
       util.dom.clean(this.shadow);
+      this.#buttonConfig = null;
 
       // add styles
       const style = document.createElement('style');
       style.innerHTML = styleBase + this.constructor.styleBase + this.styleDynamic;
       util.dom.add( this.shadow, style );
 
-      // configuration button
-      if (this.constructor.observedAttributes.length) {
-        util.dom.add( this.shadow, buttonConfig.cloneNode(true) );
-      }
-
       // add content
       util.dom.add( this.shadow, rendered );
+
+    }
+
+    // show/hide configuration button
+    if (this.constructor.observedAttributes.length) {
+
+      if (this.noconfig) {
+        if (this.#buttonConfig) {
+          this.#buttonConfig = this.#buttonConfig.remove();
+        }
+      }
+      else {
+        if (!this.#buttonConfig) {
+          this.#buttonConfig = util.dom.add( this.shadow, buttonConfig.cloneNode(true) );
+        }
+      }
 
     }
 

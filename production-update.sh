@@ -31,9 +31,6 @@ pm2 start ./tasks.js
 # start Express app in cluster mode
 pm2 start ./api.js -i max
 
-# save PM2 state
-pm2 save
-
 # frontend installation
 cd $FRONTEND
 npm install
@@ -41,5 +38,8 @@ npm run build
 
 # finish
 cd $HOME
+
+# save PM2 state
+pm2 save
 
 echo 'Update complete'
