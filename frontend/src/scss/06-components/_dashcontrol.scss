@@ -38,7 +38,7 @@
 
   :hover button, :focus button, :focus-within button {
     color: var(--tz-color-info1);
-    outline: 3px solid var(--tz-color-info1);
+    outline: 0.1em solid var(--tz-color-info1);
   }
 
 }

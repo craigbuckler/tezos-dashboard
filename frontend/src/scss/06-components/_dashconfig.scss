@@ -110,6 +110,10 @@
   transition: transform 0.3s ease-in-out;
   overflow: auto;
   outline: 0 none;
+
+  :first-child {
+    margin-top: 0;
+  }
 }
 
 #dashconfig-panel:focus, #dashconfig-panel:focus-within,
@@ -117,12 +121,16 @@
   transform: translateX(0%);
 }
 
-// widget list
-#dashconfig-add li {
+#dashconfig-add {
+  margin-top: 1em;
+}
+
+// widget list and clickable elements
+#dashconfig-add li, .dashcontrol {
   color: var(--tz-color-fore0);
   cursor: pointer;
 
   &:hover, &:focus {
-    outline: 3px solid var(--tz-color-info1);
+    outline: 0.1em solid var(--tz-color-info1);
   }
 }

@@ -16,7 +16,7 @@
   border-radius: var(--tz-border-radius);
 
   &(:focus), &(:focus-within) {
-    outline: 3px solid var(--tz-color-info1);
+    outline: 0.1em solid var(--tz-color-info1);
   }
 
   & > * {
@@ -46,7 +46,7 @@ input, output, textarea, select, button {
   outline: 0 none;
 
   &:focus {
-    outline: 3px solid var(--tz-color-info1);
+    outline: 0.1em solid var(--tz-color-info1);
   }
 }
 
@@ -236,7 +236,7 @@ svg {
   &:focus {
     color: var(--tz-color-fore0);
     background-color: var(--tz-color-back0);
-    outline: 3px solid var(--tz-color-info1);
+    outline: 0.1em solid var(--tz-color-info1);
   }
 
 }

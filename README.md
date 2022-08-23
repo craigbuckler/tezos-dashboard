@@ -23,8 +23,6 @@ API_PORT=3100
 API_URL=http://<HOST>/api/
 ```
 
-Follow the steps in `production-install.sh`.
-
 Then set:
 
 ```sh
@@ -32,6 +30,8 @@ export $(grep -v '^#' .env | xargs)
 ```
 
 (Can unset with `unset $(grep -v '^#' .env | sed -E 's/(.*)=.*/\1/' | xargs)`)
+
+Follow the steps in `production-install.sh`.
 
 
 ## Development environment configuration

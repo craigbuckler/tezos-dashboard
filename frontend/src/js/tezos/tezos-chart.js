@@ -116,7 +116,7 @@ export class Chart {
         area[idx] += ` L${ x },${ y }`;
 
         // grid X-axis and data labels
-        if (!idx && dataIdx && !(dataIdx % gridXskip) && (dataIdx + gridXskip - 1 < o.pointCount)) {
+        if (!idx && dataIdx && !(dataIdx % gridXskip) && x < o.chartWidth * 0.85 + o.chartXmin) {
           gridX += ` M${ x },${ o.chartYmin } L${ x },${ o.chartYmax }`;
           label += `<text class="label top center" x="${ x }" y="${ o.chartYmax + textOffset }">${ o.labelsFormat( this.labels[dataIdx] ) }</text>`;
         }

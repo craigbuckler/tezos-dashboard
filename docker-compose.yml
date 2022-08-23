@@ -51,6 +51,8 @@ services:
 
   frontend:
     env_file: .env
+    environment:
+      - SHELL=/bin/sh
     build:
       context: ./frontend
       dockerfile: frontend.Dockerfile

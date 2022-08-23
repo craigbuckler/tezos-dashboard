@@ -14,10 +14,19 @@
 <label id="dashconfig-overlay" for="dashconfig"></label>
 <aside id="dashconfig-panel" tabindex="0">
 
+  <p id="fullscreen" tabindex="0" class="dashcontrol icon fullscreen" data-lang="fullscreen" hidden>fullscreen</p>
+
   <ul id="dashconfig-add"></ul>
 
+  <label for="awake" class="icon sleep" data-lang="awake" hidden>awake</label>
+  <select id="awake" data-tezos-reducer="awake" hidden>
+    <option value="" data-lang="system">system</option>
+    <option value="f" data-lang="fullscreen">fullscreen</option>
+    <option value="y" data-lang="always">always</option>
+  </select>
+
   <!-- locale: https://www.fincher.org/Utilities/CountryLanguageList.shtml -->
-  <label for="locale" class="icon translate">language</label>
+  <label for="locale" class="icon translate" data-lang="language">language</label>
   <select id="locale" data-tezos-reducer="locale">
     <option value="">local</option>
     <option value="en-GB">English: UK</option>
@@ -36,7 +45,7 @@
 
 </aside>
 
-<p id="dashconfig-tooltip">start</p>
+<p id="dashconfig-tooltip" data-lang="start">start</p>
 
 <label id="dashconfig-icon" for="dashconfig">
   <%- include('../media/icons/dashadd.svg') -%>

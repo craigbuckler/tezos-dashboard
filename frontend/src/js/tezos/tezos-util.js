@@ -280,6 +280,19 @@ const languageToken = {
     ja: 'アカウント',
   },
 
+  always: {
+    fr: 'toujours',
+    de: 'stets',
+    pt: 'sempre',
+    es: 'siempre',
+    it: 'sempre',
+    sv: 'alltid',
+    ru: 'всегда',
+    ar: 'دائماً',
+    zh: '总是',
+    ja: 'いつも',
+  },
+
   average: {
     fr: 'moyen',
     de: 'durchschnitt',
@@ -291,6 +304,19 @@ const languageToken = {
     ar: 'معدل',
     zh: '平均',
     ja: '平均',
+  },
+
+  awake: {
+    fr: 'éveillé',
+    de: 'erwachen',
+    pt: 'acordado',
+    es: 'despierto',
+    it: 'sveglio',
+    sv: 'vaken',
+    ru: 'бодрствующий',
+    ar: 'مستيقظ',
+    zh: '苏醒',
+    ja: '起きた',
   },
 
   bakers: {
@@ -481,6 +507,19 @@ const languageToken = {
     ja: 'フォーマット',
   },
 
+  fullscreen: {
+    fr: 'plein écran',
+    de: 'ganzer bildschirm',
+    pt: 'tela cheia',
+    es: 'pantalla completa',
+    it: 'a schermo intero',
+    sv: 'fullskärm',
+    ru: 'полноэкранный',
+    ar: 'شاشة كاملة',
+    zh: '全屏',
+    ja: '全画面表示',
+  },
+
   funded: {
     fr: 'financé',
     de: 'finanziert',
@@ -492,6 +531,19 @@ const languageToken = {
     ar: 'ممول',
     zh: '资助的',
     ja: '資金提供',
+  },
+
+  language: {
+    fr: 'langue',
+    de: 'sprache',
+    pt: 'língua',
+    es: 'idioma',
+    it: 'linguaggio',
+    sv: 'språk',
+    ru: 'язык',
+    ar: 'لغة',
+    zh: '语',
+    ja: '言語',
   },
 
   long: {
@@ -689,6 +741,18 @@ const languageToken = {
     ar: 'بداية',
     zh: '开始',
     ja: '始める',
+  },
+
+  system: {
+    fr: 'système',
+    pt: 'sistema',
+    es: 'sistema',
+    it: 'sistema',
+    sv: 'systemet',
+    ru: 'система',
+    ar: 'النظام',
+    zh: '系统',
+    ja: 'システム',
   },
 
   time: {
