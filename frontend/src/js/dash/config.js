@@ -5,12 +5,17 @@ import { stateZ, tezosReducer, util } from '../dashboard.js';
 const
   dashboard = {
 
-    state:      stateZ({ name: 'dashState' }),
-    dom:        new util.DOM(),
-    container:  document.querySelector('main'),
-    addlist:    document.querySelector('#dashconfig-add'),
-    control:    document.querySelector('#dashcontrol'),
-    tooltip:    document.querySelector('#dashconfig-tooltip'),
+    state:        stateZ({ name: 'dashState' }),
+    dom:          new util.DOM(),
+    container:    document.querySelector('main'),
+    addlist:      document.querySelector('#dashconfig-add'),
+    control:      document.querySelector('#dashcontrol'),
+    tooltip:      document.querySelector('#dashconfig-tooltip'),
+    fullscreen:   document.getElementById('fullscreen'),
+    fsElement:    document.documentElement,
+    awakeEnabled: false,
+    awake:        document.getElementById('awake'),
+    wakeLock:     null,
     widget: {
 
       'time': {
@@ -109,15 +114,16 @@ for (const w in dashboard.widget) {
 
   util.dom.add(
     dashboard.addlist,
-    `<li data-widget="${ w }" tabindex="0" class="icon ${ dashboard.widget[w].icon }"></li>`
+    `<li data-widget="${ w }" tabindex="0" class="icon ${ dashboard.widget[w].icon }" data-lang="${ dashboard.widget[w].name }"></li>`
   );
 
 }
 
 
-// localization
+// choice updates
 tezosReducer.addEventListener('change', e => {
   if (e.detail.property === 'locale') localizeDashboard();
+  if (e.detail.property === 'awake') wakeLock();
 });
 
 localizeDashboard();
@@ -125,13 +131,9 @@ localizeDashboard();
 // localize all dashboard strings
 function localizeDashboard() {
 
-  // start tooltip
-  dashboard.tooltip.textContent = localizeString('start');
-
-  // widget names
-  for (const w in dashboard.widget) {
-    dashboard.dom.update(`[data-widget="${ w }"]`, localizeString(dashboard.widget[w].name));
-  }
+  Array.from(document.querySelectorAll('[data-lang]')).forEach(n => {
+    n.textContent = localizeString(n.dataset.lang);
+  });
 
 }
 
@@ -174,6 +176,84 @@ Array.from(document.querySelectorAll('[data-tezos-reducer]')).forEach(field => {
   }
 
 });
+
+
+// full screen option
+if (dashboard.fsElement.requestFullscreen && document.exitFullscreen) {
+
+  // icon activated
+  dashboard.fullscreen.addEventListener('click', fullscreenToggle);
+  dashboard.fullscreen.addEventListener('keydown', e => {
+    const c = e.code;
+    if (c == 'Enter' || c == 'Space') fullscreenToggle();
+  });
+
+  // enable icon
+  dashboard.fullscreen.removeAttribute('hidden');
+
+}
+
+
+// toggle fullscreen
+function fullscreenToggle() {
+
+  if (document.fullscreenElement) {
+    document.exitFullscreen();
+  }
+  else {
+    dashboard.fsElement.requestFullscreen();
+  }
+
+}
+
+
+// wake locking
+if ('wakeLock' in navigator) {
+
+  dashboard.awakeEnabled = true;
+
+  // full screen and visibility change event
+  document.addEventListener('fullscreenchange', wakeLock);
+  document.addEventListener('visibilitychange', wakeLock);
+  await wakeLock();
+
+  // enable option
+  Array.from( document.querySelectorAll(`label[for="${ dashboard.awake.id }"]`) ).forEach(n => n.removeAttribute('hidden'));
+  dashboard.awake.removeAttribute('hidden');
+
+}
+
+async function wakeLock() {
+
+  if (!dashboard.awakeEnabled) return;
+
+  try {
+
+    const awake = tezosReducer.awake;
+
+    if (
+      document.visibilityState === 'visible' &&
+      (awake == 'y' || (awake == 'f' && document.fullscreenElement))
+    ) {
+
+      // enable wakelock
+      dashboard.wakeLock = dashboard.wakeLock || await navigator.wakeLock.request('screen');
+
+    }
+    else {
+
+      // disable wakelock
+      if (dashboard.wakeLock) {
+        await dashboard.wakeLock.release();
+        dashboard.wakeLock = null;
+      }
+
+    }
+
+  }
+  catch(e) {}
+
+}
 
 
 // add widget

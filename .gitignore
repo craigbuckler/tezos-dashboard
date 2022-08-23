@@ -1,3 +1,4 @@
+frontend/tokens-ejs.json
 frontend/buildpre
 frontend/static
 frontend/src/js/tezos/css/
@@ -18,5 +19,3 @@ logs
 
 .DS_Store
 Thumbs.db
-
-frontend/tokens-ejs.json

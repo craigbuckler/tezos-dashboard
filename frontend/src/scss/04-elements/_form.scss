@@ -1,9 +1,12 @@
 // default form styles
-label {
+label, .dashcontrol {
   clear: both;
-  display: block;
   margin-top: 1em;
   cursor: pointer;
+
+  &:not([hidden]) {
+    display: block;
+  }
 }
 
 input, output, textarea, select, button {
@@ -16,7 +19,7 @@ input, output, textarea, select, button {
   outline: 0 none;
 
   &:focus {
-    outline: 3px solid var(--tz-color-info1);
+    outline: 0.1em solid var(--tz-color-info1);
   }
 }
 

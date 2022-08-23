@@ -16,9 +16,9 @@ module.exports = (cfg) => {
       require('postcss-map-get')(),
       require('postcss-nested')(),
       require('postcss-assets')({
-        basePath: 'src/media/',
-        loadPaths: ['fonts', 'icons', 'logos'],
-        relative: true
+        basePath: 'src/',
+        loadPaths: ['media/fonts', 'media/icons', 'media/logos'],
+        relative: false
       }),
       require('postcss-calc')(),
       require('postcss-combine-media-query')(),

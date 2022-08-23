@@ -7,11 +7,13 @@ import { stateZ } from 'statez';
 
 const
   api = '__meta_api__?reducer=',
+  reducerInterval = 600000,
   state = stateZ({ name: 'tezosReducer' }),
   observeList = new Set(),                    // observed reducers passed to API
   ignoreSet = new Set(['locale', 'time']);    // non-API reducers
 
 state.timestamp = 0;
+state.lastFetch = state.lastFetch || 0;
 
 
 // pass reducers to observe and return initial values
@@ -55,17 +57,22 @@ function setTime() {
 }
 
 
-// reducer update every 10 minutes
-setInterval(reducerFetch, 600000);
-
+// reducer update every 10 minutes or tab activation
+setInterval(reducerFetch, reducerInterval);
+document.addEventListener('visibilitychange', reducerFetch);
 
 // fetch updated reducer values from API
 async function reducerFetch( reducers ) {
 
+  if (document.visibilityState !== 'visible') return;
+
   let timestamp = 0;
 
-  // run all reducers
+  // run all reducers if reducerInterval has elapsed
   if (!reducers || !Array.isArray(reducers)) {
+    let now = +new Date();
+    if (now - state.lastFetch < reducerInterval) return;
+    state.lastFetch = now;
     reducers = [...observeList];
     timestamp = state.timestamp;
   }
