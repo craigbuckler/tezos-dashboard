@@ -31,6 +31,9 @@ async function processQueue() {
   // run executable
   const res = await execCmd(job.cmd, job.timeout || task.timeout);
 
+  // error count fail / success?
+  job.error = res.code ? (job.error || 0) + 1 : 0;
+
   // determine time of next run
   let nextRun;
   const m = res.out.match(/NEXT:\s*(\d+)/i);
@@ -38,14 +41,12 @@ async function processQueue() {
 
   if (!nextRun) {
 
-    if (res.code) {
+    if (job.error) {
       // error retry
-      job.error = (job.error || 0) + 1;
       nextRun = task.errorRetry[ Math.min(job.error, task.errorRetry.length) - 1 ];
     }
     else {
-      // default success retry
-      delete job.error;
+      // default retry
       nextRun = job.retry || task.retry;
     }
 
