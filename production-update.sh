@@ -8,7 +8,7 @@ ENV="$BACKEND/.env"
 
 cd $HOME
 
-# update environment variables
+# update environment variables (ALWAYS RUN!)
 export $(grep -v '^#' $ENV | xargs)
 
 # stop PM2 tasks
