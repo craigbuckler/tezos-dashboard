@@ -63,9 +63,11 @@ export class Chart {
     o.labelsRange = o.labelsMaxValue - o.labelsMinValue;
 
     o.seriesMinValue = Math.min(...min);
-    o.seriesMin = o.seriesMinValue - (o.seriesMinValue * o.chartYPad);
     o.seriesMaxValue = Math.max(...max);
-    o.seriesMax = o.seriesMaxValue + (o.seriesMaxValue * o.chartYPad);
+    o.seriesValueRange = o.seriesMaxValue - o.seriesMinValue;
+
+    o.seriesMin = o.seriesMinValue - (o.seriesValueRange * o.chartYPad);
+    o.seriesMax = o.seriesMaxValue + (o.seriesValueRange * o.chartYPad);
     o.seriesRange = o.seriesMax - o.seriesMin;
 
     o.chartXmin = o.width * o.pad;
