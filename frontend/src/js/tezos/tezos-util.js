@@ -533,6 +533,19 @@ const languageToken = {
     ja: '資金提供',
   },
 
+  install: {
+    fr: 'installer',
+    de: 'installieren',
+    pt: 'instalar',
+    es: 'instalar',
+    it: 'installare',
+    sv: 'installera',
+    ru: 'установить',
+    ar: 'تثبيت',
+    zh: '安装',
+    ja: 'インストール',
+  },
+
   language: {
     fr: 'langue',
     de: 'sprache',
