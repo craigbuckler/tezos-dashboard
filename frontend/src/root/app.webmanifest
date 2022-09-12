@@ -1,0 +1,18 @@
+{
+	"lang"							: "en",
+	"dir"								: "ltr",
+	"name"							: "Tezos dashboard",
+	"short_name"				: "Tezos",
+	"description"				: "Live Tezos dashboard with configurable widgets",
+  "categories"        : [ "tezos", "live", "dashboard", "widget" ],
+	"scope"							: "/",
+	"start_url"					: "/",
+	"display"						: "standalone",
+  "orientation"       : "any",
+	"theme_color"				: "#161618",
+	"background_color"	: "#161618",
+  "icons": [
+    { "src": "/media/favicons/favicon192.png", "type": "image/png", "sizes": "192x192" },
+    { "src": "/media/favicons/favicon512.png", "type": "image/png", "sizes": "512x512" }
+  ]
+}

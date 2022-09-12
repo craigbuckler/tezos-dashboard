@@ -1,6 +1,6 @@
 {
   "name": "tezos-dashboard",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "Tezos configurable statistics dashboard.",
   "type": "module",
   "main": "index.js",

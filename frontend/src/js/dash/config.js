@@ -16,6 +16,8 @@ const
     awakeEnabled: false,
     awake:        document.getElementById('awake'),
     wakeLock:     null,
+    pwaSW:        'serviceWorker' in navigator && '/sw.js?v__meta_version__',
+    install:      document.getElementById('install'),
     widget: {
 
       'time': {
@@ -378,3 +380,46 @@ const observer = new MutationObserver( util.debounce( () => {
 
 }, 1000) );
 observer.observe(dashboard.container, { attributes: true, childList: true, subtree: true });
+
+
+// PWA installation
+let deferredPrompt;
+
+if (dashboard.pwaSW && dashboard.install) {
+
+  // register service worker
+  navigator.serviceWorker.register(dashboard.pwaSW);
+
+  // install prompt
+  window.addEventListener('beforeinstallprompt', e => {
+
+    e.preventDefault();
+    deferredPrompt = e;
+    dashboard.install.addEventListener('click', pwaInstall);
+    dashboard.install.removeAttribute('hidden');
+
+  });
+
+}
+
+
+// install PWA
+function pwaInstall(e) {
+
+  e.preventDefault();
+  if (!deferredPrompt) return;
+
+  deferredPrompt.prompt();
+  deferredPrompt.userChoice
+    .then(function(choice) {
+      if (choice.outcome === 'accepted') {
+
+        console.log('PWA installed');
+        dashboard.install.setAttribute('hidden', '');
+        dashboard.install.removeEventListener('click', pwaInstall);
+
+      }
+      deferredPrompt = null;
+    });
+
+}

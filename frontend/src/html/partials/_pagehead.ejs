@@ -17,14 +17,20 @@
 <meta name="author" content="<%= meta.author %>" />
 <meta name="robots" content="index, follow" />
 
-<!--
--- manifest --
+<!-- application -->
+<meta name="application-name" content="<%= meta.app %>" />
+<meta name="theme-color" content="<%= design.color.dark.back[1] %>" />
+<meta name="mobile-web-app-capable" content="yes" />
+<meta name="apple-touch-fullscreen" content="yes" />
+<meta name="apple-mobile-web-app-title" content="<%= meta.app %>" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="default" />
 <link rel="manifest" href="./app.webmanifest" />
--->
 
 <!-- favicons -->
-<link rel="icon" href="/favicon.ico" />
+<link rel="icon" href="/favicon.ico" sizes="any" />
 <link rel="icon" href="/media/favicons/favicon.svg" type="image/svg+xml" />
+<link rel="apple-touch-icon" href="/media/favicons/favicon180.png" />
 
 </head>
 <body>

@@ -1,4 +1,4 @@
-<%- include('./partials/_pagehead.ejs', { meta }) -%>
+<%- include('./partials/_pagehead.ejs', { meta, design }) -%>
 
 <input type="checkbox" id="dashconfig" />
 
@@ -43,6 +43,8 @@
     <option value="ja-JP">日本</option>
   </select>
 
+  <p id="install" tabindex="0" class="dashcontrol icon home" data-lang="install" hidden>install</p>
+
 </aside>
 
 <p id="dashconfig-tooltip" data-lang="start">start</p>
@@ -52,4 +54,4 @@
   <%- include('../media/icons/close.svg') -%>
 </label>
 
-<%- include('./partials/_pagefoot.ejs', { meta }) -%>
+<%- include('./partials/_pagefoot.ejs', { meta, design }) -%>

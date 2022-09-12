@@ -30,6 +30,33 @@ if (productionMode) {
 
 console.log(`JavaScript ${ productionMode ? 'production' : 'development' } build`);
 
+
+// build service worker
+esbuild.build({
+
+  entryPoints: [ './src/js/sw.js' ],
+  platform: 'neutral',
+  format: 'esm',
+  bundle: true,
+  minify: productionMode,
+  sourcemap: !productionMode && 'linked',
+  mainFields: ['module', 'browser', 'main'],
+  banner: { js: `/* ${ tokens.meta.app } service worker ${ tokens.meta.version }, by ${ tokens.meta.author }, built: ${ (new Date()).toISOString() } */` },
+  plugins: [
+    inlineFile,
+    textReplace({
+      include: /.js$/,
+      pattern
+    }),
+    time('Service Worker')
+  ],
+  watch: !productionMode,
+  outfile: './static/sw.js'
+
+}).catch(() => process.exit(1));
+
+
+// build dashboard and widgets
 esbuild.build({
 
   entryPoints: [ './src/js/tezos-widgets.js', './src/js/dashboard.js' ],
