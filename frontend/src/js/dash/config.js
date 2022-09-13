@@ -377,6 +377,7 @@ const actionHandler = {
 const observer = new MutationObserver( util.debounce( () => {
 
   dashboard.state.widgets = dashboard.container.innerHTML;
+  dashboard.state.syncState(); // required for iOS/Safari
 
 }, 1000) );
 observer.observe(dashboard.container, { attributes: true, childList: true, subtree: true });

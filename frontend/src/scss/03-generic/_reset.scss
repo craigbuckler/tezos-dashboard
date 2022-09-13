@@ -6,6 +6,27 @@
   user-select: none;
 }
 
+// Firefox scrollbars
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--tz-color-info0) var(--tz-color-back1);
+}
+
+// other scrollbars
+::-webkit-scrollbar {
+  width: 11px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--tz-color-back1);
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--tz-color-info0);
+  border-radius: 10px;
+  border: 3px solid var(--tz-color-back1);
+}
+
 template {
   display: none;
 }

@@ -41,7 +41,6 @@ input, output, textarea, select, button {
   max-width: 100%;
   color: var(--tz-color-fore0);
   background: var(--tz-color-back2);
-  accent-color: var(--tz-color-back2);
   border: 0 none;
   outline: 0 none;
 
@@ -76,6 +75,7 @@ input[type="checkbox"], input[type="radio"] {
   justify-self: end;
   width: 0.8em;
   height: 0.8em;
+  accent-color: var(--tz-color-back2);
 
   & + label {
     grid-column: 3 / 4;
@@ -133,6 +133,8 @@ progress::-moz-progress-bar {
 
 // SVGs
 svg {
+
+  outline: 0 none;
 
   .line, .area, .grid {
     stroke: var(--tz-color-info1);
@@ -244,6 +246,8 @@ svg {
 // widget configuration panel
 .configpanel {
   position: fixed;
+  width: 15em;
+  max-width: 90%;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);

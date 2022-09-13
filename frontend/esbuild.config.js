@@ -63,7 +63,7 @@ esbuild.build({
   platform: 'neutral',
   format: 'esm',
   bundle: true,
-  external: [ './tezos-widgets.js' ], // separate dashboard and widget API JavaScript
+  external: [ `./tezos-widgets.js?v${ tokens.meta.version }` ], // separate dashboard and widget API JavaScript
   minify: productionMode,
   sourcemap: !productionMode && 'linked',
   mainFields: ['module', 'browser', 'main'],
