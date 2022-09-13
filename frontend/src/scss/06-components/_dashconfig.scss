@@ -111,6 +111,10 @@
   overflow: auto;
   outline: 0 none;
 
+  & > :not([hidden]) + :not(:where(input, select)) {
+    margin-top: 1em;
+  }
+
   :first-child {
     margin-top: 0;
   }
@@ -119,10 +123,6 @@
 #dashconfig-panel:focus, #dashconfig-panel:focus-within,
 #dashconfig:checked ~ #dashconfig-panel {
   transform: translateX(0%);
-}
-
-#dashconfig-add {
-  margin-top: 1em;
 }
 
 // widget list and clickable elements

@@ -14,7 +14,6 @@ input, output, textarea, select, button {
   font-size: 1em;
   color: var(--tz-color-fore0);
   background: var(--tz-color-back2);
-  accent-color: var(--tz-color-back2);
   border: 0 none;
   outline: 0 none;
 
@@ -26,4 +25,5 @@ input, output, textarea, select, button {
 input[type="checkbox"], input[type="radio"] {
   width: auto;
   height: auto;
+  accent-color: var(--tz-color-back2);
 }

@@ -98,6 +98,8 @@ async function reducerFetch( reducers ) {
       state[ prop ] = update[ prop ];
     }
 
+    state.syncState(); // required for iOS/Safari
+
   }
   catch(e) {}
 

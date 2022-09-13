@@ -184,6 +184,11 @@ export class TezosWidget extends HTMLElement {
 
     this.postRender( this.#renderIteration++, propChange, dataChange );
 
+    // set tabindex on child nodes (necessary for iOS)
+    Array.from(this.shadow.children).forEach(c => {
+      c.setAttribute('tabindex', '0');
+    });
+
   }
 
 
