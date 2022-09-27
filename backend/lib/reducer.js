@@ -282,6 +282,9 @@ function reduceDay(price) {
 
   });
 
+  // ensure first item has data
+  data[0] = data[0] || data.find(v => v);
+
   // interpolate missing values
   let ns = 0, nsv;
   while (ns < data.length) {
