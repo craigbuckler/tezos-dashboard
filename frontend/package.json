@@ -1,6 +1,6 @@
 {
   "name": "tezos-dashboard",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "Tezos configurable statistics dashboard.",
   "type": "module",
   "main": "index.js",
@@ -41,11 +41,11 @@
   },
   "homepage": "https://github.com/craigbuckler/tezos-dashboard#readme",
   "dependencies": {
-    "autoprefixer": "10.4.9",
+    "autoprefixer": "10.4.12",
     "concurrently": "7.4.0",
     "cssnano": "5.1.13",
     "ejs-render": "1.0.3",
-    "esbuild": "0.15.7",
+    "esbuild": "0.15.9",
     "esbuild-plugin-text-replace": "1.2.0",
     "esbuild-plugin-time": "1.0.0",
     "html-minifier": "4.0.0",
@@ -57,7 +57,7 @@
     "postcss-combine-media-query": "1.0.1",
     "postcss-map-get": "0.3.0",
     "postcss-nested": "5.0.6",
-    "postcss-scss": "4.0.4",
+    "postcss-scss": "4.0.5",
     "statez": "1.0.1"
   },
   "devDependencies": {
