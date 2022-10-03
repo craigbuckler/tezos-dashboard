@@ -1,6 +1,6 @@
 {
   "name": "tezos-data-backend",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "Tezos data fetching APIs for dashboard.",
   "type": "module",
   "main": "tasks.js",
@@ -14,7 +14,7 @@
   "license": "MIT",
   "dependencies": {
     "compression": "1.7.4",
-    "dotenv": "16.0.2",
+    "dotenv": "16.0.3",
     "express": "4.18.1",
     "mongodb": "4.10.0"
   },

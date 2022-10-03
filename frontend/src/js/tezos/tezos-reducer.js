@@ -61,6 +61,9 @@ function setTime() {
 setInterval(reducerFetch, reducerInterval);
 document.addEventListener('visibilitychange', reducerFetch);
 
+// refresh after page load
+window.addEventListener('load', reducerFetch);
+
 // fetch updated reducer values from API
 async function reducerFetch( reducers ) {
 
