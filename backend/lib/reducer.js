@@ -1,6 +1,9 @@
 // reducer functions
 import { dateDayAdd } from './lib.js';
 
+// number of days presumed in one month
+const monthDays = 30;
+
 export default {
 
   /*
@@ -171,7 +174,7 @@ export default {
   currentmonth: {
 
     detail: 'reduce average daily crypto-currency prices for month',
-    fetch:  [ 'xtzday:30', 'btcday:30', 'ethday:30' ],
+    fetch:  [ `xtzday:${ monthDays }`, `btcday:${ monthDays }`, `ethday:${ monthDays }` ],
     reduce: fetch => {
 
       const
@@ -181,7 +184,7 @@ export default {
 
       if (xtz && btc && eth) return {
 
-        date: fetch.xtzday.map(day => parseFloat( +day.date ) ).reverse(),
+        date: monthDaysDate().reverse(),
         XTZ: {
           name: 'Tezos',
           price: xtz
@@ -264,9 +267,8 @@ function reduceDay(price) {
   if (!price || !price.length) return;
 
   const
-    max = 30,
     data = [],
-    date = Array(max).fill(null, 0).map((v, i) => +dateDayAdd(v, -i-1));
+    date = monthDaysDate();
 
   // fetch daily prices
   price.forEach(p => {
@@ -310,6 +312,14 @@ function reduceDay(price) {
     ns++;
   }
 
-  if (data.length === max) return data.reverse();
+  if (data.length === monthDays) return data.reverse();
+
+}
+
+
+// return dates of the last monthDays
+function monthDaysDate() {
+
+  return Array( monthDays ).fill(null, 0).map((v, i) => +dateDayAdd(v, -i-1));
 
 }

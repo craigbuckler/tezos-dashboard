@@ -82,6 +82,8 @@ docker-compose down
 
 ### Backend
 
+Connect to container: `docker exec -it backend sh`
+
 Runs with `npm run debug` or `npm run start` (debug deletes the `tasks.log` file).
 
 Initial installation and database updates:
@@ -109,6 +111,8 @@ node ./api.js
 
 
 ### Frontend
+
+Connect to container: `docker exec -it frontend sh`
 
 Initial installation:
 
