@@ -166,9 +166,9 @@ export default {
   XTZ/BTC/ETH daily prices over past 30 days (dates are at midnight)
   {
     date: [ <date-1>, <date-2>, ...],
-    XTZ: { "name" : "Tezos", "price": [1.70, 1.71, ...] },
-    BTC: { "name" : "Bitcoin", "price": [] },
-    ETH: { "name" : "Ethereum", "price": [] }
+    XTZ: { "name" : "XTC", "price": [1.70, 1.71, ...] },
+    BTC: { "name" : "BTC", "price": [] },
+    ETH: { "name" : "ETH", "price": [] }
   }
   */
   currentmonth: {
@@ -186,15 +186,15 @@ export default {
 
         date: monthDaysDate().reverse(),
         XTZ: {
-          name: 'Tezos',
+          name: 'XTZ',
           price: xtz
         },
         BTC: {
-          name: 'Bitcoin',
+          name: 'BTC',
           price: btc
         },
         ETH: {
-          name: 'Etherium',
+          name: 'ETH',
           price: eth
         }
 

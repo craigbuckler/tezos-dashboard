@@ -1,7 +1,7 @@
 # Connection: mongodb://user:pass@localhost:27017/dbname?authSource=dbname
 set -e
 
-mongo <<EOF
+mongosh <<EOF
 use $MONGO_DBNAME;
 
 db.createUser({

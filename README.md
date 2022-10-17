@@ -80,6 +80,13 @@ docker-compose down
 ```
 
 
+### MongoDB Database
+
+Connect to container: `docker exec -it mongodb sh`
+
+The database is initiated with a new user in the script at `mongodb/init.sh` using the credentials defined in `.env` in the project root. DB failures usually indicate the file has failed to run; it may be necessary to stop Docker, delete the volumes, and restart. If necessary, enable MongoDB logging by removing the `driver: "none"` entry in `docker-compose.yml`.
+
+
 ### Backend
 
 Connect to container: `docker exec -it backend sh`
